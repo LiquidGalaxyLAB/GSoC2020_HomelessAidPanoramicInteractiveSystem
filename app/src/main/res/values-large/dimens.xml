@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="top_margin">16dp</dimen>
+    <dimen name="bottom_margin">16dp</dimen>
+    <dimen name="start_margin">16dp</dimen>
+    <dimen name="end_margin">16dp</dimen>
+    <dimen name="margins">16dp</dimen>
+
+    <dimen name="padding">15dp</dimen>
+
+    <!--    Text -->
+    <dimen name="title">40sp</dimen>
+    <dimen name="body">30sp</dimen>
+
+    <!--Boxes-->
+    <dimen name="intro_view_pager">600dp</dimen>
+    <dimen name="intro_bottom_margin">150dp</dimen>
+
+    <!--    Images -->
+    <dimen name="intro_image_layout_height_land">200dp</dimen>
+</resources>

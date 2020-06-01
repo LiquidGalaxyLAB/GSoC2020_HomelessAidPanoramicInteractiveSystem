@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ********* Intro Activity********** -->
+    <string name="logo_intro_title">HAPIS</string>
+    <string name="donor_intro_title">DONANTE</string>
+    <string name="volunteer_intro_tile">VOLUNTARIO</string>
+    <string name="liquid_galaxy_intro_title">SISTEMA LIQUID GALAXY</string>
+    <string name="logo_intro_description">Esta es una aplicación social a través de la cual puedes donar cosas básicas a una persona que de verdad lo necesita.</string>
+    <string name="donor_intro_description">Puedes registrarte como donante y tendrás la oportunidad de ver los perfiles de las personas sin recursos y ayudarlas.</string>
+    <string name="volunteer_intro_description">Puedes registrarte como voluntario y ayudar a registrar y administrar los perfiles de las personas que necesitan ayuda.</string>
+    <string name="liquid_galaxy_description">Si tienes instalado el sistema Liquid Galxy puedes ver toda la información en unas pantallas panoramicas espectaculares.</string>
+    <string name="next_button">Siguiente</string>
+    <string name="get_started_button">EMPEZAR</string>
+
+</resources>
