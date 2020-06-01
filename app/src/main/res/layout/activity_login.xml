@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LOGIN"
+        android:text="PROVE FORK COMMIT AND PUSH"
         android:textSize="@dimen/title"
         android:gravity="center"
         tools:ignore="MissingConstraints" />
