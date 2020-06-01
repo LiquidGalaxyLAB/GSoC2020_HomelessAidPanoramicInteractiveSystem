@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">GSoC2020_HomelessAidPanoramicInteractiveSystem</string>
+    <string name="app_name" translatable="false">HAPIS</string>
+
+    <string name="content_description" translatable="false">Content description</string>
+
+    <!-- ********* Intro Activity********** -->
+    <string name="logo_intro_title">HAPIS</string>
+    <string name="donor_intro_title">DONOR</string>
+    <string name="volunteer_intro_tile">VOLUNTEER</string>
+    <string name="liquid_galaxy_intro_title">LIQUID GALAXY SYSTEM</string>
+    <string name="logo_intro_description">This is a social app where you can donate resources to someone that really need it.</string>
+    <string name="donor_intro_description">Become a donor and you will have the opportunity to see profiles of people in need and help them.</string>
+    <string name="volunteer_intro_description">Be a volunteer and help to register and manage the profiles of people that need help.</string>
+    <string name="liquid_galaxy_description">If you have a Liquid Galxy System installed you can view all this info into a spectacular panoramic screens.</string>
+    <string name="next_button">Next</string>
+    <string name="get_started_button">GET STARTED</string>
+
 </resources>

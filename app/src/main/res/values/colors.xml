@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#2979ff</color>
+    <color name="colorPrimaryDark">#022763</color>
+    <color name="colorAccent">#18ffff</color>
+
+    <!-- colors for Intro-->
+    <color name="white">#ffffff</color>
+    <color name="grey">#656565</color>
+
+    <!--colors for tab and screens text-->
+    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="intro_description_color">#656565</color>
+
+    <!-- colors for buttons-->
+    <color name="gradient_start_color">#2979ff</color>
+    <color name="gradient_end_color">#022763</color>
+
+
 </resources>
