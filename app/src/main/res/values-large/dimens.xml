@@ -8,10 +8,16 @@
     <dimen name="margins">16dp</dimen>
 
     <dimen name="padding">15dp</dimen>
+    <dimen name="login_margin">50dp</dimen>
 
     <!--    Text -->
     <dimen name="title">40sp</dimen>
     <dimen name="body">30sp</dimen>
+
+    <!--    Cards-->
+    <dimen name="cardCornerRadius">8dp</dimen>
+    <dimen name="elevation">8dp</dimen>
+    <dimen name="cv_margins">10dp</dimen>
 
     <!--Boxes-->
     <dimen name="intro_view_pager">600dp</dimen>

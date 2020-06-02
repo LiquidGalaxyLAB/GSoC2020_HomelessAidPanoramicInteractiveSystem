@@ -15,4 +15,23 @@
     <string name="next_button">Next</string>
     <string name="get_started_button">GET STARTED</string>
 
+    <!--******  Login activity  *******-->
+    <string name="login_title">Login to continue</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="google_text_view">You also can continue with Google:</string>
+    <string name="signup_tex_view">Don\'t have an account yet?</string>
+    <string name="statistics_tv">Here you can consult our statistics:</string>
+    <string name="sign_up">REGISTER NOW</string>
+    <string name="liquid_galaxy_tv">LIQUID GALAXY</string>
+    <string name="error_login">Check your username or password</string>
+    <string name="user_exists">This user already exists!Choose another name.</string>
+    <string name="login_button">LOGIN</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="username_error_text">Enter a valid username. Username must have at least 4 characters</string>
+    <string name="password_error_text">Introduce a valid password.Password must have at least 6 characters </string>
+    <string name="complete_life_toast">You have to fill this field</string>
+    <string name="progress_login">Starting session…</string>
+    <string name="email_error_text">Enter a valid email</string>
+
 </resources>
