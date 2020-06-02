@@ -13,7 +13,7 @@ to connect homeless people with persons who can help them. Besides, it can be co
 
 ## __Wiki__
  
- You can find all the development process and more information about this project on the [Wiki](https://github.com/ClaudiaMihaelaDiosan/GSoC2020_HomelessAidPanoramicInteractiveSystem/wiki) 
+ You can find all the development process and more information about this project on the [Wiki](https://github.com/LiquidGalaxyLAB/GSoC2020_HomelessAidPanoramicInteractiveSystem/wiki) 
  
 ## __Prerequisites__
  
