@@ -9,21 +9,20 @@
         android:roundIcon="@mipmap/hapis_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.LoginActivity">
-
-        </activity>
-        <activity android:name=".intro.IntroActivity"
+        <activity android:name=".liquidGalaxy.FirstActivityLG"></activity>
+        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".login.ForgotPasswordActivity" />
+        <activity android:name=".login.LoginActivity" />
+        <activity
+            android:name=".intro.IntroActivity"
             android:theme="@style/IntroTheme">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

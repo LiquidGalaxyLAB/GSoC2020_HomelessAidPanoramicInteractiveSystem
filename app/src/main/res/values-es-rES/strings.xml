@@ -13,4 +13,23 @@
     <string name="next_button">Siguiente</string>
     <string name="get_started_button">EMPEZAR</string>
 
+    <!--******  Login activity  *******-->
+    <string name="login_title">Inicia sesión para continuar</string>
+    <string name="forgot_password">¿Has olvidado tu contraseña?</string>
+    <string name="google_text_view">También puedes continuar con la cuenta de Google:</string>
+    <string name="signup_tex_view">¿No tienes una cuenta aún?</string>
+    <string name="statistics_tv">Aquí puedes consultar nuestras estadísticas:</string>
+    <string name="sign_up">REGÍSTRATE AHORA</string>
+    <string name="liquid_galaxy_tv">LIQUID GALAXY</string>
+    <string name="error_login">Comprueba tu usuario o contraseña</string>
+    <string name="user_exists">Este usuario ya existe!Escoje otro nombre.</string>
+    <string name="login_button">INICIAR SESIÓN</string>
+    <string name="email_hint">Correo electronico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="username_error_text">Introduce un nombre de usuario válido.El usuario tiene que tener mínimo 4 caràcteres y un máximo de 25.</string>
+    <string name="password_error_text">Introduce una contraseña valida.La contrasña tiene que tener al menos 6 caràcteres </string>
+    <string name="complete_life_toast">Rellena este campo</string>
+    <string name="progress_login">Iniciando sesión…</string>
+    <string name="email_error_text">Introduce un correo valido</string>
+
 </resources>
