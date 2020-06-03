@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/hapis_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".liquidGalaxy.FirstActivityLG"></activity>
+        <activity android:name=".register.RegisterVolunteerActivity"></activity>
+        <activity android:name=".register.RegisterDonorActivity" />
+        <activity android:name=".liquidGalaxy.FirstActivityLG" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.ForgotPasswordActivity" />
         <activity android:name=".login.LoginActivity" />

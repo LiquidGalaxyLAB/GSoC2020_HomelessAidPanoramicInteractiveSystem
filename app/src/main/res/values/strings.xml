@@ -34,4 +34,25 @@
     <string name="progress_login">Starting session…</string>
     <string name="email_error_text">Enter a valid email</string>
 
+
+    <!--*****    Register Activity  *****-->
+    <string name="register_activity_name">Register</string>
+    <string name="donor_cv_title">REGISTER AS DONOR</string>
+    <string name="volunteer_cv_title">REGISTER AS VOLUNTEER</string>
+    <string name="cv_more_button">KNOW MORE</string>
+    <string name="cv_start_button">START</string>
+    <string name="register_pop_up_button">OK</string>
+    <!--    Know more register volunteer popup -->
+    <string name="volunteer_know_more_title">What can you do if you register as volunteer?</string>
+    <string name="volunteer_know_more_text">1. You can connect with people without resources who need our help \n\n
+                                            2. You can create and manage profiles for them, since they do not always have a mobile phone connected to the Internet \n\n
+                                            3. You can help to make the donation delivery in case the donors do not have the possibility to do it personally
+    </string>
+    <!--    Know more register donor popup -->
+    <string name="donor_know_more_title">What can you do if you register as donor?</string>
+    <string name="donor_know_more_text">1. You can help people without basic resources such as food, accommodation or clothing \n\n
+                                  2. You can choose the profile of the person who most attracts your attention and help them \n\n
+                                  3. You can donate food, clothing, accommodation, work or personal hygiene products \n\n
+                                  4. You can deliver the aid personally or with the help of a volunteer</string>
+
 </resources>
