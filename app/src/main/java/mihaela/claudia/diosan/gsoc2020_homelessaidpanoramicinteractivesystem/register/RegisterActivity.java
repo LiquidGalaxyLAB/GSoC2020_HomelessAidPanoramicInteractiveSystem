@@ -47,14 +47,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 knowMorePopUp(getString(R.string.donor_know_more_title), getString(R.string.donor_know_more_text));
                 break;
             case R.id.start_register_donor:
-                startActivity(new Intent(RegisterActivity.this, RegisterDonorActivity.class));
+                startActivity(new Intent(RegisterActivity.this, RegisterUserActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.know_more_volunteer_button:
                 knowMorePopUp(getString(R.string.volunteer_know_more_title), getString(R.string.volunteer_know_more_text));
                 break;
             case R.id.start_register_volunteer:
-                startActivity(new Intent(RegisterActivity.this, RegisterVolunteerActivity.class));
+                startActivity(new Intent(RegisterActivity.this, RegisterUserActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }

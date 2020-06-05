@@ -54,4 +54,41 @@
                                             3. Puedes ayudar a realizar la entrega de donaciones en caso que los donantes no tienen la posibilidad de realizarla personalmente
     </string>
 
+
+    <!--*****    Register User Activity  *****-->
+    <string name="register_volunteer_name">Register Volunteer</string>
+    <string name="register_donor_name">Register Donor</string>
+    <string name="register_user_title">Crea tu cuenta</string>
+    <string name="register_user_pop_up_title">REGISTRO CORRECTO</string>
+    <string name="register_user_login_info">Información de inicio de sesión</string>
+    <string name="register_user_optional_info">Información Opcional</string>
+    <string name="register_user_pop_up_message">Gracias.Por favor revisa tu correo electrónico para activar tu cuenta.</string>
+    <string name="register_user_terms">Acepto las <a href="https://freetexthost.net/YgMgzfo">Condiciones Legales</a> e  <a href="https://freetexthost.net/DRNtHzb">Información basica de privacidad</a></string>
+    <string name="register_user_terms_error">Primero acepta las condiciones legales!</string>
+    <string name="register_user_username_hint">Nombre de usuario</string>
+    <string name="register_user_email_hint">Correo electrónico</string>
+    <string name="register_user_password_hint">Contraseña</string>
+    <string name="register_user_first_name_hint">Nombre</string>
+    <string name="register_user_last_name_hint">Apellido</string>
+    <string name="register_user_phone_number_hint">Teléfono</string>
+    <string name="register_user_button">REGISTRAR</string>
+    <string name="register_user_pop_up_button">OK</string>
+    <string name="register_pop_up_title">REGISTRO CORRECTO</string>
+    <string name="register_pop_up_message">Gracias por registrarte.\nApreta el botón OK para ir al login.</string>
+    <string name="register_error">"Algo ha ido mal!</string>
+
+    <!--******  Forgot password activity  *******-->
+    <string name="is_email_valid_error">El Email no es válido o el campo esta vacio</string>
+    <string name="forgot_password_name">Contraseña olvidada</string>
+    <string name="fp_title">¿Has olvidado tu contraseña?</string>
+    <string name="fp_body">Para restablecer tu contraseña, introduce tu correo electrónico que utilizas para iniciar sesión en HAPIS.</string>
+    <string name="pop_up_message"> Un correo ha sido enviado al email facilitado.\nSigue las instrucciones para restablecer tu contraseña.</string>
+    <string name="pop_up_title">CORREO EVIADO</string>
+    <string name="fp_button">RECUPERAR CONTRASEÑA</string>
+    <string name="pop_up_button">OK</string>
+    <string name="fp_email_hint">Correo electrónico</string>
+    <string name="fp_recover_failed">Error al enviar el correo para restablecer la contraseña!\nComprueba que el correo es correcto</string>
+
+
+
 </resources>

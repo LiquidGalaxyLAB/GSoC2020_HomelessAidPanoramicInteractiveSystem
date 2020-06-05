@@ -55,4 +55,40 @@
                                   3. You can donate food, clothing, accommodation, work or personal hygiene products \n\n
                                   4. You can deliver the aid personally or with the help of a volunteer</string>
 
+
+    <!--*****    Register User Activity  *****-->
+    <string name="register_volunteer_name">Register Volunteer</string>
+    <string name="register_donor_name">Register Donor</string>
+    <string name="register_user_title">Create an account</string>
+    <string name="register_user_pop_up_title">REGISTRATION SUCCESS</string>
+    <string name="register_user_login_info">Login Info</string>
+    <string name="register_user_optional_info">Optional Info</string>
+    <string name="register_user_pop_up_message">Thank you. Please check your email to activate your account.</string>
+    <string name="register_user_terms">I agree the <a href="https://freetexthost.net/cwlxbsV">Terms and Conditions</a> and the <a href="https://freetexthost.net/fDVzKMh">Privacy Policy</a></string>
+    <string name="register_user_terms_error">You have to agree the Terms and conditions first!</string>
+    <string name="register_user_username_hint">Username</string>
+    <string name="register_user_email_hint">Email</string>
+    <string name="register_user_password_hint">Password</string>
+    <string name="register_user_first_name_hint">First Name</string>
+    <string name="register_user_last_name_hint">Last Name</string>
+    <string name="register_user_phone_number_hint">Phone number</string>
+    <string name="register_user_button">REGISTER</string>
+    <string name="register_user_pop_up_button">OK</string>
+    <string name="register_pop_up_title">REGISTRATION SUCCESS</string>
+    <string name="register_pop_up_message">Thank you. Please check your email to activate your account.</string>
+    <string name="register_error">"Something went wrong!</string>
+
+    <!--******  Forgot password activity  *******-->
+    <string name="forgot_password_name">Forgot password</string>
+    <string name="is_email_valid_error">The email field is not valid or is empty</string>
+    <string name="fp_title">Forgot your password?</string>
+    <string name="fp_body">To reset your password, enter the email address you use to login to HAPIS.</string>
+    <string name="pop_up_title">EMAIL SENT</string>
+    <string name="pop_up_message">An email has been sent to the supplied email address.\nFollow the instructions in the email to reset your password.</string>
+    <string name="fp_button">RECOVER PASSWORD</string>
+    <string name="pop_up_button">OK</string>
+    <string name="fp_email_hint">Email</string>
+    <string name="fp_recover_failed">Fail to send reset password email!\Check that the email is correct</string>
+
+
 </resources>
