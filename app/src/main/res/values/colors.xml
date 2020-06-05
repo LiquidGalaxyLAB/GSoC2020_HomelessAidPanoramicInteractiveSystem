@@ -11,6 +11,7 @@
     <color name="blue">#0A4CB6</color>
     <color name="amber">#FF5722</color>
     <color name="lila_color">#cc99ff</color>
+    <color name="green">#00F10A</color>
 
     <!--colors for tab and screens text-->
     <color name="tab_indicator_gray">#c0c0c0</color>

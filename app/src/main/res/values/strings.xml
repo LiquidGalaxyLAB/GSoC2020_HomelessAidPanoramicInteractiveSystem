@@ -78,4 +78,17 @@
     <string name="register_pop_up_message">Thank you. Please check your email to activate your account.</string>
     <string name="register_error">"Something went wrong!</string>
 
+    <!--******  Forgot password activity  *******-->
+    <string name="forgot_password_name">Forgot password</string>
+    <string name="is_email_valid_error">The email field is not valid or is empty</string>
+    <string name="fp_title">Forgot your password?</string>
+    <string name="fp_body">To reset your password, enter the email address you use to login to HAPIS.</string>
+    <string name="pop_up_title">EMAIL SENT</string>
+    <string name="pop_up_message">An email has been sent to the supplied email address.\nFollow the instructions in the email to reset your password.</string>
+    <string name="fp_button">RECOVER PASSWORD</string>
+    <string name="pop_up_button">OK</string>
+    <string name="fp_email_hint">Email</string>
+    <string name="fp_recover_failed">Fail to send reset password email!\Check that the email is correct</string>
+
+
 </resources>
