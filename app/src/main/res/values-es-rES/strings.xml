@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="open_navigation_drawer">Abrir navigation drawer</string>
+    <string name="close_navigation_drawer">Cerrar navigation drawer</string>
+
+
     <!-- ********* Intro Activity********** -->
     <string name="logo_intro_title">HAPIS</string>
     <string name="donor_intro_title">DONANTE</string>
@@ -9,7 +13,7 @@
     <string name="logo_intro_description">Esta es una aplicación social a través de la cual puedes donar cosas básicas a una persona que de verdad lo necesita.</string>
     <string name="donor_intro_description">Puedes registrarte como donante y tendrás la oportunidad de ver los perfiles de las personas sin recursos y ayudarlas.</string>
     <string name="volunteer_intro_description">Puedes registrarte como voluntario y ayudar a registrar y administrar los perfiles de las personas que necesitan ayuda.</string>
-    <string name="liquid_galaxy_description">Si tienes instalado el sistema Liquid Galxy puedes ver toda la información en unas pantallas panoramicas espectaculares.</string>
+    <string name="liquid_galaxy_description">Si tienes instalado el sistema Liquid Galaxy puedes ver toda la información en unas pantallas panoramicas espectaculares.</string>
     <string name="next_button">Siguiente</string>
     <string name="get_started_button">EMPEZAR</string>
 
@@ -18,7 +22,7 @@
     <string name="forgot_password">¿Has olvidado tu contraseña?</string>
     <string name="google_text_view">También puedes continuar con la cuenta de Google:</string>
     <string name="signup_tex_view">¿No tienes una cuenta aún?</string>
-    <string name="statistics_tv">Aquí puedes consultar nuestras estadísticas:</string>
+    <string name="liquid_galaxy_text">Aquí puedes acceder al sistema Liquid Galaxy:</string>
     <string name="sign_up">REGÍSTRATE AHORA</string>
     <string name="liquid_galaxy_tv">LIQUID GALAXY</string>
     <string name="error_login">Comprueba tu usuario o contraseña</string>
@@ -89,6 +93,139 @@
     <string name="fp_email_hint">Correo electrónico</string>
     <string name="fp_recover_failed">Error al enviar el correo para restablecer la contraseña!\nComprueba que el correo es correcto</string>
 
+
+    <!--*****   User Home  *****-->
+    <string name="user_home_name">Voluntario</string>
+    <string name="user_menu_home">Inicio</string>
+    <string name="user_menu_donate">Donar</string>
+    <string name="user_menu_profile">Perfil</string>
+    <string name="user_menu_configuration">Configuración</string>
+    <string name="user_menu_logout">Salir</string>
+    <string name="user_menu_contact">Contacto</string>
+    <string name="user_username_text_view">Nombre de usuario</string>
+    <string name="user_email_text_view">Correo electrónico</string>
+    <string name="configuration_menu">Configuración</string>
+    <string name="contact_menu">Contacto</string>
+    <string name="user_phone_text_view">Número de teléfono</string>
+    <string name="bottom_nav_home">Inicio</string>
+    <string name="bottom_nav_map">Mapa</string>
+    <string name="bottom_nav_list_map">Lista de Mapas</string>
+    <string name="welcome_user">BIENVENID@,</string>
+    <string name="user_profile_info">INFORMACIÓN DE PERFIL :</string>
+
+    <!--    Volunteer home fragment-->
+    <string name="edit_button_toast">Con este botón el voluntario podrá editar los campos que aparecen para la persona necesitada</string>
+    <string name="delete_button_toast">Con este botón se borrará el perfil de la persona necesitada</string>
+    <!--Floating Action Menu -->
+    <string name="new_homeless_profile">Nuevo perfil persona necesitada</string>
+    <string name="send_delivery_notification">Entrega donaciones</string>
+    <string name="search_hint_donor_volunteer">Usuario, Necesidad o Dirrección</string>
+
+    <!--  Donate Fragment-->
+    <string name="donate_title">DONA A HAPIS</string>
+    <string name="donate_text"> Tu donación proporciona cosas como comida a personas reales y nos ayuda seguir manteniendo esta aplicación.</string>
+    <string name="donate_button">DONAR DINERO</string>
+    <string name="or">O</string>
+    <string name="donate_video">Mira un video de 30 segundo para donar €0.40 .</string>
+    <string name="video_button">MIRAR VIDEO</string>
+
+    <!--    Payment activity-->
+    <string name="payment_activity_name">Donar </string>
+    <string name="payment_title">Introduce el importe de la donación:</string>
+    <string name="payment_card_credit">Introduce los datos de tu tarjeta:</string>
+    <string name="currency_hint">0,00 €</string>
+    <string name="payment_donate_button">DONAR</string>
+    <string name="payment_confirm_title">Confirma los datos antes de pagar</string>
+    <string name="payment_confirm_button">Confirmar</string>
+    <string name="payment_cancel_button">Cancelar</string>
+    <string name="paymant_phone_explanation">Se enviará un SMS a este número de teléfono</string>
+    <string name="payment_card__number">Número de la tarjeta: </string>
+    <string name="payment_card_expiration">Fecha caducidad tarjeta: </string>
+    <string name="payment_card_cvv">CVV: </string>
+    <string name="payment_postal_code">Código Postal: </string>
+    <string name="payment_phone_number">Número de teléfono: </string>
+    <string name="payment_toast_success">Gracias por tu donación!</string>
+    <string name="payment_toast_fail">Por favor, rellena el formulario</string>
+
+    <!--Configuration Fragment-->
+    <string name="config_phone_number_hint">Número de teléfono</string>
+    <string name="config_phone_number_summary">Cambia tu número de teléfono existente o añade un número nuevo</string>
+    <string name="config_changed_phone_toast">Has cambiado tu número de teléfono correctamente. La próxima vez que entras en la aplicación podrás ver tu nuevo teléfono en tu información de perfil.</string>
+
+    <!--  Contact Fragment-->
+    <string name="contact_title">CONTACTA CON NOSOTROS</string>
+    <string name="contact_text_hint">Escribe tu mensaje aquí</string>
+    <string name="contact_send_button">ENVIAR MENSAJE</string>
+    <string name="contact_sended_toast_message">El mensaje se ha enviado correctamente.\n Recibirás una respuesta lo antes posible.</string>
+    <string name="contact_subject_hint">Asunto</string>
+    <string name="contact_toast_message">El mensaje se ha enviado correctamente.\n Recibirás una respuesta lo antes posible en el correo con el que has registrado la cuenta.</string>
+    <string name="empty_field_error">Este campo no puede estar vacío!</string>
+
+    <!--  Create homeless profile  -->
+    <string name="create_homeless_profile_name">Crear perfil</string>
+    <string name="fragment_terms_title">Antes de empezar a crear el perifl, lee las siguientes condiciones y política de privacidad a la persona necesitada y asegurate que ha entendido todo y da su consentimiento firmando más abajo.</string>
+    <string name="fragment_terms_text">1. A continuación el voluntario te solicitará algunos datos personales por tal de crear tu perfil.De este modo, las personas entendrán mejor tu situación y
+            podrán ayudarte\n\n2. No se te pedirá tu nombre real,sino un nombre de usuario que será visible para los donantes\n\n3. Podrás añadir una foto tuya al perfil, pero no es
+            obligatorio.\n\n4. Se te pedirán la fecha de nacimiento,una pequeña historia de tu vida, el número de teléfono y lo que más necesitas en este momento.\n\n5. Tendrás
+            que especificar la localización y un horario en el que podrás ser encontrado en la dicha localización. Estos datos sirven para que las personas que quieren donar algo te entreguen las cosas personalmente.\n\n6. Todos los datos facilitados serán utilizados solamente con el fin de que las personas te conozcan mejor para poder ayudarte y en ningún momento serán cedidas a terceros.</string>
+    <string name="clear_signature_button">BORRAR</string>
+    <string name="save_signature_button">GUARDAR FIRMA</string>
+    <string name="success_upload">La firma se ha guardado correctamente!Puedes continuar con el registro</string>
+    <string name="unable_to_store_jpg">No ha sido posible guardar la firma</string>
+    <string name="correct_saved_info">La información se ha guardad correctamente!Puedes continuar con el registro</string>
+    <string name="cannot_write_external">No se pueden guardar imàgenes en la memoria externa</string>
+    <string name="signature_pad">HAPIS</string>
+    <string name="directory_not_created">Directorio no creado</string>
+    <string name="album_name">SignaturePad</string>
+    <string name="agreement">Acepto los tèrminos y las condiciones</string>
+    <string name="have_to_sign">Tienes que firmar antes!</string>
+    <string name="confirmation_popup_message">Para confirmar introduce el nombre y los apellidos de la persona que ha firmado.</string>
+    <string name="confirmation_popup_button_confirm">CONFIRMAR</string>
+    <string name="confirmation_popup_cancel_button">CANCELAR</string>
+    <string name="confirmation_popup_firstname_hint">Nombre</string>
+    <string name="confirmation_popup_lastname_hint">Apellidos</string>
+    <string name="account_created">LA CUENTA SE HA CREADO CORRECTAMENTE!</string>
+
+    <!--    Create profile fragment-->
+    <string name="photo">Add your photo here</string>
+    <string name="homeless_profile_fragment_username_hint">Username</string>
+    <string name="homeless_profile_fragment_phone_number">Phone number (optional)</string>
+    <string name="homeless_profile_fragment_birthday_hint">Birthday (optional) </string>
+    <string name="homeless_profile_fragment_life_history_hint">Write something about you and your life experiences</string>
+    <string name="homeless_profile_cancel_button">CANCEL</string>
+    <string name="homeless_profile_save_button">SAVE</string>
+    <string name="homeless_profile_add_photo">Add profile photo</string>
+    <string name="chooser_gallery">Gallery</string>
+    <string name="chooser_camera">Camera</string>
+    <string name="chooser_cancel">Cancel</string>
+    <string name="dialog_add_image">Add Image</string>
+    <string name="dialog_select_file">Select File</string>
+    <string name="select_photo_button">SELECT PROFILE PHOTO</string>
+    <string name="life_hitory_error">Life History must be between 20 and 400 characters large.</string>
+    <string name="uploading_photo">Uploading…</string>
+    <string name="uploaded_photo">Uploaded</string>
+
+    <!--    Needs Fragment -->
+    <string name="schedule_text">Escribe cuando puede ser encontrada la persona necesitada en la ubicación seleccionada anteriormente:</string>
+    <string name="schedule_edit_text">Días y horas disponibles </string>
+    <string name="needs_text">A continuación, selecciona la necesidad más importante que tiene la persona necesitada en este momento:</string>
+    <string name="most_important_need_tv">La necesidad más importante seleccionada es: </string>
+    <string name="complete_schedule_toast">Tienes que rellenar el horario</string>
+    <string name="maxim_char_schedule">El horario puede tener como máximo 40 caracteres</string>
+    <string name="complete_need_toast">Tienes que elegir la necesidad más importante</string>
+
+    <!-- Needs Fragment -->
+    <string name="chip_food">Comida</string>
+    <string name="chip_clothes">Ropa</string>
+    <string name="chip_work">Trabajo</string>
+    <string name="chip_lodging">Alojamiento</string>
+    <string name="chip_hygiene_products">Higiene personal</string>
+
+    <!--    Location Fragment -->
+    <string name="location_fragment_title">A continuación, busca y selecciona una ubicación donde los donantes podrán encontrar a la persona necesitada </string>
+    <string name="selected_location">Has seleccionado la siguiente ubicación:</string>
+    <string name="location_error_toast">Tienes que seleccionar una ubicación</string>
+    <string name="toast_save_btn">Información guardada correctamente!</string>
 
 
 </resources>

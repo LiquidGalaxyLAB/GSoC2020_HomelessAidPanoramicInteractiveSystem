@@ -117,23 +117,6 @@
                     android:layout_marginTop="@dimen/top_margin"
                     android:textColor="@color/colorPrimary" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margins"
-                    android:layout_marginEnd="@dimen/end_margin"
-                    android:layout_marginStart="@dimen/start_margin"
-                    android:backgroundTint="@color/colorAccent"
-                    android:orientation="vertical">
-
-                    <fragment
-                        android:id="@+id/register_autocomplete_fragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:name= "com.google.android.libraries.places.widget.AutocompleteSupportFragment"/>
-
-                </com.google.android.material.card.MaterialCardView>
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

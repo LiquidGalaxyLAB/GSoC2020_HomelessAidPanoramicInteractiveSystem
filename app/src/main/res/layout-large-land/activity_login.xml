@@ -188,7 +188,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_marginTop="@dimen/top_margin"
-                            android:text="@string/statistics_tv"
+                            android:text="@string/liquid_galaxy_text"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/body" />
 
@@ -200,13 +200,13 @@
                             android:layout_marginTop="@dimen/top_margin"
                             android:backgroundTint="@color/white"
                             android:text="@string/liquid_galaxy_tv"
-                            android:textColor="@color/amber"
+                            android:textColor="@color/blue"
                             android:textSize="@dimen/body"
                             android:textStyle="bold"
                             app:iconPadding="@dimen/padding"
-                            app:icon="@drawable/ic_map_black_24dp"
-                            app:iconTint="@color/amber"
-                            app:strokeColor="@color/amber"
+                            app:icon="@drawable/lg"
+                            app:iconTint="@color/blue"
+                            app:strokeColor="@color/blue"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
 

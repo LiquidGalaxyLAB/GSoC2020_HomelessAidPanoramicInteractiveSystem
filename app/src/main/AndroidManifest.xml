@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem">
 
     <application
-        android:allowBackup="true"
+        android:configChanges="locale"
+        android:fullBackupContent="false"
         android:icon="@mipmap/hapis_icon"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/hapis_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".register.RegisterUserActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="q">
+        <activity android:name=".volunteer.CreateHomelessProfile"></activity>
+        <activity android:name=".common.Payment" />
+        <activity
+            android:name=".common.YouTubePlayer"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".volunteer.HomeVolunteer"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/user_home_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".register.RegisterUserActivity" />
         <activity android:name=".liquidGalaxy.FirstActivityLG" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.ForgotPasswordActivity" />

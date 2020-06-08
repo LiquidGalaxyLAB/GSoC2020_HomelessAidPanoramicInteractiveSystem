@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.FirstActivityLG;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.register.RegisterActivity;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.volunteer.HomeVolunteer;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -76,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.login_button:
              //TODO: firebase login
-
+            startActivity(new Intent(LoginActivity.this, HomeVolunteer.class));
         }
     }
 
