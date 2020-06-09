@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--General-->
+    <string name="phone_error_text"> Introduce un teléfono válido</string>
+    <string name="mobile_connected">Red Móvil Conectada!</string>
+    <string name="wifi_connected">Wifi Conectado!</string>
+    <string name="no_network_operating">No hay conexión a Internet!</string>
+    <string name="option_network">Quieres cerrar la aplicación? </string>
+    <string name="positive_button_network">CERRAR</string>
+    <string name="negative_button_network">ESPERAR</string>
     <string name="open_navigation_drawer">Abrir navigation drawer</string>
     <string name="close_navigation_drawer">Cerrar navigation drawer</string>
 

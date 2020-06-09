@@ -1,21 +1,20 @@
 package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.register;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.util.Objects;
-
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.auxiliary.AuxiliaryMethods;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public  class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     /*Buttons*/
@@ -24,13 +23,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     MaterialButton startRegisterDonorBtn;
     MaterialButton startRegisterVolunteerBtn;
 
+    /*Shared Preference*/
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        makeActivityFullScreen();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        AuxiliaryMethods.makeActivityFullScreen(getWindow(), getSupportActionBar());
         initViews();
 
         knowMoreDonorBtn.setOnClickListener(this);
@@ -44,27 +48,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.know_more_donor_button:
-                knowMorePopUp(getString(R.string.donor_know_more_title), getString(R.string.donor_know_more_text));
+                MainActivity.showPositivePopup(this, getString(R.string.donor_know_more_title), getString(R.string.donor_know_more_text), getString(R.string.register_pop_up_button));
                 break;
             case R.id.start_register_donor:
                 startActivity(new Intent(RegisterActivity.this, RegisterUserActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            case R.id.know_more_volunteer_button:
-                knowMorePopUp(getString(R.string.volunteer_know_more_title), getString(R.string.volunteer_know_more_text));
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("userType", "donor").apply();
                 break;
             case R.id.start_register_volunteer:
                 startActivity(new Intent(RegisterActivity.this, RegisterUserActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                editor1.putString("userType", "volunteer").apply();
+                break;
+            case R.id.know_more_volunteer_button:
+                MainActivity.showPositivePopup(this,getString(R.string.volunteer_know_more_title), getString(R.string.volunteer_know_more_text),getString(R.string.register_pop_up_button) );
                 break;
         }
-    }
-
-
-    private void makeActivityFullScreen() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     private void initViews() {
@@ -74,19 +75,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         startRegisterVolunteerBtn = findViewById(R.id.start_register_volunteer);
     }
 
-
-    private void knowMorePopUp(String title, String message) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(getString(R.string.register_pop_up_button), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
 
     @Override
     public void finish() {

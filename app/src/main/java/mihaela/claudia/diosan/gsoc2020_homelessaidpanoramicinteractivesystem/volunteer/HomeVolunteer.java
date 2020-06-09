@@ -14,7 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.common.ConfigurationFragment;
@@ -37,9 +44,9 @@ public class HomeVolunteer extends AppCompatActivity implements NavigationView.O
     TextView volunteerFirstName;
     TextView volunteerLastName;
 
-  /*  *//*Firebase*//*
+    /*Firebase*/
     FirebaseUser user;
-    FirebaseFirestore mFirestore;*/
+    FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +54,9 @@ public class HomeVolunteer extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.activity_home_volunteer);
 
         initViews();
-      /*  initFirebase();*/
+        initFirebase();
         setNavigationElements();
-       /* setUserData();*/
+        setUserData();
 
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeVolunteerFragment()).commit();
@@ -63,6 +70,35 @@ public class HomeVolunteer extends AppCompatActivity implements NavigationView.O
         volunteerDrawer = findViewById(R.id.volunteer_drawer);
         navigationView = findViewById(R.id.nav_view_volunteer);
 
+    }
+
+    private void initFirebase(){
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        mFirestore = FirebaseFirestore.getInstance();
+    }
+
+    private void setUserData(){
+        DocumentReference documentReference = mFirestore.collection("volunteers").document(user.getEmail());
+
+        if (user != null){
+            volunteerEmail.setText(user.getEmail());
+
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if (documentSnapshot != null){
+
+                            volunteerUsername.setText(documentSnapshot.getString("username"));
+                            volunteerPhone.setText(documentSnapshot.getString("phone"));
+                            volunteerFirstName.setText(documentSnapshot.getString("firstName"));
+                            volunteerLastName.setText(documentSnapshot.getString("lastName"));
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void setNavigationElements() {
@@ -85,6 +121,7 @@ public class HomeVolunteer extends AppCompatActivity implements NavigationView.O
         volunteerDrawer.addDrawerListener(mToggle);
         mToggle.syncState();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -110,7 +147,7 @@ public class HomeVolunteer extends AppCompatActivity implements NavigationView.O
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ConfigurationFragment()).commit();
                 break;
             case R.id.user_menu_logout:
-              /*  FirebaseAuth.getInstance().signOut();*/
+                FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity( new Intent(HomeVolunteer.this, LoginActivity.class));
                 break;
