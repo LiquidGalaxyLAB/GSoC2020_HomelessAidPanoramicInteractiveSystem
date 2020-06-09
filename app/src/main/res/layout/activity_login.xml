@@ -150,7 +150,7 @@
                         android:textSize="@dimen/body" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/statistics_tv"
+                        android:id="@+id/liquid_galaxy_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

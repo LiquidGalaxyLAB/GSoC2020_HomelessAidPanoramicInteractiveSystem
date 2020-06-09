@@ -17,8 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.auxiliary.AuxiliaryMethods;
 
 public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,11 +31,16 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     /*EditTexts*/
     TextInputEditText forgotPasswordEmail;
 
+    /*Firebase*/
+    FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+
+        mAuth = FirebaseAuth.getInstance();
 
         initViews();
 
@@ -42,11 +50,10 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.recover_password_button){
-            if (isEmailValid()){
-               // resetPassword(forgotPasswordEmail.getText().toString());
-                showPopUp();
+            if (AuxiliaryMethods.isEmailValid(forgotPasswordEmail.getText().toString(), forgotPasswordEmail.getText().toString())){
+                resetPassword(forgotPasswordEmail.getText().toString());
             }else{
-                showErrorToast(getString(R.string.is_email_valid_error));
+                MainActivity.showErrorToast(ForgotPasswordActivity.this,getString(R.string.is_email_valid_error));
             }
         }
     }
@@ -57,27 +64,21 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     }
 
 
-    private boolean isEmailValid() {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(forgotPasswordEmail.getText().toString()).matches() && !forgotPasswordEmail.getText().toString().isEmpty();
-    }
 
     private void resetPassword(String email){
-        //TODO: firebase recover password
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            showPopUp();
+                        } else {
+                            MainActivity.showErrorToast(ForgotPasswordActivity.this,getString(R.string.fp_recover_failed));
+                        }
+                    }
+                });
     }
 
-
-    public void showErrorToast(String message){
-        Toast toast = Toast.makeText(ForgotPasswordActivity.this, message, Toast.LENGTH_LONG);
-        View view =toast.getView();
-        view.setBackgroundColor(Color.WHITE);
-        TextView toastMessage =  toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(Color.RED);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setTextSize(15);
-        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.error_drawable, 0,0,0);
-        toastMessage.setPadding(10,10,10,10);
-        toast.show();
-    }
 
 
     public void showPopUp(){
@@ -95,7 +96,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
                 .show();
     }
-
 
     @Override
     public void finish(){
