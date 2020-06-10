@@ -55,4 +55,11 @@ public class AuxiliaryMethods {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !password.isEmpty();
     }
 
+    public static boolean isLifeHistoryValid(CharSequence lifeHistory){
+        if (lifeHistory.length() > 19 && lifeHistory.length()<=400) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -177,8 +177,8 @@
             required. \n\n4. You will be asked for your birth date,your phone number, a short story from your life and what you need most right now. \n\n5. You will have
             to specify the location and a time in which you can be found in said location. This information is used by people who want to donate something to hand things over to you.\n\n6. All the data provided will be used only
             so that people know you better in order to help you and at no time will it be transferred to third parties. </string>
-    <string name="clear_signature_button">CLEAR SIGNATURE</string>
-    <string name="save_signature_button">SAVE SIGNATURE</string>
+    <string name="clear_signature_button">CLEAR </string>
+    <string name="save_signature_button">SAVE </string>
     <string name="success_upload">Sign has been successfully saved!You can continue with the register</string>
     <string name="unable_to_store_jpg">Unable to store the signature</string>
     <string name="correct_saved_info">Information successfully saved!You can continue with register</string>
