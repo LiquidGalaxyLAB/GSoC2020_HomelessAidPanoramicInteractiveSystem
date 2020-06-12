@@ -236,5 +236,17 @@
     <string name="location_error_toast">You have to select a location</string>
     <string name="toast_save_btn">Your information saved correctly!</string>
 
+    <!--    Homeless custom view -->
+    <string name="hcv_username">Username</string>
+    <string name="hcv_phone">Phone</string>
+    <string name="hcv_birthday">Birthday</string>
+    <string name="hcv_life_history">LifeHistory</string>
+    <string name="hcv_address">Address</string>
+    <string name="hcv_schedule">Schedule</string>
+    <string name="hcv_need">Need</string>
+    <string name="need_tv">Needs:  </string>
+    <string name="search_hint_donor">Username, Need or Address</string>
+
+
 
 </resources>

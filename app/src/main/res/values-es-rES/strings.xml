@@ -238,4 +238,16 @@
     <string name="toast_save_btn">Información guardada correctamente!</string>
 
 
+    <!--    Homeless custom view -->
+    <string name="hcv_username">Usuario</string>
+    <string name="hcv_phone">Teléfono</string>
+    <string name="hcv_birthday">Fecha de nacimiento</string>
+    <string name="hcv_life_history">Historia</string>
+    <string name="hcv_address">Dirrección</string>
+    <string name="hcv_schedule">Horario</string>
+    <string name="hcv_need">Necesidad</string>
+    <string name="need_tv">Necesita:  </string>
+    <string name="search_hint_donor">Usuario, Necesidad o Dirrección</string>
+
+
 </resources>
