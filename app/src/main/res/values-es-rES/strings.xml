@@ -249,5 +249,19 @@
     <string name="need_tv">Necesita:  </string>
     <string name="search_hint_donor">Usuario, Necesidad o Dirrección</string>
 
+    <!--Edit Homeless-->
+    <string name="edit_title">Editar el perfil de </string>
+    <string name="edit_profile_photo_button">CAMBIAR FOTO DE PERFIL</string>
+    <string name="cancelEditBtn">CANCELAR</string>
+    <string name="saveEditBtn">GUARDAR</string>
+    <string name="deleteHomelessBtn">BORRAR EL PERFIL</string>
+    <string name="delete_dialog_title">BORRAR EL USUARIO</string>
+    <string name="delete_message">Estas seguro que quieres borrar el perfil? \nSe borrará toda la información!</string>
+    <string name="delete_confirm_button">BORRAR</string>
+    <string name="delete_cancel_button">CANCELAR</string>
+    <string name="delete_correct_toast">Perfil borrado con éxito</string>
+    <string name="update_success_toast">Perfil actualizado con éxito</string>
+    <string name="empty_error_toast">Tienes que editar almenos un campo para poder guardar! </string>
+
 
 </resources>

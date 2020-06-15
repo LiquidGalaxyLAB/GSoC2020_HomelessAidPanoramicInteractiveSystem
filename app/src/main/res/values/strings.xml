@@ -247,6 +247,18 @@
     <string name="need_tv">Needs:  </string>
     <string name="search_hint_donor">Username, Need or Address</string>
 
-
+    <!--Edit Homeless-->
+    <string name="edit_title">Edit profile info of</string>
+    <string name="edit_profile_photo_button">CHANGE PROFILE FOTO</string>
+    <string name="cancelEditBtn">CANCEL</string>
+    <string name="saveEditBtn">SAVE</string>
+    <string name="deleteHomelessBtn">DELETE ALL PROFILE</string>
+    <string name="delete_dialog_title">DELETE ALL USER</string>
+    <string name="delete_message">Are you sure you want to delete this profile? \nAll info will be lost!</string>
+    <string name="delete_confirm_button">DELETE</string>
+    <string name="delete_cancel_button">CANCEL</string>
+    <string name="delete_correct_toast">Profile successfully deleted</string>
+    <string name="update_success_toast">Profile successfully updated</string>
+    <string name="empty_error_toast">You have to edit at least one field to edit! </string>
 
 </resources>
