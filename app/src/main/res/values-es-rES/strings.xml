@@ -263,5 +263,20 @@
     <string name="update_success_toast">Perfil actualizado con éxito</string>
     <string name="empty_error_toast">Tienes que editar almenos un campo para poder guardar! </string>
 
+    <!--Map Fragment-->
+    <string name="here">En esta ubicación</string>
+    <string name="map_not_ready">El mapa no esta listo aun</string>
+    <string name="list_map">Linear</string>
+    <string name="grid_map">Grid</string>
+    <string name="search_hint_map">Usuario o dirreción</string>
+
+    <!--Homeless complete view-->
+    <string name="birthday">Cumpleaños: </string>
+    <string name="life_history">Mi historia: </string>
+    <string name="location">Ubicación</string>
+    <string name="schedule">En esta ubicación: </string>
+    <string name="need">Lo que más necesito:  </string>
+    <string name="help_button">QUIERO AYUDAR</string>
+
 
 </resources>

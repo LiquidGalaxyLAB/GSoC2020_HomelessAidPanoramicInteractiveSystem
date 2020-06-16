@@ -27,7 +27,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="q">
-        <activity android:name=".donor.HomeDonor"></activity>
+        <activity
+            android:name=".donor.HomeDonor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".volunteer.CreateHomelessProfile" />
         <activity android:name=".common.Payment" />
         <activity
