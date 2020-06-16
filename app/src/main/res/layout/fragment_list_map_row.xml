@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/start_margin"
+    android:layout_marginEnd="@dimen/end_margin"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:elevation="@dimen/elevation"
+        android:backgroundTint="@color/white"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/lite_list_row_map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lite_list_row_map"
+                map:liteMode="true"
+                map:mapType="none" />
+
+            <TextView
+                android:id="@+id/lite_list_row_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/username_drawable"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="@dimen/padding"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/lite_list_row_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/body"
+                android:drawableStart="@drawable/create_homeless_location"
+                android:drawableTint="@color/grey"
+                android:drawablePadding="@dimen/padding"
+                android:textColor="@color/grey"
+                android:text="@string/text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>

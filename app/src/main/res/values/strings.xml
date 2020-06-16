@@ -261,4 +261,19 @@
     <string name="update_success_toast">Profile successfully updated</string>
     <string name="empty_error_toast">You have to edit at least one field to edit! </string>
 
+    <!--Map Fragment-->
+    <string name="here">In this location</string>
+    <string name="map_not_ready">Map is not ready yet</string>
+    <string name="list_map">Linear</string>
+    <string name="grid_map">Grid</string>
+    <string name="search_hint_map">Username or address</string>
+
+    <!--Homeless complete view -->
+    <string name="birthday">Birthday: </string>
+    <string name="life_history">Life History: </string>
+    <string name="location">Location</string>
+    <string name="schedule">In this location: </string>
+    <string name="need">Most important need:  </string>
+    <string name="help_button">I WANT TO HELP</string>
+
 </resources>

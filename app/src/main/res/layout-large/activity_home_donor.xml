@@ -40,7 +40,6 @@
                 app:itemTextColor="@drawable/bn_item_selected"
                 app:menu="@menu/donor_bottom_navigation_menu"/>
         </FrameLayout>
-
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
