@@ -60,7 +60,7 @@
     <dimen name="delivery_top_margin">60dp</dimen>
 
     <!--Donor margins-->
-    <dimen name="donor_top_margin">60dp</dimen>
+    <dimen name="donor_top_margin">40dp</dimen>
     <dimen name="donor_bottom_margin">60dp</dimen>
     <dimen name="progress_image">45dp</dimen>
 

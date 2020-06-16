@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.adapters.VolunteerAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.adapters.HomelessAdapter;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -133,12 +133,12 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
 
                                 final Homeless homeless = new Homeless(image, username, phone, birthday, lifeHistory, address, schedule, need);
                                 homelesses.add(homeless);
-                                final VolunteerAdapter volunteerAdapter = new VolunteerAdapter(homelesses);
-                                searchText(volunteerAdapter);
-                                recyclerView.setAdapter(volunteerAdapter);
+                                final HomelessAdapter homelessAdapter = new HomelessAdapter(homelesses);
+                                searchText(homelessAdapter);
+                                recyclerView.setAdapter(homelessAdapter);
 
-                                recyclerView.setAdapter(volunteerAdapter);
-                                volunteerAdapter.setOnItemClicklistener(new VolunteerAdapter.OnItemClickListener() {
+                                recyclerView.setAdapter(homelessAdapter);
+                                homelessAdapter.setOnItemClicklistener(new HomelessAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
                                         SharedPreferences.Editor editor = preferences.edit();
@@ -154,7 +154,7 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
                 });
     }
 
-    private void searchText(final VolunteerAdapter volunteerAdapter){
+    private void searchText(final HomelessAdapter homelessAdapter){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -163,7 +163,7 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                volunteerAdapter.getFilter().filter(newText);
+                homelessAdapter.getFilter().filter(newText);
 
                 return false;
             }

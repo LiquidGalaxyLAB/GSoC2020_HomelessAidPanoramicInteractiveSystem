@@ -21,7 +21,7 @@ import java.util.List;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
-public class VolunteerAdapter extends RecyclerView.Adapter<VolunteerAdapter.VolunteerAdapterHolder> implements Filterable {
+public class HomelessAdapter extends RecyclerView.Adapter<HomelessAdapter.VolunteerAdapterHolder> implements Filterable {
     private List<Homeless> homelessData;
     private List<Homeless> homelessList;
     private OnItemClickListener mListener;
@@ -68,7 +68,7 @@ public class VolunteerAdapter extends RecyclerView.Adapter<VolunteerAdapter.Volu
         mListener = listener;
     }
 
-    public VolunteerAdapter(List<Homeless> homelessData){
+    public HomelessAdapter(List<Homeless> homelessData){
         this.homelessData =homelessData;
         this.homelessList = new ArrayList<>(homelessData);
     }

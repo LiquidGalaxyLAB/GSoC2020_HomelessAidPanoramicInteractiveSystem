@@ -54,6 +54,7 @@
                 android:layout_height="@dimen/homeless_cv_image"
                 android:background="@color/light_blue"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
                 android:contentDescription="@string/content_description"/>
 
             <com.google.android.material.button.MaterialButton
