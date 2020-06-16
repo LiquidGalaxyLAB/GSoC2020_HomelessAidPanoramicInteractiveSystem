@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.adapters.DonorAdapter;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.adapters.VolunteerAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.adapters.HomelessAdapter;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -48,6 +47,8 @@ public class HomeDonorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_donor, container, false);
+
+        preferences = getActivity().getSharedPreferences("homelessInfo", MODE_PRIVATE);
 
         initViews();
         firebaseInit();
@@ -80,27 +81,29 @@ public class HomeDonorFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Log.d(TAG, document.getId() + " => " + document.getData());
                                 String image = document.getString("image");
-                                final String need = document.getString("homelessNeed");
-                                final String address = document.getString("homelessAddress");
                                 final String username = document.getString("homelessUsername");
+                                final String phone = document.getString("homelessPhoneNumber");
+                                final String birthday = document.getString("homelessBirthday");
+                                final String lifeHistory = document.getString("homelessLifeHistory");
+                                final String schedule = document.getString("homelessSchedule");
+                                final String address = document.getString("homelessAddress");
+                                String need = document.getString("homelessNeed");
 
-                                final Homeless homeless = new Homeless(username, address, need, image);
+                                final Homeless homeless = new Homeless(image, username, phone, birthday, lifeHistory, address, schedule, need);
                                 homelesses.add(homeless);
-                                final DonorAdapter donorAdapter = new DonorAdapter(homelesses);
-                                searchText(donorAdapter);
-                                recyclerView.setAdapter(donorAdapter);
+                                final HomelessAdapter homelessAdapter = new HomelessAdapter(homelesses);
+                                searchText(homelessAdapter);
+                                recyclerView.setAdapter(homelessAdapter);
 
-                                recyclerView.setAdapter(donorAdapter);
-                                donorAdapter.setOnItemClickListener(new DonorAdapter.OnItemClickListener() {
+
+                                recyclerView.setAdapter(homelessAdapter);
+                                homelessAdapter.setOnItemClicklistener(new HomelessAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
-                                        preferences = getActivity().getSharedPreferences("homelessInfo", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = preferences.edit();
-                                        editor.putString("homelessUsername",  homelesses.get(position).getHomelessUsername());
-                                        editor.apply();
+                                        editor.putString("homelessUsername",  homelesses.get(position).getHomelessUsername()).apply();
 
-                                        HomelessFragment homelessFragment = new HomelessFragment();
-                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.donor_fragment_container, homelessFragment)
+                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.donor_fragment_container, new HelpFragment())
                                                 .addToBackStack(null).commit();
                                     }
                                 });
@@ -113,7 +116,7 @@ public class HomeDonorFragment extends Fragment {
 
     }
 
-    private void searchText(final DonorAdapter donorAdapter){
+    private void searchText(final HomelessAdapter homelessAdapter){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -122,7 +125,8 @@ public class HomeDonorFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                donorAdapter.getFilter().filter(newText);
+                homelessAdapter.getFilter().filter(newText);
+
                 return false;
             }
         });
