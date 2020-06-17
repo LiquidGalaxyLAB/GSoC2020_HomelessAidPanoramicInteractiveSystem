@@ -276,7 +276,16 @@
     <string name="location">Ubicación</string>
     <string name="schedule">En esta ubicación: </string>
     <string name="need">Lo que más necesito:  </string>
-    <string name="help_button">QUIERO AYUDAR</string>
+
+
+    <!--  Help Fragment-->
+    <string name="donation_type">Selecciona  que quieres donar</string>
+    <string name="help_type">Selecciona como quieres realizar tu donación</string>
+    <string name="personally_button">PERSONALMENTE</string>
+    <string name="through_volunteer_button">A TRAVÉS DE UN VOLUNTARIO</string>
+    <string name="chip_text1">Tu donación de </string>
+    <string name="chip_text2">será añadida a nuestras estadísticas</string>
+    <string name="error_chip">Tienes que seleccionar un tipo de ayuda primero.</string>
 
 
 </resources>

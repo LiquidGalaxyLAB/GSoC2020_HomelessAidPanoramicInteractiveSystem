@@ -240,7 +240,7 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
     }
 
     private void deleteProfilePhoto(String username){
-        storageReference.child("homelessProfilePhotos/" + user.getEmail() + "->" + username)
+        storageReference.child("homelessProfilePhotos/" + user.getEmail() + ":" + username)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -264,7 +264,7 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
             progressDialog.show();
 
             final DocumentReference documentReference = mFirestore.collection("homeless").document(username);
-            final StorageReference ref = storageReference.child("homelessProfilePhotos/" + user.getEmail() + "->" + username);
+            final StorageReference ref = storageReference.child("homelessProfilePhotos/" + user.getEmail() + ":" + username);
 
             ref.putFile(selectedImagePath)
                     .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
