@@ -287,5 +287,9 @@
     <string name="chip_text2">será añadida a nuestras estadísticas</string>
     <string name="error_chip">Tienes que seleccionar un tipo de ayuda primero.</string>
 
+    <!-- Personally Fragment-->
+    <string name="location_text_personally">La persona que necesita tu ayuda estará en la siguiente ubicación para que puedas dejarle tu donación</string>
+    <string name="schedule_text_personally">Podrás encontrarla en el siguiente horario</string>
+
 
 </resources>
