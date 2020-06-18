@@ -22,11 +22,11 @@
                 android:id="@+id/homeless_username"
                 android:text="@string/text"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:textSize="@dimen/title"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/homeless_location_text"
@@ -35,7 +35,8 @@
                 android:textSize="@dimen/body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin" />
+                android:layout_marginTop="@dimen/top_margin"
+                />
 
             <TextView
                 android:id="@+id/homeless_location"
@@ -44,7 +45,8 @@
                 android:text="@string/text"
                 android:textSize="@dimen/body"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                />
 
             <TextView
 
@@ -52,7 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/body"
-                android:layout_marginTop="@dimen/top_margin" />
+                android:layout_marginTop="@dimen/top_margin"
+                />
 
             <TextView
                 android:id="@+id/homeless_schedule_text"
@@ -62,14 +65,16 @@
                 android:text="@string/text"
                 android:textSize="@dimen/body"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                />
 
             <!-- MapFragment with lite mode enabled -->
             <fragment
                 android:id="@+id/homeless_location_map"
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                />
 
         </LinearLayout>
 

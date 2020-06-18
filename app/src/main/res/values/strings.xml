@@ -285,5 +285,8 @@
     <string name="chip_text2">   will be added to our statistics</string>
     <string name="error_chip">You have to select a type of help first.</string>
 
+    <!--    Fragment personally-->
+    <string name="location_text_personally">You can find the homeless person in the next location in order tu give your donation</string>
+    <string name="schedule_text_personally">It will be here in the next schedule</string>
 
 </resources>
