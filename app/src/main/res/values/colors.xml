@@ -2,11 +2,14 @@
 <resources>
     <color name="colorPrimary">#2979ff</color>
     <color name="colorPrimaryDark">#004ecb</color>
-    <color name="colorAccent">#18ffff</color>
+    <color name="colorAccent">#cc99ff</color>
 
     <!-- colors for Intro-->
     <color name="white">#ffffff</color>
     <color name="grey">#656565</color>
+
+    <color name="colorPrimaryLight">#75a7ff</color>
+    <color name="colorAccentLight">#ffabe2</color>
 
     <color name="blue">#0A4CB6</color>
     <color name="amber">#FF5722</color>

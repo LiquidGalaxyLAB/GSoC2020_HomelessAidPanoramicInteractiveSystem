@@ -291,5 +291,31 @@
     <string name="location_text_personally">La persona que necesita tu ayuda estará en la siguiente ubicación para que puedas dejarle tu donación</string>
     <string name="schedule_text_personally">Podrás encontrarla en el siguiente horario</string>
 
+    <!--Fragment through a volunteer -->
+    <string name="fr_tv_title">Establece un punto de encuentro cercano, el día y la hora para encontrarte con el voluntario y se pondrá en contacto contigo. </string>
+    <string name="pick_date_button">FECHA</string>
+    <string name="pick_time_button">HORA</string>
+    <string name="fr_tv_location">Ubicación seleccionada</string>
+    <string name="fr_tv_date">Fecha seleccionada</string>
+    <string name="fr_tv_hour">Hora seleccionada</string>
+    <string name="fr_tv_confirm_button">CONFIRMAR</string>
+    <string name="fr_tv_confirm_toast"> Gracias por tu ayuda! El voluntario recibirá estos datos y contactará contigo</string>
+    <string name="date_error_toast">Tienes que seleccionar una fecha!</string>
+    <string name="time_error_toast">Tienes que seleccionar una hora!</string>
+    <string name="fthv_location_error_toast">Tienes que seleccionar una ubicación!</string>
+
+    <!--Through volunteer fragment-->
+    <string name="donation_type_tv">Quiere donar</string>
+    <string name="donates_to">A</string>
+    <string name="can_be">Ubicación</string>
+    <string name="on">Fecha y hora</string>
+    <string name="contact">Contacto: </string>
+    <string name="delivery_done">ENTREGA REALIZADA</string>
+    <string name="delivery_message">Has entregado esta donación a la persona necesitada?</string>
+    <string name="confirm_button_delivery">SI</string>
+    <string name="negative_button_delivery">TODAVÍA NO</string>
+    <string name="toast_delivery">Gracias por tu colaboración!</string>
+    <string name="delivery_title">Donaciones para entregar</string>
+
 
 </resources>
