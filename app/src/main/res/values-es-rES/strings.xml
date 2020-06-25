@@ -317,5 +317,16 @@
     <string name="toast_delivery">Gracias por tu colaboración!</string>
     <string name="delivery_title">Donaciones para entregar</string>
 
+    <!--First activity lg-->
+    <string name="lg_title">Conectar a Liquid Galaxy</string>
+    <string name="lg_username">Nombre de usuario</string>
+    <string name="lg_username_password_hint">lg</string>
+    <string name="lg_password">Contraseña</string>
+    <string name="lg_ip">IP Host</string>
+    <string name="lg_ip_hint">X.X.X.X</string>
+    <string name="lg_port">Puerto</string>
+    <string name="lg_port_hint">22</string>
+    <string name="lg_start_btn">EMPEZAR</string>
+
 
 </resources>
