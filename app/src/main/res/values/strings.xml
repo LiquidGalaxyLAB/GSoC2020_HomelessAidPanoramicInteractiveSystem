@@ -314,5 +314,15 @@
     <string name="negative_button_delivery">NOT YET</string>
     <string name="toast_delivery">Thank you for you collaboration!</string>
     <string name="delivery_title">Donations to deliver</string>
-
+    
+    <!--First activity lg-->
+    <string name="lg_title">Connect to Liquid Galaxy</string>
+    <string name="lg_username">Username</string>
+    <string name="lg_username_password_hint">lg</string>
+    <string name="lg_password">Password</string>
+    <string name="lg_ip">Host IP</string>
+    <string name="lg_ip_hint">X.X.X.X</string>
+    <string name="lg_port">Port</string>
+    <string name="lg_port_hint">22</string>
+    <string name="lg_start_btn">START</string>
 </resources>
