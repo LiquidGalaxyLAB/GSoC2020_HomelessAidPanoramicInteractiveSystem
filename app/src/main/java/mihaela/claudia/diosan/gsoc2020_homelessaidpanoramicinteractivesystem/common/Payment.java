@@ -17,7 +17,7 @@ import me.abhinay.input.CurrencyEditText;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 
-public class Payment extends AppCompatActivity {
+public class Payment extends MainActivity  {
 
     MaterialButton payBtn;
     CardForm cardForm;

@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.common.ConfigurationFragment;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.common.ContactFragment;
@@ -33,7 +34,7 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.log
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.maps.ListMapFragment;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.maps.MapFragment;
 
-public class HomeDonor extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeDonor extends MainActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /*Navigation Elements*/
     private DrawerLayout donorDrawer;

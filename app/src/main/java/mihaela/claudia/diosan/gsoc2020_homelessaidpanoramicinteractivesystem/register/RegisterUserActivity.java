@@ -34,7 +34,7 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.re
         import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.auxiliary.AuxiliaryMethods;
         import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.login.LoginActivity;
 
-public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterUserActivity extends MainActivity implements View.OnClickListener {
 
     /* ImageView */
     ImageView regUserImg;

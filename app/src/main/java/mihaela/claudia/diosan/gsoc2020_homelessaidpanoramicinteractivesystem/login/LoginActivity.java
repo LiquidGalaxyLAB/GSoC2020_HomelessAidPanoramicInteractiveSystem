@@ -30,7 +30,7 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liq
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.register.RegisterActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.volunteer.HomeVolunteer;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends MainActivity implements View.OnClickListener {
 
     /*TextViews*/
     TextView forgotPassword;

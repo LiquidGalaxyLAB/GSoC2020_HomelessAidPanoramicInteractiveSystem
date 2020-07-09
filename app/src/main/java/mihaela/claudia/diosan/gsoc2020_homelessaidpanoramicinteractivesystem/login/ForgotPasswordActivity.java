@@ -23,7 +23,7 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.Mai
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.auxiliary.AuxiliaryMethods;
 
-public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class ForgotPasswordActivity extends MainActivity implements View.OnClickListener {
 
     /*Buttons*/
     Button recoverPassword;

@@ -14,7 +14,7 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.Mai
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.auxiliary.AuxiliaryMethods;
 
-public  class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public  class RegisterActivity extends MainActivity implements View.OnClickListener {
 
 
     /*Buttons*/

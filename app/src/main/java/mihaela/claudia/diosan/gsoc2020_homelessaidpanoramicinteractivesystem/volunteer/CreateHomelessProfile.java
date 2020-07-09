@@ -17,9 +17,10 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 
-public class CreateHomelessProfile extends AppCompatActivity {
+public class CreateHomelessProfile extends MainActivity {
 
     ViewPager viewPager;
     TabLayout tabLayout;
