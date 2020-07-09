@@ -31,7 +31,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textStyle="bold"
                     android:textSize="@dimen/body"
                     android:layout_marginBottom="@dimen/bottom_margin"
                     android:textColor="@color/grey"
@@ -50,6 +49,7 @@
                         android:id="@+id/autocomplete_fragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:name=
                             "com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
 
@@ -69,7 +69,6 @@
 
                 <TextView
                     android:id="@+id/selected_location_tv"
-                    android:textStyle="bold"
                     android:textSize="@dimen/body"
                     android:layout_marginTop="@dimen/top_margin"
                     android:layout_marginBottom="@dimen/bottom_margin"
@@ -80,7 +79,7 @@
                     android:drawableTint="@color/colorPrimaryDark"
                     />
 
-                <!-- MapFragment with lite mode enabled -->
+
                 <fragment
                     android:id="@+id/map"
                     class="com.google.android.gms.maps.SupportMapFragment"
@@ -88,6 +87,8 @@
                     android:layout_height="@dimen/map_fragment"
                     android:layout_marginBottom="@dimen/bottom_margin"
                     map:liteMode="true" />
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

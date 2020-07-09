@@ -21,114 +21,156 @@
             android:orientation="vertical"
             android:layout_margin="@dimen/margins">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/delivery_donor_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/start_margin"
+                    android:textSize="@dimen/title"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:text="@string/text"/>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/delivery_donor_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/title"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold"
-                            android:text="@string/text"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:text="@string/donation_type_tv"/>
 
+                    <TextView
+                        android:id="@+id/delivery_donation_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:text="@string/text"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:text="@string/donates_to"/>
+
+                    <TextView
+                        android:id="@+id/delivery_donates_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:text="@string/text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:text="@string/can_be"/>
+
+                    <TextView
+                        android:id="@+id/delivery_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:text="@string/text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:text="@string/on"/>
+
+                    <TextView
+                        android:id="@+id/delivery_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:text="@string/text"/>
+
+                    <TextView
+                        android:id="@+id/delivery_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:text="@string/text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/start_margin"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:text="@string/contact"/>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:text="@string/donation_type_tv"/>
-
-                        <TextView
-                            android:id="@+id/delivery_donation_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold"
-                            android:text="@string/text"/>
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:text="@string/donates_to"/>
-
-                        <TextView
-                            android:id="@+id/delivery_donates_to"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold"
-                            android:text="@string/text"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:text="@string/can_be"/>
-
-                        <TextView
-                            android:id="@+id/delivery_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold"
-                            android:text="@string/text"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:text="@string/on"/>
-
-                        <TextView
-                            android:id="@+id/delivery_date"
+                            android:id="@+id/delivery_donor_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/start_margin"
@@ -138,7 +180,7 @@
                             android:text="@string/text"/>
 
                         <TextView
-                            android:id="@+id/delivery_time"
+                            android:id="@+id/delivery_donor_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/start_margin"
@@ -146,54 +188,12 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"
                             android:text="@string/text"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/start_margin"
-                            android:textSize="@dimen/body"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:text="@string/contact"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/delivery_donor_email"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/start_margin"
-                                android:textSize="@dimen/body"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textStyle="bold"
-                                android:text="@string/text"/>
-
-                            <TextView
-                                android:id="@+id/delivery_donor_phone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/start_margin"
-                                android:textSize="@dimen/body"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textStyle="bold"
-                                android:text="@string/text"/>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -50,6 +50,7 @@
         app:itemTextColor="@color/darkGrey"
         app:itemIconTint="@color/colorPrimary"
         app:menu="@menu/user_menu"
+        android:elevation="@dimen/elevation"
         app:headerLayout="@layout/user_header"
         android:layout_gravity="start">
     </com.google.android.material.navigation.NavigationView>

@@ -133,7 +133,7 @@
                         android:textColor="@color/blue"
                         android:textSize="@dimen/body"
                         android:textStyle="bold"
-                        app:icon="@drawable/ic_person_add_black_24dp"
+                        app:icon="@drawable/add_user_icon_48dp"
                         app:iconTint="@color/blue"
                         app:iconPadding="@dimen/padding"
                         app:strokeColor="@color/blue"
@@ -150,22 +150,14 @@
                         android:textSize="@dimen/body" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/statistics_tv"
+                        android:id="@+id/liquid_galaxy_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/top_margin"
                         android:backgroundTint="@color/white"
-                        android:text="@string/liquid_galaxy_tv"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/body"
-                        android:textStyle="bold"
                         app:iconPadding="@dimen/padding"
-                        app:iconTint="@color/blue"
                         app:icon="@drawable/lg"
-                        app:strokeColor="@color/blue"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-
+                        app:iconTint="@null" />
                 </LinearLayout>
 
             </LinearLayout>

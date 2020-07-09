@@ -25,6 +25,12 @@
     <color name="green_color">#66ff99</color>
     <color name="yellow_color">#ffcc66</color>
 
+    <!--dashboard cards-->
+    <color name="color_first_card">#8c52ff</color>
+    <color name="color_second_card">#ff66c4</color>
+    <color name="color_third_card">#ffc604</color>
+    <color name="color_forth_card">#5271ff</color>
+
 
     <!--colors for tab and screens text-->
     <color name="tab_indicator_gray">#c0c0c0</color>

@@ -159,7 +159,6 @@
                         app:iconPadding="@dimen/padding"
                         app:icon="@drawable/lg"
                         app:iconTint="@null" />
-
                 </LinearLayout>
 
             </LinearLayout>

@@ -157,7 +157,7 @@
                     android:gravity="top|start"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/ic_schedule_black_24dp"
+                    android:drawableStart="@drawable/schedule_icon"
                     android:drawableTint="@color/colorPrimaryDark" />
             </com.google.android.material.textfield.TextInputLayout>
 

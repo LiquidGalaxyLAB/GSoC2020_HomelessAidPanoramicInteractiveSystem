@@ -7,9 +7,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginStart="@dimen/start_margin"
-        android:layout_marginEnd="@dimen/end_margin">
+        android:layout_margin="@dimen/margins">
 
 
         <LinearLayout
@@ -98,7 +96,7 @@
                     android:layout_marginTop="@dimen/top_margin"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/ic_schedule_black_24dp"
+                    android:drawableStart="@drawable/schedule_icon"
                     android:drawableTint="@color/colorPrimaryDark"
                     android:text="@string/hcv_schedule"/>
 

@@ -61,8 +61,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/payment_icons"
+                    android:layout_height="@dimen/payment_icons"
                     android:layout_marginTop="@dimen/top_margin"
                     android:layout_marginStart="@dimen/start_margin"
                     android:contentDescription="@string/content_description"

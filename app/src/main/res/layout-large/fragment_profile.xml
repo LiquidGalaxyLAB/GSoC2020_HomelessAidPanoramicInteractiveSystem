@@ -24,13 +24,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+
                 <ImageView
                     android:id="@+id/homeless_profile_image"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/create_profile_image"
-                    android:background="@drawable/gradient_background"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/content_description"/>
+                    android:layout_height="@dimen/homeless_cv_image"
+                    android:scaleType="centerCrop"
+                    android:background="@color/white"
+                    android:src="@mipmap/ic_launcher"
+                    android:contentDescription="@string/content_description"
+                    android:layout_gravity="center" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/add_homeless_profile_photo_button"

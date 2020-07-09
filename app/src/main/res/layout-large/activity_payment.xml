@@ -61,8 +61,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/payment_icons"
+                    android:layout_height="@dimen/payment_icons"
                     android:layout_marginTop="@dimen/top_margin"
                     android:layout_marginStart="@dimen/start_margin"
                     android:contentDescription="@string/content_description"
@@ -92,6 +92,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/green"
                 android:textStyle="bold"
+                android:textSize="@dimen/body"
                 android:textColor="@color/green"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"

@@ -37,6 +37,7 @@
                 android:text="@string/fragment_terms_text"
                 android:layout_gravity="start"
                 android:textColor="@color/grey"
+                android:textAlignment="textStart"
                 android:scrollbars="vertical"
                 android:textSize="@dimen/body" />
 

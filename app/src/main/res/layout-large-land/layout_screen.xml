@@ -8,15 +8,6 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/intro_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="@dimen/margins"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/title"
-        android:textStyle="bold" />
 
 
     <ImageView
@@ -28,6 +19,16 @@
         android:layout_marginEnd="16dp"
         tools:srcCompat="@tools:sample/avatars"
         android:contentDescription="@string/content_description"/>
+
+    <TextView
+        android:id="@+id/intro_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/margins"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/title"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/intro_description"
