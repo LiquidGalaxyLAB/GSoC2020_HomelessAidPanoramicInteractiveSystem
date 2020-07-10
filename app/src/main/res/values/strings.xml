@@ -314,7 +314,7 @@
     <string name="negative_button_delivery">NOT YET</string>
     <string name="toast_delivery">Thank you for you collaboration!</string>
     <string name="delivery_title">Donations to deliver</string>
-    
+
     <!--First activity lg-->
     <string name="lg_title">Connect to Liquid Galaxy</string>
     <string name="lg_username">Username</string>
@@ -325,4 +325,38 @@
     <string name="lg_port">Port</string>
     <string name="lg_port_hint">22</string>
     <string name="lg_start_btn">START</string>
+
+    <!--    Lg menu-->
+    <string name="settings">Settings</string>
+    <string name="tools">Tools</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!--    About dialog -->
+    <string name="lg_about_title">About HAPIS Application</string>
+    <string name="lg_about_button">CLOSE</string>
+    <string name="lg_about_info">This app has been developed thanks to Intership students as a new application from GSoC 2020 Project </string>
+    <string name="lg_about_contact">Depeloped by Mihaela Claudia Diosan (mcd1591@gmail.com) </string>
+    <string name="lg_about_github">https://github.com/LiquidGalaxyLAB/GSoC2020_HomelessAidPanoramicInteractiveSystem?organization=LiquidGalaxyLAB&amp;organization=LiquidGalaxyLAB</string>
+    <string name="lg_about_thanks">Developed thanks to TIC Laboratories of the Scientific Park of Lleida and Liquid Galaxy LAB</string>
+
+
+    <!--Dashboard cards-->
+    <string name="cities">Cities</string>
+    <string name="statistics">Statistics</string>
+    <string name="demo">Demo</string>
+    <string name="tour">Tour</string>
+
+    <!--Activity Tools-->
+    <string name="clean_kmls">Clean KMLs</string>
+    <string name="relaunch_lg">Relaunch LG</string>
+    <string name="reboot_lg">Reboot LG</string>
+    <string name="shutdown_lg">Shutdown LG</string>
+    <string name="error_galaxy">Error connecting with Liquid Galaxy. Please, try changing settings.</string>
+    <string name="lg_positive_btn">Yes</string>
+    <string name="lg_negative_btn">No</string>
+
+    <!--City activity-->
+    <string name="search_hint_city">City or Country</string>
 </resources>

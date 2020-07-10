@@ -55,6 +55,7 @@
     <dimen name="header">200dp</dimen>
     <dimen name="terms_fragment">200dp</dimen>
     <dimen name="signature_pad">100dp</dimen>
+    <dimen name="dashboard_cards">100dp</dimen>
 
     <!--Delivery margins-->
     <dimen name="delivery_top_margin">60dp</dimen>

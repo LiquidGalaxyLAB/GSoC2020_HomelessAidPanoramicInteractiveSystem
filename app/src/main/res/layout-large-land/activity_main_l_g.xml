@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/margins"
+    android:orientation="vertical"
+    tools:context=".liquidGalaxy.MainActivityLG">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cities_cv"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="@dimen/margins"
+            android:backgroundTint="@color/color_first_card"
+            android:layout_width="@dimen/dashboard_cards"
+            android:layout_height="@dimen/dashboard_cards">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/icon_cities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_location_city_white_48dp"
+                    android:layout_margin="@dimen/margins"
+                    android:contentDescription="@string/content_description"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/title_cities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/cities"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/statistics_cv"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="@dimen/margins"
+            android:backgroundTint="@color/color_second_card"
+            android:layout_width="@dimen/dashboard_cards"
+            android:layout_height="@dimen/dashboard_cards">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/icon_statistics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_bar_chart_white_48dp"
+                    android:layout_margin="@dimen/margins"
+                    android:contentDescription="@string/content_description"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/title_statistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/statistics"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/demo_cv"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="@dimen/margins"
+            android:backgroundTint="@color/color_third_card"
+            android:layout_width="@dimen/dashboard_cards"
+            android:layout_height="@dimen/dashboard_cards">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/icon_demo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_location_city_white_48dp"
+                    android:layout_margin="@dimen/margins"
+                    android:contentDescription="@string/content_description"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/title_demo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/demo"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/tour_cv"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="@dimen/margins"
+            android:backgroundTint="@color/color_forth_card"
+            android:layout_width="@dimen/dashboard_cards"
+            android:layout_height="@dimen/dashboard_cards">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/icon_tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_directions_white_48dp"
+                    android:layout_margin="@dimen/margins"
+                    android:contentDescription="@string/content_description"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/title_tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/tour"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</ScrollView>
+
+
+

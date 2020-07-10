@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="lg"
+        android:summary="lg"
+        android:inputType="text"
+        android:key="SSH-USER"
+        android:singleLine="true"
+        android:title="LiquidGalaxy SSH-USER" />
+
+    <EditTextPreference
+        android:defaultValue="lqgalaxy"
+        android:summary="lqgalaxy"
+        android:inputType="textPassword"
+        android:key="SSH-PASSWORD"
+        android:password="true"
+        android:singleLine="true"
+        android:title="LiquidGalaxy SSH-PASSWORD" />
+
+    <EditTextPreference
+        android:defaultValue="192.168.86.224"
+        android:summary="192.168.86.224"
+        android:digits="0123456789."
+        android:inputType="numberDecimal"
+        android:key="SSH-IP"
+        android:singleLine="true"
+        android:title="LiquidGalaxy SSH-IP" />
+
+    <EditTextPreference
+        android:defaultValue="22"
+        android:summary="22"
+        android:inputType="number"
+        android:key="SSH-PORT"
+        android:singleLine="true"
+        android:title="LiquidGalaxy SSH-PORT" />
+
+</PreferenceScreen>

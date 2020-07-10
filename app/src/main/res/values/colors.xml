@@ -24,6 +24,7 @@
     <color name="blue_light">#00bfff</color>
     <color name="green_color">#66ff99</color>
     <color name="yellow_color">#ffcc66</color>
+    <color name="dark_green">#0CA33E</color>
 
     <!--dashboard cards-->
     <color name="color_first_card">#8c52ff</color>
