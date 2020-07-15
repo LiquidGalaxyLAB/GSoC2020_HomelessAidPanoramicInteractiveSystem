@@ -27,6 +27,7 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.auxiliary.AuxiliaryMethods;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.donor.HomeDonor;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.FirstActivityLG;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.MainActivityLG;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.register.RegisterActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.volunteer.HomeVolunteer;
 
@@ -93,7 +94,7 @@ public class LoginActivity extends MainActivity implements View.OnClickListener 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.liquid_galaxy_tv:
-                Intent statisticsActivity = new Intent(LoginActivity.this, FirstActivityLG.class);
+                Intent statisticsActivity = new Intent(LoginActivity.this, MainActivityLG.class);
                 startActivity(statisticsActivity);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
