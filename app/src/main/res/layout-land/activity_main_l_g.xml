@@ -23,6 +23,8 @@
             app:cardCornerRadius="@dimen/cardCornerRadius"
             android:backgroundTint="@color/color_first_card"
             android:layout_height="wrap_content"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
             android:layout_margin="8dp">
 
             <LinearLayout
@@ -65,6 +67,8 @@
             android:id="@+id/statistics_cv"
             app:cardCornerRadius="@dimen/cardCornerRadius"
             android:layout_width="@dimen/dashboard_cards"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
             android:backgroundTint="@color/color_second_card"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">
@@ -109,6 +113,8 @@
             android:id="@+id/demo_cv"
             android:layout_width="@dimen/dashboard_cards"
             app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
             android:backgroundTint="@color/color_third_card"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">
@@ -142,6 +148,7 @@
                         android:layout_gravity="center"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -151,6 +158,8 @@
             android:id="@+id/tour_cv"
             android:layout_width="@dimen/dashboard_cards"
             app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
             android:backgroundTint="@color/color_forth_card"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">

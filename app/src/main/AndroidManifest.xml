@@ -26,7 +26,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="q">
-        <activity android:name=".liquidGalaxy.CityActivity"
+        <activity android:name=".liquidGalaxy.VolunteersActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".liquidGalaxy.DonorsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".liquidGalaxy.HomelessActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".liquidGalaxy.CityActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" />
         <activity
@@ -59,7 +69,9 @@
         <activity android:name=".liquidGalaxy.FirstActivityLG" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.ForgotPasswordActivity" />
-        <activity android:name=".login.LoginActivity" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".intro.IntroActivity"
             android:theme="@style/IntroTheme">

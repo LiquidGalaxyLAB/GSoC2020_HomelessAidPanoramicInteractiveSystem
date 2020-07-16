@@ -7,6 +7,56 @@
     android:orientation="vertical"
     tools:context=".liquidGalaxy.MainActivityLG">
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/margins"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        app:cardElevation="@dimen/elevation"
+        android:elevation="@dimen/elevation"
+        android:backgroundTint="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/margins">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/you_are"
+                android:layout_marginEnd="@dimen/cv_margins"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/city_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text"
+                android:layout_marginEnd="@dimen/cv_margins"
+                android:textColor="@color/colorPrimary"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comma"
+                android:layout_marginEnd="@dimen/cv_margins"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/country_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text"
+                android:layout_marginEnd="@dimen/cv_margins"
+                android:textColor="@color/colorPrimary"/>
+
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +69,8 @@
             android:id="@+id/homeless_cv"
             android:layout_width="@dimen/dashboard_cards"
             app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
             android:backgroundTint="@color/color_forth_card"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">
@@ -62,7 +114,9 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/donors_cv"
             android:layout_width="@dimen/dashboard_cards"
-            android:backgroundTint="@color/color_first_card"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
+            android:backgroundTint="@color/color_second_card"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/cardCornerRadius"
             android:layout_margin="8dp">
@@ -108,6 +162,8 @@
             android:id="@+id/volunteers_cv"
             android:layout_width="@dimen/dashboard_cards"
             app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
             android:backgroundTint="@color/color_third_card"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">

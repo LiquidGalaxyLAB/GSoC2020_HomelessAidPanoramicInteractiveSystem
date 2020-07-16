@@ -33,7 +33,7 @@
     <dimen name="help_image_land">120dp</dimen>
     <dimen name="through_vol_fragment">100dp</dimen>
     <dimen name="profile_image">100dp</dimen>
-    <dimen name="homeless_cv_image">150dp</dimen>
+    <dimen name="homeless_cv_image">200dp</dimen>
     <dimen name="intro_image">200dp</dimen>
     <dimen name="intro_image_layout_width_land">260dp</dimen>
     <dimen name="intro_image_layout_height_land">160dp</dimen>

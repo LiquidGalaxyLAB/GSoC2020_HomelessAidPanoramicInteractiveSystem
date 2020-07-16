@@ -364,5 +364,22 @@
     <string name="volunteers">Voluntarios</string>
     <string name="donors">Donantes</string>
 
+    <!--Cities activity-->
+    <string name="you_are">Estas en </string>
+    <string name="comma">,</string>
+
+    <!--Homeless Activity-->
+    <string name="search_users_hint">Nombre de usuario</string>
+    <string name="homeless_from">Personas que necesitan ayuda en</string>
+
+    <!--Donors Activity-->
+    <string name="search_donors_hint">Nombre de usuario</string>
+    <string name="donors_from">Donantes en</string>
+
+
+    <!--Volunteers Activity-->
+    <string name="search_volunteers_hint">Nombre de usuario</string>
+    <string name="volunteers_from">Voluntarios en</string>
+
 
 </resources>

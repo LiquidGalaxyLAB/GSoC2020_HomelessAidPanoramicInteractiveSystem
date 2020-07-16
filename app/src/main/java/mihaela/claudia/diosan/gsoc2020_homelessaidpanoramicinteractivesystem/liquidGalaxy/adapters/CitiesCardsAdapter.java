@@ -5,10 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,6 +83,12 @@ public class CitiesCardsAdapter extends RecyclerView.Adapter<CitiesCardsAdapter.
         Cities cities = citiesData.get(position);
         holder.city.setText(cities.getCity());
         holder.country.setText(cities.getCountry());
+
+        Glide
+                .with(holder.itemView.getContext())
+                .load(cities.getImage())
+                .placeholder(R.drawable.no_profile_image)
+                .into(holder.city_image);
           }
 
     @Override
@@ -90,6 +99,7 @@ public class CitiesCardsAdapter extends RecyclerView.Adapter<CitiesCardsAdapter.
     static class  CardsAdapterHolder extends RecyclerView.ViewHolder{
         TextView city;
         TextView country;
+        ImageView city_image;
 
 
         public CardsAdapterHolder(@NonNull View itemView,final OnItemClickListener listener) {
@@ -97,6 +107,7 @@ public class CitiesCardsAdapter extends RecyclerView.Adapter<CitiesCardsAdapter.
 
             city = itemView.findViewById(R.id.city_name);
             country = itemView.findViewById(R.id.country_name);
+            city_image = itemView.findViewById(R.id.city_image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
