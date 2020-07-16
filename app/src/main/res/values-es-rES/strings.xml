@@ -360,6 +360,9 @@
 
     <!--City activity-->
     <string name="search_hint_city">Ciudad o País</string>
+    <string name="homeless">Necesitan ayuda</string>
+    <string name="volunteers">Voluntarios</string>
+    <string name="donors">Donantes</string>
 
 
 </resources>

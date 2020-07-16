@@ -359,5 +359,7 @@
 
     <!--City activity-->
     <string name="search_hint_city">City or Country</string>
-
+    <string name="homeless">Homeless</string>
+    <string name="volunteers">Volunteers</string>
+    <string name="donors">Donors</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -96,9 +97,10 @@ public class CitiesActivity extends AppCompatActivity {
                                        /* SharedPreferences.Editor editor = preferences.edit();
                                         editor.putString("homelessUsername",  homelesses.get(position).getHomelessUsername()).apply();
 */
-                                        MainActivity.showSuccessToast(getApplicationContext(), cities.get(position).getCity());
+                                        startActivity(new Intent(CitiesActivity.this, CityActivity.class));
+                                       /* MainActivity.showSuccessToast(getApplicationContext(), cities.get(position).getCity());
                                         MainActivity.showSuccessToast(getApplicationContext(), cities.get(position).getCountry());
-                                    }
+                                */    }
                                 });
 
                             }
