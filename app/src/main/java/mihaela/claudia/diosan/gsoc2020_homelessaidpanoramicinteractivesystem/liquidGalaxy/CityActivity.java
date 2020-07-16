@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -16,6 +17,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView city_tv, country_tv;
     MaterialCardView homeless, donors, volunteers;
+    ImageView goHome;
 
     SharedPreferences preferences;
 
@@ -30,6 +32,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
         homeless.setOnClickListener(this);
         donors.setOnClickListener(this);
         volunteers.setOnClickListener(this);
+        goHome.setOnClickListener(this);
 
     }
 
@@ -39,6 +42,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
         homeless = findViewById(R.id.homeless_cv);
         donors = findViewById(R.id.donors_cv);
         volunteers = findViewById(R.id.volunteers_cv);
+        goHome = findViewById(R.id.go_home_iv);
 
     }
 
@@ -64,6 +68,9 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.volunteers_cv:
                 startActivity(new Intent(CityActivity.this, VolunteersActivity.class));
+                break;
+            case R.id.go_home_iv:
+                startActivity(new Intent(CityActivity.this, MainActivityLG.class));
                 break;
         }
     }

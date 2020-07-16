@@ -28,9 +28,10 @@
                 android:layout_margin="@dimen/margins">
 
                 <TextView
+                    android:id="@+id/city_text_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/homeless_from"
+                    android:text="@string/text"
                     android:layout_marginEnd="@dimen/cv_margins"
                     android:textColor="@color/black"/>
 
@@ -64,7 +65,8 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_marginEnd="@dimen/end_margin"
             android:layout_margin="@dimen/margins"
             android:layout_height="wrap_content"
@@ -78,6 +80,25 @@
                 android:layout_width="match_parent"
                 android:queryHint="@string/search_users_hint"
                 android:layout_height="?actionBarSize"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/margins"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
+            android:backgroundTint="@color/white">
+
+            <ImageView
+                android:id="@+id/go_home_iv_users"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_description"
+                android:layout_gravity="center"
+                android:src="@drawable/go_home_icon"/>
 
         </com.google.android.material.card.MaterialCardView>
 

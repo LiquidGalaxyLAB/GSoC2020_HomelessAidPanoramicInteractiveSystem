@@ -373,10 +373,10 @@
     
     <!--Donors Activity-->
     <string name="search_donors_hint">Username</string>
-    <string name="donors_from">Homeless people from</string>
+    <string name="donors_from">Donors from</string>
 
 
     <!--Volunteers Activity-->
     <string name="search_volunteers_hint">Username</string>
-    <string name="volunteers_from">Homeless people from</string>
+    <string name="volunteers_from">Volunteers from</string>
 </resources>

@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -34,7 +37,8 @@ public class VolunteersActivity extends AppCompatActivity {
     private SearchView searchView;
 
     SharedPreferences preferences;
-    TextView city_tv, country_tv;
+    TextView city_tv, country_tv,from_tv;
+    ImageView goHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,13 @@ public class VolunteersActivity extends AppCompatActivity {
 
         setActualLocation();
         setRecyclerView();
+
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(VolunteersActivity.this, MainActivityLG.class));
+            }
+        });
     }
 
     private void initViews(){
@@ -55,6 +66,8 @@ public class VolunteersActivity extends AppCompatActivity {
         searchView.clearFocus();
         city_tv = findViewById(R.id.city_text_users);
         country_tv = findViewById(R.id.country_text_users);
+        goHome = findViewById(R.id.go_home_iv_users);
+        from_tv = findViewById(R.id.city_text_tv);
 
     }
 
@@ -66,6 +79,7 @@ public class VolunteersActivity extends AppCompatActivity {
 
         city_tv.setText(city);
         country_tv.setText(country);
+        from_tv.setText(getString(R.string.volunteers_from));
     }
 
     private void setRecyclerView(){
