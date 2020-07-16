@@ -26,11 +26,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="q">
-        <activity android:name=".liquidGalaxy.CitiesActivity"></activity>
+        <activity android:name=".liquidGalaxy.CityActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".liquidGalaxy.CitiesActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
         <activity android:name=".liquidGalaxy.HelpActivity" />
         <activity android:name=".liquidGalaxy.ToolsActivity" />
         <activity android:name=".liquidGalaxy.SettingsActivity" />
-        <activity android:name=".liquidGalaxy.MainActivityLG" />
+        <activity
+            android:name=".liquidGalaxy.MainActivityLG"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".donor.HomeDonor"
             android:theme="@style/AppTheme.NoActionBar" />

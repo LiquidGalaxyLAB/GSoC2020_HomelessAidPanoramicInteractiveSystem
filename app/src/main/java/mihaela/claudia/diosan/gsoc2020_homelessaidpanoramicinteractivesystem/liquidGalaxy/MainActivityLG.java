@@ -17,15 +17,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 
 public class MainActivityLG extends AppCompatActivity implements View.OnClickListener {
 
     MaterialCardView cities, statistics, demo, tour;
-    MaterialButton test;
+
 
     private static final POI EARTH_POI = new POI()
             .setLongitude(10.52668d)
@@ -48,38 +46,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         demo.setOnClickListener(this);
         tour.setOnClickListener(this);
 
-        test = findViewById(R.id.test);
-
-        test.setOnClickListener(v -> {
-            try {
-                String sentence = "/home/lg/bin/lg-relaunch > /home/lg/log.txt";
-                showAlertAndExecution(sentence, "relaunch");
-            } catch (Exception e) {
-                Toast.makeText(this, getResources().getString(R.string.error_chip), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    /*SHUT DOWN, RELAUNCH and REBOOT*/
-    private void showAlertAndExecution(final String sentence, String action) {
-        // prepare the alert box
-        MaterialAlertDialogBuilder alertbox = new MaterialAlertDialogBuilder(this);
-
-        // set the message to display
-        alertbox.setMessage("Are you sure to " + action + " Liquid Galaxy?");
-
-        // set a positive/yes button and create a listener
-        // When button is clicked
-        alertbox.setPositiveButton("OK", (arg0, arg1) -> {
-            LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
-        });
-
-        // set a negative/no button and create a listener
-        // When button is clicked
-        alertbox.setNegativeButton("CANCEL", (arg0, arg1) -> {
-        });
-        // display box
-        alertbox.show();
     }
 
 

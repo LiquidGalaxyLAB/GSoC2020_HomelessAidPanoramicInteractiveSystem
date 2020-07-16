@@ -3,6 +3,8 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.vo
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,9 +37,11 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
@@ -54,8 +58,7 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
     /*Map and Autocomplete Place*/
     private List<Place.Field> placeFields = Arrays.asList(Place.Field.ID,Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
     private GoogleMap mGoogleMap;
-    private Double latitude;
-    private Double longitude;
+
 
     /*TextViews*/
     private TextView selectedLocationTV;
@@ -70,9 +73,12 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
     private StorageReference storageReference;
     private FirebaseUser user;
     private Map<String,String> homeless = new HashMap<>();
+    private Map<String,String> cities = new HashMap<>();
 
     /*SharedPreferences*/
     private SharedPreferences preferences;
+
+    private Geocoder mGeocoder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +91,8 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
         initMapAndPlaces();
         firebaseInit();
         setupPlaceAutoComplete();
+
+        mGeocoder = new Geocoder(getActivity(), Locale.getDefault());
 
         return view;
     }
@@ -157,13 +165,22 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
                     String homelessAddress = place.getAddress();
                     String homelessLatitude = Double.toString(latitude);
                     String homelessLongitude = Double.toString(longitude);
+                    String city = getCityNameByCoordinates(latitude, longitude);
+                    String country = getCountryNameByCoordinates(latitude, longitude);
 
                     homeless.put("homelessAddress", homelessAddress);
                     homeless.put("homelessLongitude", homelessLongitude);
                     homeless.put("homelessLatitude", homelessLatitude);
+                    homeless.put("city", city);
+                    homeless.put("country", country);
+
+                    cities.put("city", city);
+                    cities.put("country", country);
+
+
 
                     mFirestore.collection("homeless").document(homelessUsername).set(homeless, SetOptions.merge());
-
+                    mFirestore.collection("cities").document().set(cities,SetOptions.merge());
 
                     selectedLocationTV.setText(place.getAddress());
                     // Creating a marker
@@ -200,6 +217,35 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
                 Toast.makeText(view.getContext(), ""+status.getStatusMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String getCityNameByCoordinates(double lat, double lon)  {
+
+        List<Address> addresses = null;
+        try {
+            addresses = mGeocoder.getFromLocation(lat, lon, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses != null && addresses.size() > 0) {
+            return addresses.get(0).getLocality();
+        }
+        return null;
+    }
+
+    private String getCountryNameByCoordinates(double lat, double lon){
+        List<Address> addresses = null;
+        try {
+            addresses = mGeocoder.getFromLocation(lat, lon, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (addresses != null && addresses.size() > 0)
+        {
+            return addresses.get(0).getCountryName();
+        }
+        return null;
     }
 
     private static double aroundUp(double number, int canDecimal) {

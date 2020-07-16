@@ -1,13 +1,16 @@
 package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,7 +19,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
@@ -55,7 +61,7 @@ public class CitiesActivity extends AppCompatActivity {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             mLayoutManager = new GridLayoutManager(this, 3);
         }else {
-            mLayoutManager = new GridLayoutManager(this, 5);
+            mLayoutManager = new GridLayoutManager(this, 4);
         }
 
         recyclerView.setHasFixedSize(true);
@@ -63,7 +69,8 @@ public class CitiesActivity extends AppCompatActivity {
 
         final List<Cities> cities = new ArrayList<>();
 
-        mFirestore.collection("homeless")
+
+        mFirestore.collection("cities")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -71,12 +78,14 @@ public class CitiesActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                final String city = document.getString("homelessCity");
-                                final String country = document.getString("homelessCountry");
+                                final String city = document.getString("city");
+                                final String country = document.getString("country");
 
 
                                 final Cities oneCity = new Cities(city, country);
                                 cities.add(oneCity);
+
+
                                 final CitiesCardsAdapter citiesCardsAdapter = new CitiesCardsAdapter(cities);
                                 searchText(citiesCardsAdapter);
                                 recyclerView.setAdapter(citiesCardsAdapter);
@@ -87,7 +96,6 @@ public class CitiesActivity extends AppCompatActivity {
                                        /* SharedPreferences.Editor editor = preferences.edit();
                                         editor.putString("homelessUsername",  homelesses.get(position).getHomelessUsername()).apply();
 */
-
                                         MainActivity.showSuccessToast(getApplicationContext(), cities.get(position).getCity());
                                         MainActivity.showSuccessToast(getApplicationContext(), cities.get(position).getCountry());
                                     }

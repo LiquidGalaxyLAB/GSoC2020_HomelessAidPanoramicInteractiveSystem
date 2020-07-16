@@ -91,6 +91,7 @@ public class HomelessAdapter extends RecyclerView.Adapter<HomelessAdapter.Volunt
         holder.schedule.setText(homeless.getHomelessSchedule());
         holder.need.setText(homeless.getHomelessNeed());
 
+
         Glide
                 .with(holder.itemView.getContext())
                 .load(homeless.getImage())

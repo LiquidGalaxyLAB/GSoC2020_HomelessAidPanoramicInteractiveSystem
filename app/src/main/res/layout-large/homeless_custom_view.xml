@@ -36,7 +36,7 @@
                     android:id="@+id/homeless_username_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:textSize="@dimen/title"
                     android:drawablePadding="@dimen/padding"
                     android:drawableStart="@drawable/username_drawable"
@@ -49,7 +49,7 @@
                     android:id="@+id/homeless_phone_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:drawableStart="@drawable/phone_drawable"
                     android:drawablePadding="@dimen/padding"
                     android:drawableTint="@color/colorPrimaryDark"
@@ -60,7 +60,7 @@
                     android:id="@+id/homeless_birthday_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
                     android:drawableStart="@drawable/birthday_drawable"
@@ -71,7 +71,7 @@
                     android:id="@+id/homeless_lifeHistory_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
                     android:drawableStart="@drawable/life_history_drawable"
@@ -82,7 +82,7 @@
                     android:id="@+id/homeless_locationAddress_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
                     android:drawableStart="@drawable/create_homeless_location"
@@ -93,7 +93,7 @@
                     android:id="@+id/homeless_schedule_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
                     android:drawableStart="@drawable/schedule_icon"
@@ -105,7 +105,7 @@
                     android:id="@+id/homeless_need_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginTop="@dimen/cv_margins"
                     android:drawablePadding="@dimen/padding"
                     android:textSize="@dimen/body"
                     android:drawableStart="@drawable/create_homeless_needs"
@@ -113,8 +113,6 @@
                     android:text="@string/hcv_need"/>
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 

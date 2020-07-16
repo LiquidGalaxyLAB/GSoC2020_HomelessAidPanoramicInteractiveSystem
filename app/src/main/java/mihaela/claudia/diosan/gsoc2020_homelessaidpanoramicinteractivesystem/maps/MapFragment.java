@@ -131,7 +131,12 @@ public class MapFragment extends Fragment implements OnMapAndViewReadyListener.O
                                 if (task.isSuccessful()){
                                     String latitude = document.getString("homelessLatitude");
                                     String longitude = document.getString("homelessLongitude");
-                                    final LatLng position = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+
+                                    Double double_lat = Double.parseDouble(latitude);
+                                    Double double_long = Double.parseDouble(longitude);
+
+
+                                    final LatLng position = new LatLng(aroundUp(double_lat, 5), aroundUp(double_long, 5));
 
                                     LatLngBounds bounds = new LatLngBounds.Builder()
                                             .include(position)
@@ -145,6 +150,11 @@ public class MapFragment extends Fragment implements OnMapAndViewReadyListener.O
                 });
     }
 
+
+    private static double aroundUp(double number, int canDecimal) {
+        int cifras = (int) Math.pow(10, canDecimal);
+        return Math.ceil(number * cifras) / cifras;
+    }
 
     private void addMarkersToMap() {
         //Colored icon

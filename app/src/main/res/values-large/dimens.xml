@@ -16,8 +16,8 @@
     <dimen name="cv_margins">10dp</dimen>
 
     <!--    Text -->
-    <dimen name="title">40sp</dimen>
-    <dimen name="body">30sp</dimen>
+    <dimen name="title">35sp</dimen>
+    <dimen name="body">25sp</dimen>
 
     <!--    Images -->
     <dimen name="check_size">60dp</dimen>
@@ -36,6 +36,8 @@
     <dimen name="delivery_notification_height">300dp</dimen>
     <dimen name="homeless_custom_view">100dp</dimen>
     <dimen name="create_profile_image">300dp</dimen>
+    <dimen name="dashboard_image_cv">194dp</dimen>
+    <dimen name="logos_image">300dp</dimen>
 
 
     <!--Boxes-->
@@ -49,14 +51,15 @@
     <dimen name="header">400dp</dimen>
     <dimen name="terms_fragment">500dp</dimen>
     <dimen name="signature_pad">200dp</dimen>
-    <dimen name="dashboard_cards">200dp</dimen>
+    <dimen name="dashboard_cards">300dp</dimen>
+
 
     <!--Delivery margins-->
     <dimen name="delivery_top_margin">100dp</dimen>
 
     <!--Donor margins-->
-    <dimen name="donor_top_margin">80dp</dimen>
-    <dimen name="donor_bottom_margin">100dp</dimen>
+    <dimen name="donor_top_margin">70dp</dimen>
+    <dimen name="donor_bottom_margin">60dp</dimen>
     <dimen name="progress_image">65dp</dimen>
 
 </resources>

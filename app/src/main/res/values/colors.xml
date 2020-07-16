@@ -27,10 +27,10 @@
     <color name="dark_green">#0CA33E</color>
 
     <!--dashboard cards-->
-    <color name="color_first_card">#8c52ff</color>
+    <color name="color_first_card">#3e72ff</color>
     <color name="color_second_card">#ff66c4</color>
     <color name="color_third_card">#ffc604</color>
-    <color name="color_forth_card">#5271ff</color>
+    <color name="color_forth_card">#ff6100</color>
 
 
     <!--colors for tab and screens text-->

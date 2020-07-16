@@ -114,7 +114,8 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
 
         final List<Homeless> homelesses = new ArrayList<>();
 
-        mFirestore.collection("homeless").whereEqualTo("volunteerEmail",user.getEmail())
+
+        mFirestore.collection("homeless")/*.whereEqualTo("volunteerEmail".toLowerCase(),user.getEmail())*/
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

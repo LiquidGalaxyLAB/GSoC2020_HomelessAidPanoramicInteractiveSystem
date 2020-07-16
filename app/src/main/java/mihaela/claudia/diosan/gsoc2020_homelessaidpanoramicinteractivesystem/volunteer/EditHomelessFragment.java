@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -46,14 +48,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -101,6 +109,9 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
     private ChipGroup chipGroup;
     private AutocompleteSupportFragment autocompleteSupportFragment;
 
+    private Geocoder mGeocoder;
+    private Map<String,String> cities = new HashMap<>();
+
     /*Autocomplete place field*/
     private List<Place.Field> placeFields = Arrays.asList(Place.Field.ID,Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
@@ -119,6 +130,7 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
         usernameTV.setText(username);
 
         getCurrentInfo(username);
+        mGeocoder = new Geocoder(getActivity(), Locale.getDefault());
 
         return view;
     }
@@ -184,7 +196,7 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
             case R.id.saveHomelessBtn:
                 if (isLifeHistoryValid(lifeHistoryET.getText().toString()) && isValidPhoneNumber(phoneET.getText().toString())){
                     updateProfileInfo(username);
-                    showSuccessfullToast(getString(R.string.update_success_toast));
+                    MainActivity.showSuccessToast(getActivity(),getString(R.string.update_success_toast));
                     startActivity(new Intent(getActivity(), HomeVolunteer.class));
                 }
                 break;
@@ -228,7 +240,7 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
                     @Override
                     public void onSuccess(Void aVoid) {
                         //  Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                        showSuccessfullToast(getString(R.string.delete_correct_toast));
+                        MainActivity.showSuccessToast(getActivity(),getString(R.string.delete_correct_toast));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -264,7 +276,7 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
             progressDialog.show();
 
             final DocumentReference documentReference = mFirestore.collection("homeless").document(username);
-            final StorageReference ref = storageReference.child("homelessProfilePhotos/" + user.getEmail() + ":" + username);
+            final StorageReference ref = storageReference.child("homelessProfilePhotos/" + user.getEmail() + "_" + username);
 
             ref.putFile(selectedImagePath)
                     .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -379,16 +391,24 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
                     double latitude = aroundUp(place.getLatLng().latitude,5);
                     double longitude = aroundUp(place.getLatLng().longitude,5) ;
 
+
                     String homelessAddress = place.getAddress();
                     String homelessLatitude = Double.toString(latitude);
                     String homelessLongitude = Double.toString(longitude);
+                    String city = getCityNameByCoordinates(latitude, longitude);
+                    String country = getCountryNameByCoordinates(latitude, longitude);
+
+                    cities.put("city", city);
+                    cities.put("country", country);
 
                     DocumentReference documentReference = mFirestore.collection("homeless").document(username);
+                    mFirestore.collection("cities").document(city).set(cities, SetOptions.merge());
 
                     location.setText(homelessAddress);
                     documentReference.update("homelessAddress", homelessAddress);
                     documentReference.update("homelessLongitude", homelessLongitude);
                     documentReference.update("homelessLatitude", homelessLatitude);
+
 
                 }
 
@@ -398,6 +418,36 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
                 Toast.makeText(view.getContext(), ""+status.getStatusMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    private String getCityNameByCoordinates(double lat, double lon)  {
+
+        List<Address> addresses = null;
+        try {
+            addresses = mGeocoder.getFromLocation(lat, lon, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses != null && addresses.size() > 0) {
+            return addresses.get(0).getLocality();
+        }
+        return null;
+    }
+
+    private String getCountryNameByCoordinates(double lat, double lon){
+        List<Address> addresses = null;
+        try {
+            addresses = mGeocoder.getFromLocation(lat, lon, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (addresses != null && addresses.size() > 0)
+        {
+            return addresses.get(0).getCountryName();
+        }
+        return null;
     }
 
     private static double aroundUp(double number, int canDecimal) {
@@ -454,31 +504,9 @@ public class EditHomelessFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void showSuccessfullToast(String message){
-        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-        View view =toast.getView();
-        view.setBackgroundColor(Color.WHITE);
-        TextView toastMessage =  toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(Color.GREEN);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setTextSize(15);
-        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_circle_black_24dp, 0,0,0);
-        toastMessage.setPadding(10,10,10,10);
-        toast.show();
-    }
 
-    private void showErrorToast(String message){
-        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-        View view =toast.getView();
-        view.setBackgroundColor(Color.WHITE);
-        TextView toastMessage =  toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(Color.RED);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setTextSize(15);
-        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.error_drawable, 0,0,0);
-        toastMessage.setPadding(10,10,10,10);
-        toast.show();
-    }
+
+
 
     private void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
