@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -23,6 +24,18 @@ public class LgUserAdapter extends RecyclerView.Adapter<LgUserAdapter.LgUserHold
 
     private List<LgUser> userData;
     private List<LgUser> userList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+        void onBioClick(int position);
+        void onTransactionClick(int position);
+        void onOrbitClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     @Override
     public Filter getFilter() {
@@ -66,7 +79,7 @@ public class LgUserAdapter extends RecyclerView.Adapter<LgUserAdapter.LgUserHold
     @Override
     public LgUserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lg_user_design, parent, false);
-        return new LgUserHolder(view);
+        return new LgUserHolder(view, mListener);
     }
 
     @Override
@@ -87,14 +100,67 @@ public class LgUserAdapter extends RecyclerView.Adapter<LgUserAdapter.LgUserHold
     static class LgUserHolder extends RecyclerView.ViewHolder{
         TextView username;
         MaterialCardView cardView;
+        MaterialButton showBio;
+        MaterialButton showTransactions;
+        MaterialButton showOrbit;
 
-        public LgUserHolder(@NonNull View itemView) {
+        public LgUserHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             username = itemView.findViewById(R.id.lg_username);
             cardView = itemView.findViewById(R.id.user_card_view);
+            showBio = itemView.findViewById(R.id.show_bio);
+            showTransactions = itemView.findViewById(R.id.show_transactions);
+            showOrbit = itemView.findViewById(R.id.orbit);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            }
+            });
+
+            showBio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onBioClick(position);
+                        }
+                    }
+                }
+            });
+
+            showTransactions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onTransactionClick(position);
+                        }
+                    }
+                }
+            });
+
+            showOrbit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onOrbitClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
-
 
 }

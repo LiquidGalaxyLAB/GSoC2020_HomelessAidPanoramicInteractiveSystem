@@ -4,14 +4,15 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/user_card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/cv_margins"
-        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/cardCornerRadius"
         app:cardElevation="@dimen/elevation"
-        android:elevation="@dimen/elevation">
+        android:elevation="@dimen/elevation"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,58 +25,57 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/cv_margins"
                 android:textSize="@dimen/body"
                 android:layout_marginEnd="@dimen/cv_margins"
                 android:textColor="@color/black"/>
 
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center"
-                >
+                android:gravity="center"
+                android:layout_gravity="center">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_bio"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:backgroundTint="@color/white"
+                    android:layout_marginEnd="@dimen/end_margin"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeColor="@color/color_second_card"
                     app:icon="@drawable/show_bio_icon"
-                    app:iconTint="@color/black"/>
-
-
+                    app:iconTint="@color/grey"/>
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_transactions"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeColor="@color/color_first_card"
                     android:backgroundTint="@color/white"
+                    android:layout_marginEnd="@dimen/end_margin"
                     app:icon="@drawable/show_transactions_icon"
-                    app:iconTint="@color/black"/>
+                    app:iconTint="@color/grey"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/orbit"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeColor="@color/green"
+                    android:layout_marginEnd="@dimen/end_margin"
                     android:backgroundTint="@color/white"
                     app:icon="@drawable/orbit_icon"
-                    app:iconTint="@color/black"/>
-
+                    app:iconTint="@color/grey"/>
             </LinearLayout>
-
-
-
-
         </LinearLayout>
+
     </com.google.android.material.card.MaterialCardView>
+
+
 
 
 </LinearLayout>
