@@ -32,9 +32,9 @@
     <color name="color_third_card">#ffc604</color>
     <color name="color_forth_card">#ff6100</color>
 
-    <color name="homeless_cards">#BAFF6100</color>
-    <color name="donors_cards">#BAFF66C4</color>
-    <color name="volunteers_cards">#BAFFC604</color>
+    <color name="homeless_cards">#FFA56F</color>
+    <color name="donors_cards">#FD7ACB</color>
+    <color name="volunteers_cards">#FFDF71</color>
 
     <!--colors for tab and screens text-->
     <color name="tab_indicator_gray">#c0c0c0</color>

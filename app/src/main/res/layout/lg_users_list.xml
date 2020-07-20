@@ -109,7 +109,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/top_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
+        app:spanCount="2"
         android:scrollbars="vertical"/>
 
 </LinearLayout>

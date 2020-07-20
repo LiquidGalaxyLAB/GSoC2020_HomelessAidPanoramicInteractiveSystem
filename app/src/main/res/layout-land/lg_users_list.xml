@@ -109,7 +109,6 @@
         android:id="@+id/recycler_view_users_lg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/top_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="4"
         android:scrollbars="vertical"/>

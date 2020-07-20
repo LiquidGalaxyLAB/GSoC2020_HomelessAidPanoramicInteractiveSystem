@@ -9,23 +9,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cv_margins"
+        android:layout_gravity="center"
         app:cardElevation="@dimen/elevation"
         android:elevation="@dimen/elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/margins">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/lg_username"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text"
+                android:layout_gravity="center"
                 android:textSize="@dimen/body"
                 android:layout_marginEnd="@dimen/cv_margins"
                 android:textColor="@color/black"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/show_bio"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/white"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="@color/color_second_card"
+                    app:icon="@drawable/show_bio_icon"
+                    app:iconTint="@color/black"/>
+
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/show_transactions"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="@color/color_first_card"
+                    android:backgroundTint="@color/white"
+                    app:icon="@drawable/show_transactions_icon"
+                    app:iconTint="@color/black"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/orbit"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="@color/green"
+                    android:backgroundTint="@color/white"
+                    app:icon="@drawable/orbit_icon"
+                    app:iconTint="@color/black"/>
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
