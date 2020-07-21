@@ -17,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 
@@ -32,6 +33,15 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
             .setHeading(0.0d)
             .setTilt(0.0d)
             .setRange(10000000.0d)
+            .setAltitudeMode("relativeToSeaFloor");
+
+    public static final POI TEST = new POI()
+            .setLongitude(-122.0822035425683d)
+            .setLatitude(37.42228990140251d)
+            .setAltitude(0.0d)
+            .setHeading(0.0d)
+            .setTilt(0.0d)
+            .setRange(1000.0d)
             .setAltitudeMode("relativeToSeaFloor");
 
     @Override
@@ -50,6 +60,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     }
 
 
+
     private void initViews(){
         cities = findViewById(R.id.cities_cv);
         statistics = findViewById(R.id.statistics_cv);
@@ -66,9 +77,12 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.statistics_cv:
                 MainActivity.showSuccessToast(this,"Statistics");
+                POIController.getInstance().sendKML(EARTH_POI, null);
+                POIController.getInstance().showPlacemark(EARTH_POI, null);
                 break;
 
             case R.id.demo_cv:
+                POIController.getInstance().moveToPOI(TEST, null);
                 MainActivity.showSuccessToast(this,"Demo");
                 break;
             case R.id.tour_cv:

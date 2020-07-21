@@ -35,6 +35,17 @@ public class POIController {
         return sendPoiToLG(listener);
     }
 
+    public LGCommand showPlacemark(POI poi, LGCommand.Listener listener){
+        currentPOI = new POI(poi);
+        return  sendPlacemarkToLG(listener);
+    }
+
+    public LGCommand sendKML(POI poi, LGCommand.Listener listener){
+        currentPOI = new POI(poi);
+        return  setKML(listener);
+    }
+
+
     public synchronized void moveXY(double angle, double percentDistance) {
         //.setLongitude() [-180 to +180]: X (cos)
         //.setLatitude() [-90 to +90]: Y (sin)
@@ -95,4 +106,42 @@ public class POIController {
                 "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
                 "</LookAt>' > /tmp/query.txt";
     }
+
+    private LGCommand sendPlacemarkToLG(LGCommand.Listener listener){
+        LGCommand lgCommand = new LGCommand(buildPlacemark(), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+            //currentPOI = new POI(previousPOI);
+            if(listener != null)
+                listener.onResponse(result);
+        });
+        LGConnectionManager.getInstance().addCommandToLG(lgCommand);
+        return lgCommand;
+    }
+
+    private LGCommand setKML(LGCommand.Listener listener){
+        LGCommand lgCommand = new LGCommand(setKmlRoute(), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+            //currentPOI = new POI(previousPOI);
+            if(listener != null)
+                listener.onResponse(result);
+        });
+        LGConnectionManager.getInstance().addCommandToLG(lgCommand);
+        return lgCommand;
+    }
+
+
+
+    private static String buildPlacemark(){
+        return  "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<kml xmlns=\"http://www.opengis.net/kml/2.2\"> <Placemark>\n" +
+                " <name>Marca de posición simple</name>\n" +
+                " <description>Pegada al suelo. Se coloca de forma inteligente a la altura del relieve subyacente.</description>\n" +
+                " <Point>\n" +
+                " <coordinates>-122.0822035425683,37.42228990140251,0</coordinates>\n" +
+                " </Point>\n" +
+                " </Placemark> </kml>' > /var/www/html/placemarks.kml";
+    }
+
+    private static String setKmlRoute(){
+        return "echo '/var/www/html/placemarks.kml' > /var/www/html/kmls.txt";
+    }
+
 }
