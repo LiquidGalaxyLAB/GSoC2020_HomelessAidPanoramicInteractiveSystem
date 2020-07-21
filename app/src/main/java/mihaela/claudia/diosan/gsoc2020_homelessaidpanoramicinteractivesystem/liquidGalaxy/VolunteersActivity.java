@@ -26,6 +26,8 @@ import java.util.List;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
 
 public class VolunteersActivity extends AppCompatActivity {
@@ -109,9 +111,11 @@ public class VolunteersActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 final String username = document.getString("username");
+                                final String latitude = document.getString("latitude");
+                                final String longitude = document.getString("longitude");
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,color);
+                                final LgUser user = new LgUser(username,color, latitude, longitude);
                                 users.add(user);
 
 
@@ -122,11 +126,8 @@ public class VolunteersActivity extends AppCompatActivity {
                                 lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
-                                        /*SharedPreferences.Editor editor = preferences.edit();
-                                        editor.putString("city",  cities.get(position).getCity()).apply();
-                                        editor.putString("country", cities.get(position).getCountry()).apply();
-                                        editor.apply();
-                                        startActivity(new Intent(CitiesActivity.this, CityActivity.class));*/
+                                        POI userPoi = createPOI(users.get(position).getLatitude(), users.get(position).getLongitude());
+                                        POIController.getInstance().moveToPOI(userPoi, null);
                                         Toast.makeText(VolunteersActivity.this, users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
                                     }
 
@@ -151,6 +152,20 @@ public class VolunteersActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private POI createPOI(String latitude, String longitude){
+
+        POI poi = new POI()
+                .setLongitude(Double.parseDouble(longitude))
+                .setLatitude(Double.parseDouble(latitude))
+                .setAltitude(1000)
+                .setHeading(0.0d)
+                .setTilt(60.0d)
+                .setRange(800.0d)
+                .setAltitudeMode("relativeToSeaFloor");
+
+        return poi;
     }
 
     private void searchText(final LgUserAdapter lgUserAdapter){

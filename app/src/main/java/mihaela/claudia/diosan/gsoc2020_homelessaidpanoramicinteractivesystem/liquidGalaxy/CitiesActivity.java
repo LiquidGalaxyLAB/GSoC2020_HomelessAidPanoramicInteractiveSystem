@@ -91,8 +91,11 @@ public class CitiesActivity extends AppCompatActivity {
                                 final String city = document.getString("city");
                                 final String country = document.getString("country");
                                 final String image = document.getString("image");
+                                final String latitude = document.getString("latitude");
+                                final String longitude = document.getString("longitude");
+                                final String altitude = document.getString("altitude");
 
-                                final Cities oneCity = new Cities(city, country, image);
+                                final Cities oneCity = new Cities(city, country, image, latitude, longitude, altitude);
                                 cities.add(oneCity);
 
 
@@ -107,6 +110,9 @@ public class CitiesActivity extends AppCompatActivity {
                                         editor.putString("city",  cities.get(position).getCity()).apply();
                                         editor.putString("country", cities.get(position).getCountry()).apply();
                                         editor.apply();
+
+                                        POI cityPoi = createPOI(cities.get(position).getLatitude(), cities.get(position).getLongitude(), cities.get(position).getAltitude());
+                                        POIController.getInstance().moveToPOI(cityPoi,null);
 
                                         startActivity(new Intent(CitiesActivity.this, CityActivity.class));
 
@@ -123,15 +129,18 @@ public class CitiesActivity extends AppCompatActivity {
     }
 
 
-    private String buildCommand(POI poi) {
-        return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude>" +
-                "<latitude>" + poi.getLatitude() + "</latitude>" +
-                "<altitude>" + poi.getAltitude() + "</altitude>" +
-                "<heading>" + poi.getHeading() + "</heading>" +
-                "<tilt>" + poi.getTilt() + "</tilt>" +
-                "<range>" + poi.getRange() + "</range>" +
-                "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
-                "</LookAt>' > /tmp/query.txt";
+    private POI createPOI(String latitude, String longitude, String altitude){
+
+        POI poi = new POI()
+                .setLongitude(Double.parseDouble(longitude))
+                .setLatitude(Double.parseDouble(latitude))
+                .setAltitude(Double.parseDouble(altitude))
+                .setHeading(0.0d)
+                .setTilt(40.0d)
+                .setRange(1000.0d)
+                .setAltitudeMode("relativeToSeaFloor");
+
+        return poi;
     }
 
 

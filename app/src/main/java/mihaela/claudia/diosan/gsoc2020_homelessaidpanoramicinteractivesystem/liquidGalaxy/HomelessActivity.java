@@ -26,6 +26,8 @@ import java.util.List;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
@@ -109,9 +111,11 @@ public class HomelessActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 final String username = document.getString("homelessUsername");
+                                final String latitude = document.getString("homelessLatitude");
+                                final String longitude = document.getString("homelessLongitude");
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,color);
+                                final LgUser user = new LgUser(username,color, latitude, longitude);
                                 users.add(user);
 
 
@@ -127,7 +131,10 @@ public class HomelessActivity extends AppCompatActivity {
                                         editor.putString("country", cities.get(position).getCountry()).apply();
                                         editor.apply();
                                         startActivity(new Intent(CitiesActivity.this, CityActivity.class));*/
-                                        Toast.makeText(HomelessActivity.this, users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
+                                        POI userPoi = createPOI(users.get(position).getLatitude(), users.get(position).getLongitude());
+                                        POIController.getInstance().moveToPOI(userPoi, null);
+
+                                        Toast.makeText(HomelessActivity.this,"Goiong to " +  users.get(position).getUsername() + " on Liquid Galaxy", Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -153,6 +160,21 @@ public class HomelessActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private POI createPOI(String latitude, String longitude){
+
+        POI poi = new POI()
+                .setLongitude(Double.parseDouble(longitude))
+                .setLatitude(Double.parseDouble(latitude))
+                .setAltitude(1000)
+                .setHeading(0.0d)
+                .setTilt(60.0d)
+                .setRange(800.0d)
+                .setAltitudeMode("relativeToSeaFloor");
+
+        return poi;
+    }
+
 
     private void searchText(final LgUserAdapter lgUserAdapter){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
