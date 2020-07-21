@@ -45,7 +45,8 @@
             android:screenOrientation="landscape" />
         <activity android:name=".liquidGalaxy.HelpActivity" />
         <activity android:name=".liquidGalaxy.ToolsActivity" />
-        <activity android:name=".liquidGalaxy.SettingsActivity" />
+        <activity android:name=".liquidGalaxy.SettingsActivity"
+            android:label="Preferences"/>
         <activity
             android:name=".liquidGalaxy.MainActivityLG"
             android:configChanges="orientation|screenSize"

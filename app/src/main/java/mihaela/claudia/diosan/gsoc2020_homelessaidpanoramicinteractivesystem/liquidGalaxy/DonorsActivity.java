@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -108,7 +109,7 @@ public class DonorsActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 final String username = document.getString("username");
-                                final int color = getColor(R.color.donors_cards);
+                                final int color = getColor(R.color.white);
 
                                 final LgUser user = new LgUser(username,color);
                                 users.add(user);
@@ -118,17 +119,34 @@ public class DonorsActivity extends AppCompatActivity {
                                 searchText(lgUserAdapter);
                                 recyclerView.setAdapter(lgUserAdapter);
 
-                              /*  lgUserAdapter.setOnItemClickListener(new CitiesCardsAdapter.OnItemClickListener() {
+                                lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
-                                        SharedPreferences.Editor editor = preferences.edit();
+                                        /*SharedPreferences.Editor editor = preferences.edit();
                                         editor.putString("city",  cities.get(position).getCity()).apply();
                                         editor.putString("country", cities.get(position).getCountry()).apply();
                                         editor.apply();
-
-                                        startActivity(new Intent(CitiesActivity.this, CityActivity.class));
+                                        startActivity(new Intent(CitiesActivity.this, CityActivity.class));*/
+                                        Toast.makeText(DonorsActivity.this, users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
                                     }
-                                });*/
+
+                                    @Override
+                                    public void onBioClick(int position) {
+                                        Toast.makeText(DonorsActivity.this, "BIO" + users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onTransactionClick(int position) {
+                                        Toast.makeText(DonorsActivity.this, "TRANSACTION" + users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    @Override
+                                    public void onOrbitClick(int position) {
+                                        Toast.makeText(DonorsActivity.this, "ORBIT" + users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
 
                             }
                         }

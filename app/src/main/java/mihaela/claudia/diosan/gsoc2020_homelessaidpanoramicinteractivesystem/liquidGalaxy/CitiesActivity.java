@@ -30,7 +30,9 @@ import java.util.stream.Collectors;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.CitiesCardsAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.Cities;
 
 
@@ -107,6 +109,9 @@ public class CitiesActivity extends AppCompatActivity {
                                         editor.apply();
 
                                         startActivity(new Intent(CitiesActivity.this, CityActivity.class));
+
+
+
                                     }
                                 });
 
@@ -114,7 +119,21 @@ public class CitiesActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
+
+
+    private String buildCommand(POI poi) {
+        return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude>" +
+                "<latitude>" + poi.getLatitude() + "</latitude>" +
+                "<altitude>" + poi.getAltitude() + "</altitude>" +
+                "<heading>" + poi.getHeading() + "</heading>" +
+                "<tilt>" + poi.getTilt() + "</tilt>" +
+                "<range>" + poi.getRange() + "</range>" +
+                "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
+                "</LookAt>' > /tmp/query.txt";
+    }
+
 
     private void searchText(final CitiesCardsAdapter citiesCardsAdapter){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

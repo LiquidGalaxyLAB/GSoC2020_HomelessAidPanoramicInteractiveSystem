@@ -25,7 +25,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     MaterialCardView cities, statistics, demo, tour;
 
 
-    private static final POI EARTH_POI = new POI()
+    public static final POI EARTH_POI = new POI()
             .setLongitude(10.52668d)
             .setLatitude(40.085941d)
             .setAltitude(0.0d)
@@ -40,6 +40,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_main_l_g);
 
         initViews();
+        POIController.getInstance().moveToPOI(EARTH_POI, null);
 
         cities.setOnClickListener(this);
         statistics.setOnClickListener(this);

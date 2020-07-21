@@ -1,6 +1,8 @@
 package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection;
 
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.jcraft.jsch.ChannelExec;
@@ -29,12 +31,12 @@ public class LGConnectionManager implements Runnable {
     private int itemsToDequeue;
     private LGCommand lgCommandToReSend;
     private ILGConnection activity;
-
+    SharedPreferences preferences;
 
     public LGConnectionManager() {
         user = "lg";
         password = "lqgalaxy";
-        hostname = "192.168.86.224";
+        hostname = "192.168.1.76";
         port = 22;
 
         session = null;

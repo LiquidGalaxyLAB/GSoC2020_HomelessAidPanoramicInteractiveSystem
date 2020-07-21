@@ -25,8 +25,8 @@ public class POIController {
     //private POI previousPOI;
 
     private POIController() {
-        /*currentPOI = EARTH_POI;
-        moveToPOI(EARTH_POI, null);*/
+        currentPOI = EARTH_POI;
+        moveToPOI(EARTH_POI, null);
     }
 
     public LGCommand moveToPOI(POI poi, LGCommand.Listener listener) {

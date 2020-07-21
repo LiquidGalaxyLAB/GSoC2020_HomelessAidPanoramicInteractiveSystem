@@ -3,39 +3,56 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.li
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
-    android.preference.EditTextPreference lg_user, lg_password, lg_ip, lg_port;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.lg_settings_preferences);
 
-        lg_user = (EditTextPreference) findPreference("SSH-USER");
+        // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
+        // updated when the preference changes.za
+        bindPreferenceSummaryToValue(findPreference("SSH-USER"));
+        bindPreferenceSummaryToValue(findPreference("SSH-PASSWORD"));
+        bindPreferenceSummaryToValue(findPreference("SSH-IP"));
+        bindPreferenceSummaryToValue(findPreference("SSH-PORT"));
+
+      /*  lg_user = (EditTextPreference) findPreference("SSH-USER");
         lg_password = (EditTextPreference) findPreference("SSH-PASSWORD");
         lg_ip = (EditTextPreference) findPreference("SSH-IP");
-        lg_port = (EditTextPreference) findPreference("SSH-PORT");
+        lg_port = (EditTextPreference) findPreference("SSH-PORT");;*/
+
 
     }
 
+    public void onPause() {
+        super.onPause();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        LGConnectionManager.getInstance().setData(prefs.getString("SSH-USER", "lg"), prefs.getString("SSH-PASSWORD", "lqgalaxy"), prefs.getString("SSH-IP", "192.168.1.76"), Integer.parseInt(prefs.getString("SSH-PORT", "22")));
+    }
     public void onStop() {
         super.onStop();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        LGConnectionManager.getInstance().setData(prefs.getString("SSH-USER", "lg"), prefs.getString("SSH-PASSWORD", "lqgalaxy"), prefs.getString("SSH-IP", "192.168.86.39"), Integer.parseInt(prefs.getString("SSH-PORT", "22")));
-
+        LGConnectionManager.getInstance().setData(prefs.getString("SSH-USER", "lg"), prefs.getString("SSH-PASSWORD", "lqgalaxy"), prefs.getString("SSH-IP", "192.168.1.76"), Integer.parseInt(prefs.getString("SSH-PORT", "22")));
+        Toast.makeText(SettingsActivity.this, "Connectivity settings changed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -63,8 +80,29 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         return true;
     }
 
+    private void bindPreferenceSummaryToValue(Preference preference) {
+        // Set the listener to watch for value changes.
+        preference.setOnPreferenceChangeListener(this);
+
+        // Trigger the listener immediately with the preference's
+        // current value.
+            onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    /**
+     * Això és per a que un cop entrem a settings, al tornar enrere(osigui a MainActivityLG) continui tal qual estava, és a dir,
+     *
+     * @return
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public Intent getParentActivityIntent() {
+        return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 }
