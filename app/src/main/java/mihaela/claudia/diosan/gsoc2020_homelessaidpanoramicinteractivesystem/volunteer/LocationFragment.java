@@ -180,7 +180,7 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
 
 
                     mFirestore.collection("homeless").document(homelessUsername).set(homeless, SetOptions.merge());
-                    mFirestore.collection("cities").document().set(cities,SetOptions.merge());
+                    mFirestore.collection("cities").document(city).set(cities,SetOptions.merge());
 
                     selectedLocationTV.setText(place.getAddress());
                     // Creating a marker

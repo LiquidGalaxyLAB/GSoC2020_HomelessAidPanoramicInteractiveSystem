@@ -381,5 +381,16 @@
     <string name="search_volunteers_hint">Nombre de usuario</string>
     <string name="volunteers_from">Voluntarios en</string>
 
+    <string name="viewing">Visualizing</string>
+    <string name="inLG">in Liquid Galaxy</string>
+    <string name="visualizationCanceled">Visualization Canceled</string>
+
+    <string name="speedx2">x2</string>
+    <string name="speedx4">x4</string>
+    <string name="stop_tour">STOP</string>
+    <string name="speeddiv2">x/2</string>
+    <string name="speeddiv4">x/4</string>
+    <string name="cancel">Cancel</string>
+    <string name="connection_failure">Error connecting with Liquid Galaxy system. Try changing username, password, port or the host ip</string>
 
 </resources>

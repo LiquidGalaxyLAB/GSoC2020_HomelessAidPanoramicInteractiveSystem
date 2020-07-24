@@ -3,6 +3,7 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.li
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
 public class POIController {
 
@@ -23,6 +24,7 @@ public class POIController {
 
     private POI currentPOI;
     //private POI previousPOI;
+    private Homeless homeless;
 
     private POIController() {
         currentPOI = EARTH_POI;
@@ -35,14 +37,14 @@ public class POIController {
         return sendPoiToLG(listener);
     }
 
-    public LGCommand showPlacemark(POI poi, LGCommand.Listener listener){
+    public LGCommand showPlacemark(POI poi, LGCommand.Listener listener, String placemarkIcon, String route){
         currentPOI = new POI(poi);
-        return  sendPlacemarkToLG(listener);
+        return  sendPlacemarkToLG(listener, placemarkIcon, route);
     }
 
-    public LGCommand sendKML(POI poi, LGCommand.Listener listener){
+    public LGCommand sendPlacemark(POI poi, LGCommand.Listener listener, String hostIp, String route){
         currentPOI = new POI(poi);
-        return  setKML(listener);
+        return  setPlacemark(listener, hostIp, route);
     }
 
 
@@ -107,8 +109,8 @@ public class POIController {
                 "</LookAt>' > /tmp/query.txt";
     }
 
-    private LGCommand sendPlacemarkToLG(LGCommand.Listener listener){
-        LGCommand lgCommand = new LGCommand(buildPlacemark(), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+    private LGCommand sendPlacemarkToLG(LGCommand.Listener listener, String placemarkIcon, String route){
+        LGCommand lgCommand = new LGCommand(buildPlacemark(currentPOI, placemarkIcon, route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
             if(listener != null)
                 listener.onResponse(result);
@@ -117,8 +119,8 @@ public class POIController {
         return lgCommand;
     }
 
-    private LGCommand setKML(LGCommand.Listener listener){
-        LGCommand lgCommand = new LGCommand(setKmlRoute(), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+    private LGCommand setPlacemark(LGCommand.Listener listener, String hostIp, String route){
+        LGCommand lgCommand = new LGCommand(setPlacemarkRoute(currentPOI, hostIp,route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
             if(listener != null)
                 listener.onResponse(result);
@@ -129,19 +131,27 @@ public class POIController {
 
 
 
-    private static String buildPlacemark(){
-        return  "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<kml xmlns=\"http://www.opengis.net/kml/2.2\"> <Placemark>\n" +
-                " <name>Marca de posición simple</name>\n" +
-                " <description>Pegada al suelo. Se coloca de forma inteligente a la altura del relieve subyacente.</description>\n" +
-                " <Point>\n" +
-                " <coordinates>-122.0822035425683,37.42228990140251,0</coordinates>\n" +
-                " </Point>\n" +
-                " </Placemark> </kml>' > /var/www/html/placemarks.kml";
+    private static String buildPlacemark(POI poi, String placemarkIcon, String route){
+       return "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+               "<kml xmlns=\"http://www.opengis.net/kml/2.2\"> " +
+               "<Placemark>\n" +
+               "  <Style id=\"homelessIcon\">\n" +
+               "      <IconStyle>\n" +
+               "        <Icon>\n" +
+               "          <href>" + placemarkIcon + "</href>\n" +
+               "        </Icon>\n" +
+               "      </IconStyle>\n" +
+               "    </Style>\n" +
+               "  <styleUrl>#homelessIcon</styleUrl>\n" +
+               " <Point>\n" +
+               " <coordinates>" + poi.getLongitude() + "," + poi.getLatitude() + "," + poi.getAltitude() + "</coordinates>\n" +
+               " </Point>\n" +
+               " </Placemark> </kml>' > /var/www/html/hapis/" + route + "/" + poi.getName() + ".kml";
     }
 
-    private static String setKmlRoute(){
-        return "echo '/var/www/html/placemarks.kml' > /var/www/html/kmls.txt";
+
+    private static String setPlacemarkRoute(POI poi, String hostIp, String route){
+        return "echo 'http://" + hostIp + ":81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
     }
 
 }

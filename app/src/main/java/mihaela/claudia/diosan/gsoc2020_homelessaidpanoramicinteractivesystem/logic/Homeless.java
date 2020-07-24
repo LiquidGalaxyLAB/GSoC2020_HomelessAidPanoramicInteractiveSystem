@@ -11,6 +11,8 @@ public class Homeless {
     private String homelessAddress;
     private String homelessSchedule;
     private String homelessNeed;
+    private String homelessLongitude;
+    private String homelessLatitude;
 
     public Homeless(){
 
@@ -29,8 +31,10 @@ public class Homeless {
     }
 
 
-    public Homeless(String homelessUsername, LatLng locationCoordinates){
+    public Homeless(String homelessUsername, String homelessLongitude, String homelessLatitude){
         this.homelessUsername = homelessUsername;
+        this.homelessLongitude = homelessLongitude;
+        this.homelessLatitude = homelessLatitude;
     }
 
     public Homeless(String homelessUsername, String homelessAddress, String homelessNeed, String image){
@@ -76,5 +80,12 @@ public class Homeless {
         this.image = image;
     }
 
+    public String getHomelessLongitude() {
+        return homelessLongitude;
+    }
+
+    public String getHomelessLatitude() {
+        return homelessLatitude;
+    }
 }
 
