@@ -2,6 +2,7 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.li
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,8 @@ import java.util.List;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
@@ -40,6 +43,7 @@ public class HomelessActivity extends AppCompatActivity {
     private SearchView searchView;
 
     SharedPreferences preferences;
+    SharedPreferences defaultPrefs;
     TextView city_tv, country_tv, from_tv;
     ImageView goHome;
 
@@ -51,7 +55,7 @@ public class HomelessActivity extends AppCompatActivity {
         initViews();
         mFirestore = FirebaseFirestore.getInstance();
         preferences = this.getSharedPreferences("cityInfo", MODE_PRIVATE);
-
+        defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         setActualLocation();
         setRecyclerView();
 
@@ -131,9 +135,13 @@ public class HomelessActivity extends AppCompatActivity {
                                         editor.putString("country", cities.get(position).getCountry()).apply();
                                         editor.apply();
                                         startActivity(new Intent(CitiesActivity.this, CityActivity.class));*/
-                                        POI userPoi = createPOI(users.get(position).getLatitude(), users.get(position).getLongitude());
-                                        POIController.getInstance().moveToPOI(userPoi, null);
+                                        String sentence = "chmod 777 /var/www/html/kmls.txt; echo '' > /var/www/html/kmls.txt";
+                                        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
 
+                                        POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
+                                        POIController.getInstance().moveToPOI(userPoi, null);
+                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "homeless");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "homeless");
                                         Toast.makeText(HomelessActivity.this,"Goiong to " +  users.get(position).getUsername() + " on Liquid Galaxy", Toast.LENGTH_SHORT).show();
                                     }
 
@@ -161,9 +169,10 @@ public class HomelessActivity extends AppCompatActivity {
                 });
     }
 
-    private POI createPOI(String latitude, String longitude){
+    private POI createPOI(String name, String latitude, String longitude){
 
         POI poi = new POI()
+                .setName(name)
                 .setLongitude(Double.parseDouble(longitude))
                 .setLatitude(Double.parseDouble(latitude))
                 .setAltitude(1000)
