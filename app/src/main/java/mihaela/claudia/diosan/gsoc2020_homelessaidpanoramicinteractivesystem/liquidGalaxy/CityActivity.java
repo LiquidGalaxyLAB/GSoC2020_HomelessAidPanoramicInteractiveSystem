@@ -120,8 +120,8 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setTilt(0d)
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
-                                 POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "homeless");
-                                 POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "homeless");
+                                 POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/homeless");
+                                 POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
                             }}
                     }
                 });
@@ -153,8 +153,8 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setTilt(0d)
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
-                                POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "donors");
-                                POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "donors");
+                                POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/donors");
+                                POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
                             }}
                     }
                 });
@@ -186,8 +186,8 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setTilt(0d)
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
-                                POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "volunteers");
-                                POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "volunteers");
+                                POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/volunteers");
+                                POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
                             }}
                     }
                 });

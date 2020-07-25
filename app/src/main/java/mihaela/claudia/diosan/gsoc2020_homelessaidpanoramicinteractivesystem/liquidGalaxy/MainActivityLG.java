@@ -78,8 +78,8 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         POIController.getInstance().moveToPOI(EARTH_POI, null);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        GetSessionTask getSessionTask = new GetSessionTask(this);
-        getSessionTask.execute();
+ /*       GetSessionTask getSessionTask = new GetSessionTask(this);
+        getSessionTask.execute();*/
 
         cities.setOnClickListener(this);
        // statistics.setOnClickListener(this);
@@ -128,7 +128,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private String buildCommand(POI poi) {
+  /*  private String buildCommand(POI poi) {
         return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude>" +
                 "<latitude>" + poi.getLatitude() + "</latitude>" +
                 "<altitude>" + poi.getAltitude() + "</altitude>" +
@@ -138,7 +138,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
                 "</LookAt>' > /tmp/query.txt";
     }
-
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -192,7 +192,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right );
     }
 
-
+/*
     private class GetSessionTask extends AsyncTask<Void, Void, Void> {
         Activity activity;
 
@@ -407,6 +407,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 }
             }
         }
-    }
+    }*/
 }
 

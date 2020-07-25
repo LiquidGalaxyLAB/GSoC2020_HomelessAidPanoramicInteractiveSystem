@@ -42,6 +42,11 @@ public class POIController {
         return  sendPlacemarkToLG(listener, placemarkIcon, route);
     }
 
+    public LGCommand showBalloon(POI poi, LGCommand.Listener listener,String description, String image, String route){
+        currentPOI = new POI(poi);
+        return  sendBalloonToLG(listener,description, image, route);
+    }
+
     public LGCommand sendPlacemark(POI poi, LGCommand.Listener listener, String hostIp, String route){
         currentPOI = new POI(poi);
         return  setPlacemark(listener, hostIp, route);
@@ -119,6 +124,16 @@ public class POIController {
         return lgCommand;
     }
 
+    private LGCommand sendBalloonToLG(LGCommand.Listener listener,String description, String image, String route){
+        LGCommand lgCommand = new LGCommand(buildDescriptionBallon(currentPOI,description, image, route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+            //currentPOI = new POI(previousPOI);
+            if(listener != null)
+                listener.onResponse(result);
+        });
+        LGConnectionManager.getInstance().addCommandToLG(lgCommand);
+        return lgCommand;
+    }
+
     private LGCommand setPlacemark(LGCommand.Listener listener, String hostIp, String route){
         LGCommand lgCommand = new LGCommand(setPlacemarkRoute(currentPOI, hostIp,route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
@@ -153,5 +168,36 @@ public class POIController {
     private static String setPlacemarkRoute(POI poi, String hostIp, String route){
         return "echo 'http://" + hostIp + ":81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
     }
+
+    public static void cleanKm(){
+        String sentence = "chmod 777 /var/www/html/kmls.txt; echo '' > /var/www/html/kmls.txt";
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
+    }
+
+    private static String buildDescriptionBallon(POI poi, String description, String image, String route ){
+       return  "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+               "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
+               "  xmlns:gx=\"http://www.google.com/kml/ext/2.2\">\n" +
+               "  \n" +
+               "    <Placemark>\n" +
+               "      <name>" + poi.getName() + "</name>\n" +
+               "\t<gx:Carousel>\n" +
+               "\t\t\t<gx:Image kml:id=\"embedded_image_0EC545829414BC60CDE6\">\n" +
+               "\t\t\t\t<gx:ImageUrl>data:image/png;base64," + image + "</gx:ImageUrl>\n"+
+               "</gx:Image>\n" +
+               "\t\t</gx:Carousel>\n" +
+               "      <description>\n" +
+               "        <![CDATA[\n" + description +
+               "        ]]> \n" +
+               "      </description>\n" +
+               "      <gx:balloonVisibility>1</gx:balloonVisibility>\n" +
+               "      <Point>\n" +
+               "        <coordinates>" + poi.getLongitude() + "," + poi.getLatitude() + "," + poi.getAltitude() + "</coordinates>\n" +
+               "      </Point>\n" +
+               "    </Placemark>\n" +
+               "    \n" +
+               "</kml>' > /var/www/html/hapis/" + route + "/" + poi.getName() + ".kml";
+    }
+
 
 }
