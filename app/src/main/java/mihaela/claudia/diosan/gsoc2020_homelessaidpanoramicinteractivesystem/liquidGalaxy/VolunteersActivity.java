@@ -153,7 +153,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/volunteers");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/volunteers");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
                                         POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/volunteers");
 
@@ -165,7 +165,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/volunteers");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/volunteers");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
                                         POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/volunteers");
 
@@ -178,7 +178,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/volunteers");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/volunteers");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
                                         POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()),null, "balloons/volunteers");
 

@@ -151,7 +151,8 @@ public class DonorsActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/donors");
+//                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/donors");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/donors");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/donors");
 
@@ -162,7 +163,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/donors");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/donors");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/donors");
 
@@ -176,7 +177,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/donors");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/donors");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()),null, "balloons/donors");
 
