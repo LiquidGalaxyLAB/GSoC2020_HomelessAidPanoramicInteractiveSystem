@@ -206,7 +206,9 @@ public class POIController {
                "</gx:Image>\n" +
                "\t\t</gx:Carousel>\n" +
                "      <description>\n" +
-               "        <![CDATA[\n" + description +
+               "        <![CDATA[\n" +
+               "<body style=\"width:500px; height:550px\"> " + description +
+               "</body>" +
                "        ]]> \n" +
                "      </description>\n" +
                " <gx:displayMode>panel</gx:displayMode>" +

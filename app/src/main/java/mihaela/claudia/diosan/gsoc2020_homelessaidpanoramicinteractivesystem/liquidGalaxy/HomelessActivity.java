@@ -181,10 +181,9 @@ public class HomelessActivity extends AppCompatActivity {
 
                                        // POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
                                         POIController.getInstance().showBalloon(userPoi, null, description, null, "balloons/basic/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/homeless");
-                                        Toast.makeText(HomelessActivity.this, "Showing " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -198,11 +197,9 @@ public class HomelessActivity extends AppCompatActivity {
 
                                       //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
                                         POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), null, "balloons/bio/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/homeless");
-
-                                        Toast.makeText(HomelessActivity.this, "Showing BIO of " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -223,10 +220,9 @@ public class HomelessActivity extends AppCompatActivity {
 
                                       //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), personallyDonations, throughVolunteerDonations), null, "balloons/transactions/homeless");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), personallyDonations, throughVolunteerDonations), image, "balloons/transactions/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
-                                        Toast.makeText(HomelessActivity.this, "Showing Transactions for " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -253,8 +249,8 @@ public class HomelessActivity extends AppCompatActivity {
                 .setLatitude(Double.parseDouble(latitude))
                 .setAltitude(0.0d)
                 .setHeading(0.0d)
-                .setTilt(60.0d)
-                .setRange(300.0d)
+                .setTilt(70.0d)
+                .setRange(200.0d)
                 .setAltitudeMode("relativeToSeaFloor");
 
         return poi;

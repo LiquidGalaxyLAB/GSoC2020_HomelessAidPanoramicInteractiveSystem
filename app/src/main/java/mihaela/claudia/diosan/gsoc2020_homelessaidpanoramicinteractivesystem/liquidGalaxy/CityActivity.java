@@ -124,7 +124,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
                                  POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/homeless");
-                                 POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
+                                 POIController.getInstance().showPlacemark(Homeless,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
                             }}
                     }
                 });
@@ -157,7 +157,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
                                 POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/donors");
-                                POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
+                                POIController.getInstance().showPlacemark(Homeless,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
                             }}
                     }
                 });
@@ -190,7 +190,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
                                 POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/volunteers");
-                                POIController.getInstance().showPlacemark(Homeless,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
+                                POIController.getInstance().showPlacemark(Homeless,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
                             }}
                     }
                 });

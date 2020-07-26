@@ -1,5 +1,6 @@
 package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -19,11 +20,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
@@ -46,6 +52,11 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     private Activity activity;
     private Session session;
     SharedPreferences preferences;
+    TextView homelessNumberTV, donorNumberTV, volunteerNumberTV, foodStatisticsTV, clothesStatisticsTV, workStatisticsTV;
+    TextView lodgingStatisticsTV, hygieneProductsStatisticsTV, personallyStatistics, throughVolunteerStatistics;
+
+    /*Firebase*/
+    private FirebaseFirestore mFirestore;
 
 
     public static final POI EARTH_POI = new POI()
@@ -55,19 +66,18 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
             .setAltitude(0.0d)
             .setHeading(90.0d)      //90.0d
             .setTilt(0.0d)
-            .setRange(10500000.0d)  //10000000.0d
+            .setRange(10000000.0d)  //10000000.0d
             .setAltitudeMode("relativeToSeaFloor");
 
-
-    public static final POI TEST = new POI()
-            .setName("testPOI")
-            .setLongitude(0.6070459d)
-            .setLatitude(41.6058387d)
+    public static final POI STATISTICS = new POI()
+            .setName("GLOBAL_STATISTICS")
+            .setLongitude(-3.285760d)
+            .setLatitude(40.531229d)
             .setAltitude(0.0d)
-            .setHeading(0d) //130.2d
-            .setTilt(0d) //68.7626417d
-            .setRange(100.0d) //100.0d
-            .setAltitudeMode("relativeToSeaFloor ");
+            .setHeading(90.0d)
+            .setTilt(0.0d)
+            .setRange(10000000.0d)
+            .setAltitudeMode("relativeToSeaFloor");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +85,24 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_main_l_g);
 
         initViews();
+        POIController.cleanKm();
         POIController.getInstance().moveToPOI(EARTH_POI, null);
+        mFirestore = FirebaseFirestore.getInstance();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
- /*       GetSessionTask getSessionTask = new GetSessionTask(this);
-        getSessionTask.execute();*/
-        POIController.cleanKm();
+        getHomelessNumber();
+        getDonorsNumber();
+        getVolunteersNumber();
+        getFood();
+        getClothes();
+        getLodging();
+        getWork();
+        getHygiene();
+        getPersonallyNumber();
+        getThroughVolunteerNumber();
+
         cities.setOnClickListener(this);
-       // statistics.setOnClickListener(this);
+        statistics.setOnClickListener(this);
         demo.setOnClickListener(this);
         tour.setOnClickListener(this);
         statistics.setOnClickListener(this);
@@ -96,6 +116,27 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         statistics = findViewById(R.id.statistics_cv);
         demo = findViewById(R.id.demo_cv);
         tour = findViewById(R.id.tour_cv);
+        homelessNumberTV = findViewById(R.id.homelessNumberTV);
+        homelessNumberTV.setVisibility(View.INVISIBLE);
+        donorNumberTV = findViewById(R.id.donorNumberTV);
+        donorNumberTV.setVisibility(View.INVISIBLE);
+        volunteerNumberTV = findViewById(R.id.volunteerNumberTV);
+        volunteerNumberTV.setVisibility(View.INVISIBLE);
+        foodStatisticsTV = findViewById(R.id.foodStatisticsTV);
+        foodStatisticsTV.setVisibility(View.INVISIBLE);
+        clothesStatisticsTV = findViewById(R.id.clothesStatisticsTV);
+        clothesStatisticsTV.setVisibility(View.INVISIBLE);
+        workStatisticsTV = findViewById(R.id.workStatisticsTV);
+        workStatisticsTV.setVisibility(View.INVISIBLE);
+        lodgingStatisticsTV = findViewById(R.id.lodgingStatisticsTV);
+        lodgingStatisticsTV.setVisibility(View.INVISIBLE);
+        hygieneProductsStatisticsTV = findViewById(R.id.hygieneProductsStatisticsTV);
+        hygieneProductsStatisticsTV.setVisibility(View.INVISIBLE);
+        personallyStatistics = findViewById(R.id.personallyStatistics);
+        personallyStatistics.setVisibility(View.INVISIBLE);
+        throughVolunteerStatistics = findViewById(R.id.throughVolunteerStatistics);
+        throughVolunteerStatistics.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -107,42 +148,21 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.statistics_cv:
                 POIController.cleanKm();
-                POIController.getInstance().moveToPOI(EARTH_POI, null);
-
-
-             /*   MainActivity.showSuccessToast(this,"Statistics");
-                POIController.getInstance().sendHomeless(null);
-                POIController.getInstance().showPlacemark(null);*/
-              //  POIController.getInstance().sendHomeless(null);
-               /* String command = buildCommand(EARTH_POI);
-                VisitPoiTask visitPoiTask = new VisitPoiTask(command, EARTH_POI, true,this, this);
-                visitPoiTask.execute();*/
-             /*  POIController.getInstance().sendHomeless(null, preferences.getString("SSH-IP", "192.168.1.76"));
-               POIController.getInstance().showPlacemark(TEST,null);*/
+                POIController.getInstance().moveToPOI(STATISTICS, null);
+                POIController.getInstance().showBalloon(STATISTICS, null, buildStatistics(),null, "balloons/statistics");
+                POIController.getInstance().sendBalloon(STATISTICS, null, "balloons/statistics");
                break;
 
             case R.id.demo_cv:
-                POIController.getInstance().moveToPOI(TEST, null);
                 MainActivity.showSuccessToast(this,"Demo");
                 break;
             case R.id.tour_cv:
+                POIController.cleanKm();
                 MainActivity.showSuccessToast(this,"Tour");
-
                 break;
         }
     }
 
-  /*  private String buildCommand(POI poi) {
-        return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude>" +
-                "<latitude>" + poi.getLatitude() + "</latitude>" +
-                "<altitude>" + poi.getAltitude() + "</altitude>" +
-                "<heading>" + poi.getHeading() + "</heading>" +
-                "<tilt>" + poi.getTilt() + "</tilt>" +
-                "<range>" + poi.getRange() + "</range>" +
-                "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
-                "</LookAt>' > /tmp/query.txt";
-    }
-*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -196,225 +216,160 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right );
     }
 
-    private void showStatistics(){
-
+    private String buildStatistics(){
+        return  "<h2> <b> USERS</b></h2>\n" +
+                "<p> <b> Total homeless: </b> " + homelessNumberTV.getText().toString() + "</p>\n" +
+                "<p> <b> Total donors: </b> " + donorNumberTV.getText().toString() + "</p>\n" +
+                "<p> <b> Total volunteers: </b> " + volunteerNumberTV.getText().toString() + "</p>\n" +
+                "<h2> <b> NEEDS</b></h2>\n" +
+                "<p> <b> Food: </b> " + foodStatisticsTV.getText().toString() + "</p>\n" +
+                "<p> <b> Clothes: </b> " + clothesStatisticsTV.getText().toString() + "</p>\n" +
+                "<p> <b> Work: </b> " + workStatisticsTV.getText().toString() + "</p>\n" +
+                "<p> <b> Lodging: </b> " + lodgingStatisticsTV.getText().toString() + "</p>\n" +
+                "<p> <b> Hygiene products: </b> " + hygieneProductsStatisticsTV.getText().toString() + "</p>\n" +
+                "<h2> <b> DONATIONS</b></h2>\n" +
+                "<p> <b> Personally Donations: </b> " + personallyStatistics.getText().toString() + "</p>\n" +
+                "<p> <b> Through Volunteer Donations: </b> " + throughVolunteerStatistics.getText().toString() + "</p>\n" ;
     }
 
-/*
-    private class GetSessionTask extends AsyncTask<Void, Void, Void> {
-        Activity activity;
 
-        GetSessionTask(Activity activity) {
-            this.activity = activity;
-        }
+    private void getHomelessNumber(){
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            session = LGUtils.getSession(activity);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void success) {
-            super.onPostExecute(success);
-        }
+        mFirestore.collection("homeless").
+                get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            homelessNumberTV.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
     }
 
-    private class VisitPoiTask extends AsyncTask<Void, Void, String> {
-        String command;
-        POI currentPoi;
-        boolean rotate;
-        int rotationAngle = 10;
-        int rotationFactor = 1;
-        boolean changeVelocity = false;
-        private ProgressDialog dialog;
-        Activity activity;
-        Context context;
-
-        VisitPoiTask(String command, POI currentPoi, boolean rotate, Activity activity, Context context) {
-            this.command = command;
-            this.currentPoi = currentPoi;
-            this.rotate = rotate;
-            this.activity = activity;
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if (dialog == null) {
-                dialog = new ProgressDialog(context);
-                String message = context.getResources().getString(R.string.viewing) + " " + this.currentPoi.getName() + " " + context.getResources().getString(R.string.inLG);
-                dialog.setMessage(message);
-                dialog.setIndeterminate(false);
-                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog.setCancelable(false);
-
-
-                //Buton positive => more speed
-                //Button neutral => less speed
-                if (this.rotate) {
-                    dialog.setButton(DialogInterface.BUTTON_POSITIVE, context.getResources().getString(R.string.speedx2), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Do nothing, we after define the onclick
-                        }
-                    });
-
-                    dialog.setButton(DialogInterface.BUTTON_NEUTRAL, context.getResources().getString(R.string.speeddiv2), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Do nothing, we after define the onclick
-                        }
-                    });
-                }
-
-
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+    private void getDonorsNumber(){
+        mFirestore.collection("donors").
+                get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        cancel(true);
-                    }
-                });
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        cancel(true);
-                    }
-                });
-
-
-                dialog.show();
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_forward_black_36dp, 0, 0);
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_rewind_black_36dp, 0, 0);
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changeVelocity = true;
-                        rotationFactor = rotationFactor * 2;
-
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setText(context.getResources().getString(R.string.speedx4));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setText(context.getResources().getString(R.string.speeddiv2));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(true);
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_rewind_black_36dp, 0, 0);
-
-                        if (rotationFactor == 4) {
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            donorNumberTV.setText(String.valueOf(task.getResult().size()));
                         }
                     }
                 });
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void getVolunteersNumber(){
+        mFirestore.collection("volunteers").
+                get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onClick(View view) {
-                        changeVelocity = true;
-                        rotationFactor = rotationFactor / 2;
-
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setText(context.getResources().getString(R.string.speedx2));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setText(context.getResources().getString(R.string.speeddiv4));
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_forward_black_36dp, 0, 0);
-
-                        if (rotationFactor == 1) {
-                            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(false);
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            volunteerNumberTV.setText(String.valueOf(task.getResult().size()));
                         }
                     }
                 });
-            }
-        }
+    }
 
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-
-                session = LGUtils.getSession(activity);
-
-                //We fly to the point
-                LGUtils.setConnectionWithLiquidGalaxy(session, command, activity);
-
-                //If rotation button is pressed, we start the rotation
-                if (this.rotate) {
-
-                    boolean isFirst = true;
-
-                    while (!isCancelled()) {
-                        session.sendKeepAliveMsg();
-
-                        for (int i = 0; i <= (360 - this.currentPoi.getHeading()); i += (this.rotationAngle * this.rotationFactor)) {
-
-                            String commandRotate = "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
-                                    "<longitude>" + this.currentPoi.getLongitude() + "</longitude>" +
-                                    "<latitude>" + this.currentPoi.getLatitude() + "</latitude>" +
-                                    "<altitude>" + this.currentPoi.getAltitude() + "</altitude>" +
-                                    "<heading>" + (this.currentPoi.getHeading() + i) + "</heading>" +
-                                    "<tilt>" + this.currentPoi.getTilt() + "</tilt>" +
-                                    "<range>" + this.currentPoi.getRange() + "</range>" +
-                                    "<gx:altitudeMode>" + this.currentPoi.getAltitudeMode() + "</gx:altitudeMode>" +
-                                    "</LookAt>' > /tmp/query.txt";
-
-
-                            LGUtils.setConnectionWithLiquidGalaxy(session, commandRotate, activity);
-                            session.sendKeepAliveMsg();
-
-                            if (isFirst) {
-                                isFirst = false;
-                                Thread.sleep(7000);
-                            } else {
-                                Thread.sleep(4000);
-                            }
+    private void getFood(){
+        mFirestore.collection("homeless")
+                .whereEqualTo("homelessNeed", getString(R.string.chip_food))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            foodStatisticsTV.setText(String.valueOf(task.getResult().size()));
                         }
                     }
-                }
+                });
+    }
 
-                return "";
-
-            } catch (JSchException e) {
-                this.cancel(true);
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-                activity.runOnUiThread(new Runnable() {
-
+    private void getClothes(){
+        mFirestore.collection("homeless")
+                .whereEqualTo("homelessNeed", getString(R.string.chip_clothes))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void run() {
-                        Toast.makeText(context, context.getResources().getString(R.string.error_galaxy), Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            clothesStatisticsTV.setText(String.valueOf(task.getResult().size()));
+                        }
                     }
                 });
+    }
 
-                return null;
-            } catch (InterruptedException e) {
-                activity.runOnUiThread(new Runnable() {
-
+    private void getWork(){
+        mFirestore.collection("homeless")
+                .whereEqualTo("homelessNeed", getString(R.string.chip_work))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void run() {
-                        Toast.makeText(context, context.getResources().getString(R.string.visualizationCanceled), Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            workStatisticsTV.setText(String.valueOf(task.getResult().size()));
+                        }
                     }
                 });
-                return null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
+    }
 
-        @Override
-        protected void onPostExecute(String success) {
-            super.onPostExecute(success);
-            if (success != null) {
-                if (dialog != null) {
-                    dialog.hide();
-                    dialog.dismiss();
-                }
-            }
-        }
-    }*/
+    private void getLodging(){
+        mFirestore.collection("homeless")
+                .whereEqualTo("homelessNeed", getString(R.string.chip_lodging))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            lodgingStatisticsTV.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
+    }
+
+    private void getHygiene(){
+        mFirestore.collection("homeless")
+                .whereEqualTo("homelessNeed", getString(R.string.chip_hygiene_products))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            hygieneProductsStatisticsTV.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
+    }
+
+    private void getPersonallyNumber(){
+        mFirestore.collection("personallyDonations")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            personallyStatistics.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
+    }
+
+    private void getThroughVolunteerNumber(){
+        mFirestore.collection("throughVolunteerDonations")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            throughVolunteerStatistics.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
+    }
+
+
 }
+
 

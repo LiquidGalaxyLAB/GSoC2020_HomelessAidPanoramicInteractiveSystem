@@ -155,7 +155,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/basic/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/donors");
 
@@ -169,7 +169,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/bio/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/donors"); }
 
@@ -185,7 +185,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
+                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), personallyDonations, throughVolunteerDonations),null, "balloons/transactions/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/donors");
                                     }
