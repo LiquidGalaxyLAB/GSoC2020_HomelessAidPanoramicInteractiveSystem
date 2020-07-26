@@ -80,7 +80,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
  /*       GetSessionTask getSessionTask = new GetSessionTask(this);
         getSessionTask.execute();*/
-
+        POIController.cleanKm();
         cities.setOnClickListener(this);
        // statistics.setOnClickListener(this);
         demo.setOnClickListener(this);
@@ -106,6 +106,10 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 POIController.getInstance().moveToPOI(EARTH_POI, null);
                 break;
             case R.id.statistics_cv:
+                POIController.cleanKm();
+                POIController.getInstance().moveToPOI(EARTH_POI, null);
+
+
              /*   MainActivity.showSuccessToast(this,"Statistics");
                 POIController.getInstance().sendHomeless(null);
                 POIController.getInstance().showPlacemark(null);*/
@@ -190,6 +194,10 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right );
+    }
+
+    private void showStatistics(){
+
     }
 
 /*

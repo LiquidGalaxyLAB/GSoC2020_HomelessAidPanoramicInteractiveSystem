@@ -202,13 +202,14 @@ public class POIController {
                "      <name>" + poi.getName() + "</name>\n" +
                "\t<gx:Carousel>\n" +
                "\t\t\t<gx:Image kml:id=\"embedded_image_0EC545829414BC60CDE6\">\n" +
-               "\t\t\t\t<gx:ImageUrl>data:image/png;base64," + image + "</gx:ImageUrl>\n"+
+               "\t\t\t\t<gx:ImageUrl>" + image + "</gx:ImageUrl>\n"+
                "</gx:Image>\n" +
                "\t\t</gx:Carousel>\n" +
                "      <description>\n" +
                "        <![CDATA[\n" + description +
                "        ]]> \n" +
                "      </description>\n" +
+               " <gx:displayMode>panel</gx:displayMode>" +
                "      <gx:balloonVisibility>1</gx:balloonVisibility>\n" +
                "      <Point>\n" +
                "        <coordinates>" + poi.getLongitude() + "," + poi.getLatitude() + "," + poi.getAltitude() + "</coordinates>\n" +

@@ -48,7 +48,7 @@ public class DonorsActivity extends AppCompatActivity {
     private SearchView searchView;
 
     SharedPreferences preferences, defaultPrefs;
-    TextView city_tv, country_tv, from_tv;
+    TextView city_tv, country_tv, from_tv, test_statistics;
     ImageView goHome;
     private Session session;
 
@@ -85,6 +85,8 @@ public class DonorsActivity extends AppCompatActivity {
         country_tv = findViewById(R.id.country_text_users);
         goHome = findViewById(R.id.go_home_iv_users);
         from_tv = findViewById(R.id.city_text_tv);
+        test_statistics = findViewById(R.id.test_statistics);
+        test_statistics.setVisibility(View.INVISIBLE);
 
     }
 
@@ -146,41 +148,46 @@ public class DonorsActivity extends AppCompatActivity {
                                 lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
+                                        personallyTransactions(users.get(position).getEmail());
+                                        throughVolunteerTransactions(users.get(position).getEmail());
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-//                                        POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/donors");
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/donors");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
-                                        POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/donors");
+                                        POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/basic/donors");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/donors");
 
                                     }
 
                                     @Override
                                     public void onBioClick(int position) {
+                                        personallyTransactions(users.get(position).getEmail());
+                                        throughVolunteerTransactions(users.get(position).getEmail());
+                                        POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/donors");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/donors");
-
-                                    }
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/bio/donors");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/donors"); }
 
                                     @Override
                                     public void onTransactionClick(int position) {
                                         personallyTransactions(users.get(position).getEmail());
                                         throughVolunteerTransactions(users.get(position).getEmail());
 
+                                        String personallyDonations = test_statistics.getText().toString();
+                                        String throughVolunteerDonations = test_statistics.getText().toString();
+
+                                        POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/donors");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/grn-diamond.png", "placemarks/donors");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()),null, "balloons/donors");
-
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), personallyDonations, throughVolunteerDonations),null, "balloons/transactions/donors");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/donors");
                                     }
 
                                     @Override
@@ -205,10 +212,10 @@ public class DonorsActivity extends AppCompatActivity {
                 .setName(name)
                 .setLongitude(Double.parseDouble(longitude))
                 .setLatitude(Double.parseDouble(latitude))
-                .setAltitude(1000)
+                .setAltitude(0.0d)
                 .setHeading(0.0d)
                 .setTilt(60.0d)
-                .setRange(800.0d)
+                .setRange(300.0d)
                 .setAltitudeMode("relativeToSeaFloor");
 
         return poi;
@@ -258,9 +265,7 @@ public class DonorsActivity extends AppCompatActivity {
                 "<p> <b> Phone Number: </b> " + phone + "</p>\n" ;
     }
 
-    private String buildTransactions(String firstName, String lastName, String phone, String email, String location){
-        String personallyDonations = defaultPrefs.getString("personallyDonations", "");
-        String throughVolunteerDonations = defaultPrefs.getString("throughVolunteerDonations", "");
+    private String buildTransactions(String firstName, String lastName, String phone, String email, String location, String personallyDonations, String throughVolunteerDonations){
 
         return  "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Email: </b> " + email + "</p>\n" +
@@ -270,8 +275,8 @@ public class DonorsActivity extends AppCompatActivity {
                 "<p> <b> Last Name: </b> " + lastName + "</p>\n" +
                 "<p> <b> Phone Number: </b> " + phone + "</p>\n" +
                 "<h2><b> Transactions </b> </h2>\n" +
-                "<p><b> Personally Donations: </b> " +  personallyDonations + "</p>\n" +
-                "<p><b> Through Volunteer Donations: </b> " +  throughVolunteerDonations + "</p>\n";
+                "<p><b> Personally Donations: </b> " + personallyDonations + "</p>\n" +
+                "<p><b> Through Volunteer Donations: </b> " + throughVolunteerDonations + "</p>\n";
     }
 
     private void personallyTransactions(String email){
@@ -282,7 +287,7 @@ public class DonorsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            defaultPrefs.edit().putString("personallyDonations",String.valueOf(task.getResult().size())).apply();
+                            test_statistics.setText(String.valueOf(task.getResult().size()));
                         }
                     }
                 });
@@ -297,7 +302,7 @@ public class DonorsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            defaultPrefs.edit().putString("throughVolunteerDonations",String.valueOf(task.getResult().size())).apply();
+                            test_statistics.setText(String.valueOf(task.getResult().size()));
                         }
                     }
                 });

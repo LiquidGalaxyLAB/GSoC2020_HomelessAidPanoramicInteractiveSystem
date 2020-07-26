@@ -69,7 +69,7 @@ public class HomelessActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
     SharedPreferences defaultPrefs;
-    TextView city_tv, country_tv, from_tv;
+    TextView city_tv, country_tv, from_tv, test_statistics;
     ImageView goHome;
     private Session session;
 
@@ -106,6 +106,8 @@ public class HomelessActivity extends AppCompatActivity {
         country_tv = findViewById(R.id.country_text_users);
         goHome = findViewById(R.id.go_home_iv_users);
         from_tv = findViewById(R.id.city_text_tv);
+        test_statistics = findViewById(R.id.test_statistics);
+        test_statistics.setVisibility(View.INVISIBLE);
 
     }
 
@@ -169,29 +171,38 @@ public class HomelessActivity extends AppCompatActivity {
                                 lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
+                                        personallyTransactions(users.get(position).getUsername());
+                                        throughVolunteerTransactions(users.get(position).getUsername());
+
                                         String description = description(users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed());
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/homeless");
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, description, encode(users.get(position).getImage()), "balloons/homeless");
+                                       // POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        Toast.makeText(HomelessActivity.this, encode(users.get(position).getImage()) , Toast.LENGTH_SHORT).show();
+                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, description, null, "balloons/basic/homeless");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/homeless");
+                                        Toast.makeText(HomelessActivity.this, "Showing " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
                                     public void onBioClick(int position) {
+                                        personallyTransactions(users.get(position).getUsername());
+                                        throughVolunteerTransactions(users.get(position).getUsername());
+
+                                        POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                       /* POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");*/
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/homeless");
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), encode(users.get(position).getImage()), "balloons/homeless");
+                                      //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                       // Toast.makeText(HomelessActivity.this, users.get(position).getLifeHistory() , Toast.LENGTH_SHORT).show();
+                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), null, "balloons/bio/homeless");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/homeless");
+
+                                        Toast.makeText(HomelessActivity.this, "Showing BIO of " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -200,15 +211,22 @@ public class HomelessActivity extends AppCompatActivity {
                                         personallyTransactions(users.get(position).getUsername());
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
+                                        String personallyDonations = test_statistics.getText().toString();
+                                        String throughVolunteerDonations = test_statistics.getText().toString();
+
+                                        POIController.cleanKm();
+                                        personallyTransactions(users.get(position).getUsername());
+                                        throughVolunteerTransactions(users.get(position).getUsername());
+
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        /*POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");*/
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/homeless");
-                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), encode(users.get(position).getImage()), "balloons/homeless");
+                                      //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        Toast.makeText(HomelessActivity.this, "TRANSACTION" + buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), Toast.LENGTH_SHORT).show();
+                                        POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/H.png", "placemarks/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), personallyDonations, throughVolunteerDonations), null, "balloons/transactions/homeless");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
+                                        Toast.makeText(HomelessActivity.this, "Showing Transactions for " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -233,10 +251,10 @@ public class HomelessActivity extends AppCompatActivity {
                 .setName(name)
                 .setLongitude(Double.parseDouble(longitude))
                 .setLatitude(Double.parseDouble(latitude))
-                .setAltitude(1000)
+                .setAltitude(0.0d)
                 .setHeading(0.0d)
                 .setTilt(60.0d)
-                .setRange(800.0d)
+                .setRange(300.0d)
                 .setAltitudeMode("relativeToSeaFloor");
 
         return poi;
@@ -277,9 +295,7 @@ public class HomelessActivity extends AppCompatActivity {
                 "<p> " + lifeHistory + "</p>\n";
     }
 
-    private String buildTransactions(String lifeHistory, String birthday, String location, String schedule, String need){
-        String personallyDonations = defaultPrefs.getString("personallyDonations", "");
-        String throughVolunteerDonations = defaultPrefs.getString("throughVolunteerDonations", "");
+    private String buildTransactions(String lifeHistory, String birthday, String location, String schedule, String need, String personallyDonations, String throughVolunteerDonations){
 
         return  "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Birthday: </b> " + birthday + "</p>\n" +
@@ -301,8 +317,8 @@ public class HomelessActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()){
-                                defaultPrefs.edit().putString("personallyDonations",String.valueOf(task.getResult().size())).apply();
-                            }
+                                test_statistics.setText(String.valueOf(task.getResult().size()));
+                                }
                         }
                     });
     }
@@ -316,7 +332,7 @@ public class HomelessActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            defaultPrefs.edit().putString("throughVolunteerDonations",String.valueOf(task.getResult().size())).apply();
+                            test_statistics.setText(String.valueOf(task.getResult().size()));
                         }
                     }
                 });

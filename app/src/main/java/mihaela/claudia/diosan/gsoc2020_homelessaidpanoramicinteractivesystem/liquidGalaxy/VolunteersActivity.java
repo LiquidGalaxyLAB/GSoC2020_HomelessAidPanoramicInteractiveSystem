@@ -49,7 +49,7 @@ public class VolunteersActivity extends AppCompatActivity {
     private SearchView searchView;
 
     SharedPreferences preferences, defaultPrefs;
-    TextView city_tv, country_tv,from_tv;
+    TextView city_tv, country_tv,from_tv, test_statistics;
     ImageView goHome;
 
     private Session session;
@@ -86,6 +86,8 @@ public class VolunteersActivity extends AppCompatActivity {
         country_tv = findViewById(R.id.country_text_users);
         goHome = findViewById(R.id.go_home_iv_users);
         from_tv = findViewById(R.id.city_text_tv);
+        test_statistics = findViewById(R.id.test_statistics);
+        test_statistics.setVisibility(View.INVISIBLE);
 
     }
 
@@ -153,37 +155,43 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/volunteers");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/basic/volunteers");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/volunteers");
 
+                                        Toast.makeText(VolunteersActivity.this, "Showing " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
                                     public void onBioClick(int position) {
                                         homelessCreated(users.get(position).getEmail());
+                                        POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/volunteers");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/bio/volunteers");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/volunteers");
 
-                                        Toast.makeText(VolunteersActivity.this, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(VolunteersActivity.this, "Showing BIO of " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
+
                                     }
 
                                     @Override
                                     public void onTransactionClick(int position) {
                                         homelessCreated(users.get(position).getEmail());
+
+                                        String homelessCreated = test_statistics.getText().toString();
+
+                                        POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/volunteers");
                                         POIController.getInstance().showPlacemark(userPoi,null, "http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()),null, "balloons/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), homelessCreated),null, "balloons/transactions/volunteers");
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/volunteers");
 
-                                        Toast.makeText(VolunteersActivity.this, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(VolunteersActivity.this, "Showing Transactions for " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -207,10 +215,10 @@ public class VolunteersActivity extends AppCompatActivity {
                 .setName(name)
                 .setLongitude(Double.parseDouble(longitude))
                 .setLatitude(Double.parseDouble(latitude))
-                .setAltitude(1000)
+                .setAltitude(0.0d)
                 .setHeading(0.0d)
                 .setTilt(60.0d)
-                .setRange(800.0d)
+                .setRange(300.0d)
                 .setAltitudeMode("relativeToSeaFloor");
 
         return poi;
@@ -260,8 +268,7 @@ public class VolunteersActivity extends AppCompatActivity {
                 "<p> <b> Phone Number: </b> " + phone + "</p>\n" ;
     }
 
-    private String buildTransactions(String firstName, String lastName, String phone, String email, String location){
-        String createdHomeless = defaultPrefs.getString("createdHomeless", "");
+    private String buildTransactions(String firstName, String lastName, String phone, String email, String location, String createdHomeless){
 
         return  "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Email: </b> " + email + "</p>\n" +
@@ -282,7 +289,7 @@ public class VolunteersActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            defaultPrefs.edit().putString("createdHomeless",String.valueOf(task.getResult().size())).apply();
+                            test_statistics.setText(String.valueOf(task.getResult().size()));
                         }
                     }
                 });

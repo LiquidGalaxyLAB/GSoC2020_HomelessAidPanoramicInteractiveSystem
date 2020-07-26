@@ -110,7 +110,7 @@ public class CitiesActivity extends AppCompatActivity {
                                         editor.putString("city",  cities.get(position).getCity()).apply();
                                         editor.putString("country", cities.get(position).getCountry()).apply();
                                         editor.apply();
-
+                                        POIController.cleanKm();
                                         POI cityPoi = createPOI(cities.get(position).getLatitude(), cities.get(position).getLongitude(), cities.get(position).getAltitude());
                                         POIController.getInstance().moveToPOI(cityPoi,null);
 
@@ -137,7 +137,7 @@ public class CitiesActivity extends AppCompatActivity {
                 .setAltitude(Double.parseDouble(altitude))
                 .setHeading(0.0d)
                 .setTilt(40.0d)
-                .setRange(1000.0d)
+                .setRange(800.0d)
                 .setAltitudeMode("relativeToSeaFloor");
 
         return poi;

@@ -77,14 +77,17 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.homeless_cv:
+                POIController.cleanKm();
                 showAllHomeless();
                 startActivity(new Intent(CityActivity.this, HomelessActivity.class));
                 break;
             case R.id.donors_cv:
+                POIController.cleanKm();
                 showAllDonors();
                 startActivity(new Intent(CityActivity.this, DonorsActivity.class));
                 break;
             case R.id.volunteers_cv:
+                POIController.cleanKm();
                 showAllVolunteers();
                 startActivity(new Intent(CityActivity.this, VolunteersActivity.class));
                 break;
@@ -117,7 +120,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setLatitude(Double.parseDouble(latitude))
                                         .setAltitude(0.0d)
                                         .setHeading(0d)
-                                        .setTilt(0d)
+                                        .setTilt(40.0d)
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
                                  POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/homeless");
@@ -150,7 +153,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setLatitude(Double.parseDouble(latitude))
                                         .setAltitude(0.0d)
                                         .setHeading(0d)
-                                        .setTilt(0d)
+                                        .setTilt(40.0d)
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
                                 POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/donors");
@@ -183,7 +186,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                         .setLatitude(Double.parseDouble(latitude))
                                         .setAltitude(0.0d)
                                         .setHeading(0d)
-                                        .setTilt(0d)
+                                        .setTilt(40.0d)
                                         .setRange(100.0d)
                                         .setAltitudeMode("relativeToSeaFloor ");
                                 POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/volunteers");
