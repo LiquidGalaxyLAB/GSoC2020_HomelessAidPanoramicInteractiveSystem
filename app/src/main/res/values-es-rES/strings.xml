@@ -393,4 +393,15 @@
     <string name="cancel">Cancel</string>
     <string name="connection_failure">Error connecting with Liquid Galaxy system. Try changing username, password, port or the host ip</string>
 
+    <!--Instalation menu-->
+    <string name="first_time_install">Instalar</string>
+    <string name="uninstall">Desinstalar</string>
+    <string name="install_toast">Instalación completa</string>
+    <string name="uninstall_toast">Se ha borrado toda la información de HAPIS en el Liquid Galaxy</string>
+    <string name="install_title">Instalar requerimientos LG</string>
+    <string name="install_description">Esto es necesario la primera vez que utilizas la aplicación con el Sistema Liquid Galaxy.\n Te permite ver toda la información en las pantallas.</string>
+    <string name="uninstall_title">Desinstalar requerimientos LG</string>
+    <string name="uninstall_description">Se van a desisntalar los requerimientos y se va a borrar toda la información de HAPIS existente en el Liquid Galaxy.</string>
+
+
 </resources>

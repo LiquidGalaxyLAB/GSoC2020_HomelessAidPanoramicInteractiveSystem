@@ -2,7 +2,13 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.li
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,6 +45,73 @@ public class ToolsActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.install_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.first_time_install:
+                    install();
+                return true;
+            case R.id.complete_uninstall:
+                    uninstall();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void install(){
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.install_title))
+                .setMessage(getString(R.string.install_description))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String sentence = "cd /var/www/html/ ; mkdir -p hapis/{balloons/{basic/{donors,volunteers,homeless},bio/{donors,volunteers,homeless},statistics,transactions/{donors,volunteers,homeless}},placemarks/{donors,volunteers,homeless}} ; sudo apt install curl";
+                        String donor = "cd /var/www/html/hapis/balloons/basic/donors/ ; curl -o donor.jpg https://ibb.co/0MKdfWm ;cd /var/www/html/hapis/balloons/bio/donors/ ; curl -o donor.jpg https://ibb.co/0MKdfWm ;cd /var/www/html/hapis/balloons/transactions/donors/ ; curl -o donor.jpg https://ibb.co/0MKdfWm";
+                        String volunteer = " cd /var/www/html/hapis/balloons/basic/volunteers/ ; curl -o volunteer.jpg https://ibb.co/JcKMWwC;cd /var/www/html/hapis/balloons/bio/volunteers/ ; curl -o volunteer.jpg https://ibb.co/JcKMWwC; cd /var/www/html/hapis/balloons/transactions/volunteers/ ; curl -o volunteer.jpg https://ibb.co/JcKMWwC";
+                        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
+                        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(donor, LGCommand.CRITICAL_MESSAGE, null));
+                        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(volunteer, LGCommand.CRITICAL_MESSAGE, null));
+                        Toast.makeText(ToolsActivity.this, getString(R.string.install_toast), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void uninstall(){
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.uninstall_title))
+                .setMessage(getString(R.string.uninstall_description))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String sentence = "cd /var/www/html/ ; rm -r hapis";
+                        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
+                        Toast.makeText(ToolsActivity.this, getString(R.string.uninstall_toast), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
 
     private void initViews(){
         cleanKmls = findViewById(R.id.cleanKmls);
