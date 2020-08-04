@@ -179,6 +179,15 @@ public class POIController {
                " </Placemark> </kml>' > /var/www/html/hapis/" + route + "/" + poi.getName() + ".kml";
     }
 
+    public static void downloadProfilePhoto(String username, String imageUrl){
+        String sentence1 = "cd /var/www/html/hapis/balloons/basic/homeless/ ;curl -o " + username + " " + imageUrl;
+        String sentence2 = "cd /var/www/html/hapis/balloons/bio/homeless/ ;curl -o " + username + " " + imageUrl;
+        String sentence3 = "cd /var/www/html/hapis/balloons/transactions/homeless/ ;curl -o " + username + " " + imageUrl;
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence1, LGCommand.CRITICAL_MESSAGE, null));
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence2, LGCommand.CRITICAL_MESSAGE, null));
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence3, LGCommand.CRITICAL_MESSAGE, null));
+    }
+
 
     private static String setPlacemarkRoute(POI poi, String hostIp, String route){
         return "echo 'http://" + hostIp + ":81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
@@ -193,31 +202,29 @@ public class POIController {
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
     }
 
+
     private static String buildDescriptionBallon(POI poi, String description, String image, String route ){
        return  "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
                "  xmlns:gx=\"http://www.google.com/kml/ext/2.2\">\n" +
                "  \n" +
-               "    <Placemark>\n" +
-               "      <name>" + poi.getName() + "</name>\n" +
-               "\t<gx:Carousel>\n" +
-               "\t\t\t<gx:Image kml:id=\"embedded_image_0EC545829414BC60CDE6\">\n" +
-               "\t\t\t\t<gx:ImageUrl>" + image + "</gx:ImageUrl>\n"+
-               "</gx:Image>\n" +
-               "\t\t</gx:Carousel>\n" +
-               "      <description>\n" +
-               "        <![CDATA[\n" +
-               "<body style=\"width:500px; height:550px\"> " + description +
+               " <Placemark>\n" +
+               " <name>" + poi.getName() + "</name>\n" +
+               " <description>\n" +
+               " <![CDATA[\n" +
+               "<body style=\"width:500px; height:550px\"> \n" +
+               "<img src=" + image + " " +  "width = \"400px\" class=\"center\" > \n"+
+               "<font size = \"+2\">" + description + "</font> \n" +
                "</body>" +
-               "        ]]> \n" +
-               "      </description>\n" +
+               "]]> \n" +
+               "</description>\n" +
                " <gx:displayMode>panel</gx:displayMode>" +
-               "      <gx:balloonVisibility>1</gx:balloonVisibility>\n" +
-               "      <Point>\n" +
-               "        <coordinates>" + poi.getLongitude() + "," + poi.getLatitude() + "," + poi.getAltitude() + "</coordinates>\n" +
-               "      </Point>\n" +
-               "    </Placemark>\n" +
-               "    \n" +
+               " <gx:balloonVisibility>1</gx:balloonVisibility>\n" +
+               " <Point>\n" +
+               " <coordinates>" + poi.getLongitude() + "," + poi.getLatitude() + "," + poi.getAltitude() +"</coordinates>\n" +
+               " </Point>\n" +
+               " </Placemark>\n" +
+               " \n" +
                "</kml>' > /var/www/html/hapis/" + route + "/" + poi.getName() + ".kml";
     }
 

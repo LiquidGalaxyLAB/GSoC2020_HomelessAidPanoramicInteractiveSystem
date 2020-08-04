@@ -156,7 +156,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, description,null, "balloons/basic/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, description,"volunteer.jpg", "balloons/basic/volunteers");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/volunteers");
 
                                         //Toast.makeText(VolunteersActivity.this, "Showing " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
@@ -170,7 +170,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), null, "balloons/bio/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), "volunteer.jpg", "balloons/bio/volunteers");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/volunteers");
 
                                        // Toast.makeText(VolunteersActivity.this, "Showing BIO of " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
@@ -188,7 +188,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), homelessCreated),null, "balloons/transactions/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), homelessCreated),"volunteer.jpg", "balloons/transactions/volunteers");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/volunteers");
 
                                       //  Toast.makeText(VolunteersActivity.this, "Showing Transactions for " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();

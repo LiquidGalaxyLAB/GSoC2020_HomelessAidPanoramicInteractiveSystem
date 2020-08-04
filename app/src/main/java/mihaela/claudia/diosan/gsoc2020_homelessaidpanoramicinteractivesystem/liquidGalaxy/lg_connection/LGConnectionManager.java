@@ -36,7 +36,7 @@ public class LGConnectionManager implements Runnable {
     public LGConnectionManager() {
         user = "lg";
         password = "lqgalaxy";
-        hostname = "192.168.1.76";
+        hostname = "192.168.86.228";
         port = 22;
 
         session = null;
@@ -69,20 +69,6 @@ public class LGConnectionManager implements Runnable {
         }
     }
 
-
-/*    private void loadDataFromDB() {
-        Cursor category_cursor = POIsProvider.getLGConnectionData();
-        if (category_cursor.moveToNext()) {
-            user = category_cursor.getString(category_cursor.getColumnIndexOrThrow("user"));
-            password = category_cursor.getString(category_cursor.getColumnIndexOrThrow("password"));
-            hostname = category_cursor.getString(category_cursor.getColumnIndexOrThrow("hostname"));
-            port = category_cursor.getInt(category_cursor.getColumnIndexOrThrow("port"));
-        }
-    }
-
-    private void saveDataToDB() {
-        POIsProvider.updateLGConnectionData(user, password, hostname, port);
-    }*/
 
     private Session getSession() {
         Session oldSession = this.session;

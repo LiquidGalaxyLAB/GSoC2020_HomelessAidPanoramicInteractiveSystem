@@ -16,6 +16,7 @@ public class LgUser {
     private String firstName;
     private String lastName;
 
+
     public LgUser(){}
 
     public LgUser(String username, String latitude, String longitude, String location, String email, String phone, String firstName, String lastName) {
@@ -27,6 +28,7 @@ public class LgUser {
         this.phone = phone;
         this.firstName = firstName;
         this.lastName = lastName;
+
     }
 
     public LgUser(String username, int color, String latitude, String longitude, String image, String  birthday, String location, String schedule, String need, String lifeHistory) {

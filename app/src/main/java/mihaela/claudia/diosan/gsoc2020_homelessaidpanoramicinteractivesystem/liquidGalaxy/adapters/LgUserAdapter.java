@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +28,7 @@ public class LgUserAdapter extends RecyclerView.Adapter<LgUserAdapter.LgUserHold
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
-        void onItemClick(int position);
+        void onItemClick(int position) throws IOException;
         void onBioClick(int position);
         void onTransactionClick(int position);
         void onOrbitClick(int position);
@@ -119,7 +120,11 @@ public class LgUserAdapter extends RecyclerView.Adapter<LgUserAdapter.LgUserHold
                 if (listener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position);
+                        try {
+                            listener.onItemClick(position);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

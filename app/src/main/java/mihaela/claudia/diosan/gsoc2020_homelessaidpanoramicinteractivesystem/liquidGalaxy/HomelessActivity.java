@@ -13,10 +13,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -26,43 +29,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import io.grpc.internal.IoUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
+
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
+
 public class HomelessActivity extends AppCompatActivity {
 
     /*Firebase*/
     private FirebaseFirestore mFirestore;
+    private StorageReference storageReference;
 
     /*SearchView*/
     private SearchView searchView;
@@ -81,6 +81,8 @@ public class HomelessActivity extends AppCompatActivity {
 
         initViews();
         mFirestore = FirebaseFirestore.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         preferences = this.getSharedPreferences("cityInfo", MODE_PRIVATE);
         defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -156,11 +158,12 @@ public class HomelessActivity extends AppCompatActivity {
                                 final String need = document.getString("homelessNeed");
                                 final String lifeHistory = document.getString("homelessLifeHistory");
                                 final String image = document.getString("image");
-
+                                final double tilt = 70.0d;
+                                final double range = 200.0d;
 
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,color, latitude, longitude, image, birthday, location, schedule, need, lifeHistory);
+                                final LgUser user = new LgUser(username,color, latitude, longitude,image, birthday, location, schedule, need, lifeHistory);
                                 users.add(user);
 
 
@@ -170,7 +173,7 @@ public class HomelessActivity extends AppCompatActivity {
 
                                 lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
-                                    public void onItemClick(int position) {
+                                    public void onItemClick(int position) throws IOException {
                                         personallyTransactions(users.get(position).getUsername());
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
@@ -180,9 +183,9 @@ public class HomelessActivity extends AppCompatActivity {
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                        // POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
-
+                                        POIController.downloadProfilePhoto(userPoi.getName(), users.get(position).getImage());
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, description, null, "balloons/basic/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, description, users.get(position).getUsername(), "balloons/basic/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/homeless");
                                     }
 
@@ -198,7 +201,7 @@ public class HomelessActivity extends AppCompatActivity {
                                       //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), null, "balloons/bio/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), users.get(position).getUsername(), "balloons/bio/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/homeless");
 
                                     }
@@ -221,7 +224,7 @@ public class HomelessActivity extends AppCompatActivity {
                                       //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), personallyDonations, throughVolunteerDonations), image, "balloons/transactions/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), personallyDonations, throughVolunteerDonations), users.get(position).getUsername(), "balloons/transactions/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
 
                                     }
@@ -240,6 +243,7 @@ public class HomelessActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private POI createPOI(String name, String latitude, String longitude){
 
@@ -337,9 +341,7 @@ public class HomelessActivity extends AppCompatActivity {
 
 
 
-    private String encode(String image){
-      return  image;
-    }
+
 
     private String buildCommand(POI poi) {
         return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude>" +
