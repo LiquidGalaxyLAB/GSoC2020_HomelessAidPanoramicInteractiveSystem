@@ -43,6 +43,7 @@ If you want to delete all related data with the HAPIS Application from the Liqui
 
 
 
+## __License__
 
 Copyright (C) 2019 Mihaela Claudia Diosan
 
