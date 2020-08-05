@@ -22,6 +22,25 @@ to connect homeless people with persons who can help them. Besides, it can be co
  
 
 
+## __Installation First Time Using Application With Liquid Galaxy__
+
+When you are using the HAPIS application with a new Liquid Galaxy, follow the next instructions:
+
+ 1. From the Login screen go to the Liquid Galaxy part.
+ 2. On the menu select Settings and here you have to complete information about the LG master: user, password, IP and Port. The port normally is 22.
+ 3. Once the application is connected with the Liquid Galaxy, go back to main dashboard and into menu, now select Tools.
+ 4. In Tools select again the menu and press Install. This way you install all the necessary requirements into the LG master.
+ 
+ 
+ 
+## __Uninstall requirements from Liquid Galaxy__
+
+If you want to delete all related data with the HAPIS Application from the Liquid Galaxy, follow the next steps:
+
+ 1. Check that the application is connected with the Liquid Galaxy
+ 2. Into the main dashboard, go to menu and select Tools
+ 3. In Tools, select again the menu and press Uninstall.
+
 
 
 
