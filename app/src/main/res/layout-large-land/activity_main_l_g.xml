@@ -63,6 +63,53 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/city_statistics"
+            android:layout_width="@dimen/dashboard_cards"
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/elevation"
+            android:elevation="@dimen/elevation"
+            android:backgroundTint="@color/color_third_card"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Media -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dashboard_image_cv"
+                    app:srcCompat="@drawable/city_statistics"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/content_description"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/city_statistics"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/statistics_cv"
             app:cardCornerRadius="@dimen/cardCornerRadius"
@@ -108,253 +155,6 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/demo_cv"
-            android:layout_width="@dimen/dashboard_cards"
-            app:cardCornerRadius="@dimen/cardCornerRadius"
-            app:cardElevation="@dimen/elevation"
-            android:elevation="@dimen/elevation"
-            android:backgroundTint="@color/color_third_card"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Media -->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dashboard_image_cv"
-                    app:srcCompat="@drawable/demo_image"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/content_description"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/demo"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/tour_cv"
-            android:layout_width="@dimen/dashboard_cards"
-            app:cardCornerRadius="@dimen/cardCornerRadius"
-            app:cardElevation="@dimen/elevation"
-            android:elevation="@dimen/elevation"
-            android:backgroundTint="@color/color_forth_card"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Media -->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dashboard_image_cv"
-                    app:srcCompat="@drawable/tour_image"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/content_description"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tour"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        />
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/homelessNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/donorNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/volunteerNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/foodStatisticsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/clothesStatisticsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/workStatisticsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/lodgingStatisticsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/hygieneProductsStatisticsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/personallyStatistics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/throughVolunteerStatistics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/homelessNumberTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/donorNumberTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/volunteerNumberTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/foodStatisticsTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/clothesStatisticsTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/workStatisticsTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/lodgingStatisticsTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/hygieneProductsStatisticsTVLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/personallyStatisticsLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/throughVolunteerStatisticsLleida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"
-            android:visibility="gone" />
-
 
     </LinearLayout>
 

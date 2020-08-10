@@ -26,17 +26,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
 
 public class DonorsActivity extends AppCompatActivity {
@@ -50,7 +55,7 @@ public class DonorsActivity extends AppCompatActivity {
     SharedPreferences preferences, defaultPrefs;
     TextView city_tv, country_tv, from_tv, test_statistics;
     ImageView goHome;
-    private Session session;
+    private Map<String,String> donorInfo = new HashMap<>();
 
 
     @Override
@@ -85,9 +90,6 @@ public class DonorsActivity extends AppCompatActivity {
         country_tv = findViewById(R.id.country_text_users);
         goHome = findViewById(R.id.go_home_iv_users);
         from_tv = findViewById(R.id.city_text_tv);
-        test_statistics = findViewById(R.id.test_statistics);
-        test_statistics.setVisibility(View.INVISIBLE);
-
     }
 
     private void setActualLocation(){
@@ -105,7 +107,7 @@ public class DonorsActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager;
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_users_lg);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mLayoutManager = new GridLayoutManager(this, 3);
+            mLayoutManager = new GridLayoutManager(this, 2);
         }else {
             mLayoutManager = new GridLayoutManager(this, 4);
         }
@@ -134,10 +136,12 @@ public class DonorsActivity extends AppCompatActivity {
                                 final String firstName = document.getString("firstName");
                                 final String lastName = document.getString("lastName");
                                 final String location = document.getString("address");
+                                final String personallyDonations = document.getString("personallyDonation");
+                                final String throughVolunteerDonations = document.getString("throughVolunteerDonations");
 
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,latitude, longitude, location, email, phone, firstName, lastName);
+                                final LgUser user = new LgUser(username,color, latitude, longitude, location, email, phone, firstName, lastName, personallyDonations, throughVolunteerDonations);
                                 users.add(user);
 
 
@@ -148,16 +152,16 @@ public class DonorsActivity extends AppCompatActivity {
                                 lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
+
                                         personallyTransactions(users.get(position).getEmail());
                                         throughVolunteerTransactions(users.get(position).getEmail());
-                                        String donorImage = "donor.jpg";
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
-                                        POIController.getInstance().showBalloon(userPoi, null, description,"donor.jpg", "balloons/basic/donors");
+                                        POIController.getInstance().showBalloon(userPoi, null, description,"donor", "balloons/basic/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/donors");
 
                                     }
@@ -166,12 +170,13 @@ public class DonorsActivity extends AppCompatActivity {
                                     public void onBioClick(int position) {
                                         personallyTransactions(users.get(position).getEmail());
                                         throughVolunteerTransactions(users.get(position).getEmail());
+
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), "donor.jpg", "balloons/bio/donors");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), "donor", "balloons/bio/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/donors"); }
 
                                     @Override
@@ -179,15 +184,13 @@ public class DonorsActivity extends AppCompatActivity {
                                         personallyTransactions(users.get(position).getEmail());
                                         throughVolunteerTransactions(users.get(position).getEmail());
 
-                                        String personallyDonations = test_statistics.getText().toString();
-                                        String throughVolunteerDonations = test_statistics.getText().toString();
 
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), personallyDonations, throughVolunteerDonations),"donor.jpg", "balloons/transactions/donors");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), users.get(position).getPersonallyDonations(), users.get(position).getThroughVolunteerDonation()),"donor", "balloons/transactions/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/donors");
                                     }
 
@@ -288,7 +291,10 @@ public class DonorsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            test_statistics.setText(String.valueOf(task.getResult().size()));
+                            String personallyDonation = String.valueOf(task.getResult().size());
+                            donorInfo.put("personallyDonation", personallyDonation);
+                            mFirestore.collection("donors").document(email).set(donorInfo, SetOptions.merge());
+
                         }
                     }
                 });
@@ -303,13 +309,15 @@ public class DonorsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            test_statistics.setText(String.valueOf(task.getResult().size()));
+                            String throughVolunteerDonations = String.valueOf(task.getResult().size());
+                            donorInfo.put("throughVolunteerDonations", throughVolunteerDonations);
+                            mFirestore.collection("donors").document(email).set(donorInfo, SetOptions.merge());
                         }
                     }
                 });
     }
 
-    private class GetSessionTask extends AsyncTask<Void, Void, Void> {
+   /* private class GetSessionTask extends AsyncTask<Void, Void, Void> {
         Activity activity;
 
         GetSessionTask(Activity activity) {
@@ -523,7 +531,7 @@ public class DonorsActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
 
 
 

@@ -35,14 +35,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:padding="@dimen/cv_margins">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_bio"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:backgroundTint="@color/white"
-                    android:layout_marginEnd="@dimen/end_margin"
+                    android:layout_marginEnd="@dimen/cv_margins"
+                    android:layout_marginStart="@dimen/cv_margins"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeColor="@color/color_second_card"
                     app:icon="@drawable/show_bio_icon"
@@ -56,7 +58,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeColor="@color/color_first_card"
                     android:backgroundTint="@color/white"
-                    android:layout_marginEnd="@dimen/end_margin"
+                    android:layout_marginEnd="@dimen/cv_margins"
                     app:icon="@drawable/show_transactions_icon"
                     app:iconTint="@color/grey"/>
 
@@ -66,10 +68,11 @@
                     android:layout_height="40dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeColor="@color/green"
-                    android:layout_marginEnd="@dimen/end_margin"
+                    android:layout_marginEnd="@dimen/cv_margins"
                     android:backgroundTint="@color/white"
                     app:icon="@drawable/orbit_icon"
                     app:iconTint="@color/grey"/>
+
             </LinearLayout>
         </LinearLayout>
 

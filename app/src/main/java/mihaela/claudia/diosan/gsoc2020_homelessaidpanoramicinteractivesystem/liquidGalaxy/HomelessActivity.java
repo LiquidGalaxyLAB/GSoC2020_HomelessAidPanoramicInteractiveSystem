@@ -6,72 +6,57 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
 
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
 
 public class HomelessActivity extends AppCompatActivity {
 
     /*Firebase*/
     private FirebaseFirestore mFirestore;
-    private StorageReference storageReference;
 
     /*SearchView*/
     private SearchView searchView;
 
     SharedPreferences preferences;
     SharedPreferences defaultPrefs;
-    TextView city_tv, country_tv, from_tv, test_statistics;
+    TextView city_tv, country_tv, from_tv;
     ImageView goHome;
-    private Session session;
+    private Map<String,String> homelessInfo = new HashMap<>();
+  //  private Session session;
 
 
     @Override
@@ -82,7 +67,6 @@ public class HomelessActivity extends AppCompatActivity {
         initViews();
         mFirestore = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
         preferences = this.getSharedPreferences("cityInfo", MODE_PRIVATE);
         defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -108,8 +92,6 @@ public class HomelessActivity extends AppCompatActivity {
         country_tv = findViewById(R.id.country_text_users);
         goHome = findViewById(R.id.go_home_iv_users);
         from_tv = findViewById(R.id.city_text_tv);
-        test_statistics = findViewById(R.id.test_statistics);
-        test_statistics.setVisibility(View.INVISIBLE);
 
     }
 
@@ -128,7 +110,7 @@ public class HomelessActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager;
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_users_lg);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mLayoutManager = new GridLayoutManager(this, 3);
+            mLayoutManager = new GridLayoutManager(this, 2);
         }else {
             mLayoutManager = new GridLayoutManager(this, 4);
         }
@@ -157,13 +139,15 @@ public class HomelessActivity extends AppCompatActivity {
                                 final String schedule = document.getString("homelessSchedule");
                                 final String need = document.getString("homelessNeed");
                                 final String lifeHistory = document.getString("homelessLifeHistory");
+                                final String personallyDonations = document.getString("personallyDonations");
+                                final String throughVolunteerDonations = document.getString("throughVolunteerDonations");
                                 final String image = document.getString("image");
                                 final double tilt = 70.0d;
                                 final double range = 200.0d;
 
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,color, latitude, longitude,image, birthday, location, schedule, need, lifeHistory);
+                                final LgUser user = new LgUser(username,color, latitude, longitude,image, birthday, location, schedule, need, lifeHistory, personallyDonations, throughVolunteerDonations);
                                 users.add(user);
 
 
@@ -211,8 +195,6 @@ public class HomelessActivity extends AppCompatActivity {
                                         personallyTransactions(users.get(position).getUsername());
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
-                                        String personallyDonations = test_statistics.getText().toString();
-                                        String throughVolunteerDonations = test_statistics.getText().toString();
 
                                         POIController.cleanKm();
                                         personallyTransactions(users.get(position).getUsername());
@@ -224,7 +206,7 @@ public class HomelessActivity extends AppCompatActivity {
                                       //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), personallyDonations, throughVolunteerDonations), users.get(position).getUsername(), "balloons/transactions/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), users.get(position).getPersonallyDonations(), users.get(position).getThroughVolunteerDonation()), users.get(position).getUsername(), "balloons/transactions/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
 
                                     }
@@ -295,7 +277,7 @@ public class HomelessActivity extends AppCompatActivity {
                 "<p> " + lifeHistory + "</p>\n";
     }
 
-    private String buildTransactions(String lifeHistory, String birthday, String location, String schedule, String need, String personallyDonations, String throughVolunteerDonations){
+    public static String buildTransactions(String lifeHistory, String birthday, String location, String schedule, String need, String personallyDonations, String throughVolunteerDonations){
 
         return  "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Birthday: </b> " + birthday + "</p>\n" +
@@ -309,7 +291,7 @@ public class HomelessActivity extends AppCompatActivity {
                 "<p><b> Through Volunteer Donations: </b> " +  throughVolunteerDonations + "</p>\n";
     }
 
-    private void personallyTransactions(String homelessUsername){
+  /*  private void personallyTransactions(String homelessUsername){
 
             mFirestore.collection("personallyDonations").whereEqualTo("donatesTo",homelessUsername )
                     .get()
@@ -317,10 +299,46 @@ public class HomelessActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()){
-                                test_statistics.setText(String.valueOf(task.getResult().size()));
+                                String personallyDonations = String.valueOf(task.getResult().size());
+                                homelessInfo.put("personallyDonations", personallyDonations);
+                                mFirestore.collection("statistics").document(homelessUsername).set(homelessInfo, SetOptions.merge());
+
+                            //    test_statistics.setText(String.valueOf(task.getResult().size()));
                                 }
                         }
                     });
+    }
+*/
+
+  /*  private void throughVolunteerTransactions(String homelessUsername){
+
+        mFirestore.collection("throughVolunteerDonations").whereEqualTo("donatesTo",homelessUsername )
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            test_statistics.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
+    }*/
+
+    private void personallyTransactions(String homelessUsername){
+
+        mFirestore.collection("personallyDonations").whereEqualTo("donatesTo",homelessUsername )
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            String personallyDonations = String.valueOf(task.getResult().size());
+                            homelessInfo.put("personallyDonations", personallyDonations);
+                            mFirestore.collection("homeless").document(homelessUsername).set(homelessInfo, SetOptions.merge());
+
+                        }
+                    }
+                });
     }
 
 
@@ -332,7 +350,10 @@ public class HomelessActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            test_statistics.setText(String.valueOf(task.getResult().size()));
+                            String throughVolunteerDonations = String.valueOf(task.getResult().size());
+                            homelessInfo.put("throughVolunteerDonations", throughVolunteerDonations);
+                            mFirestore.collection("homeless").document(homelessUsername).set(homelessInfo, SetOptions.merge());
+
                         }
                     }
                 });
@@ -354,7 +375,7 @@ public class HomelessActivity extends AppCompatActivity {
                 "</LookAt>' > /tmp/query.txt";
     }
 
-    private class GetSessionTask extends AsyncTask<Void, Void, Void> {
+/*    private class GetSessionTask extends AsyncTask<Void, Void, Void> {
         Activity activity;
 
         GetSessionTask(Activity activity) {
@@ -376,9 +397,9 @@ public class HomelessActivity extends AppCompatActivity {
         protected void onPostExecute(Void success) {
             super.onPostExecute(success);
         }
-    }
+    */}
 
-    private class VisitPoiTask extends AsyncTask<Void, Void, String> {
+/*    private class VisitPoiTask extends AsyncTask<Void, Void, String> {
         String command;
         POI currentPoi;
         boolean rotate;
@@ -568,7 +589,7 @@ public class HomelessActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
 
 
-}
+

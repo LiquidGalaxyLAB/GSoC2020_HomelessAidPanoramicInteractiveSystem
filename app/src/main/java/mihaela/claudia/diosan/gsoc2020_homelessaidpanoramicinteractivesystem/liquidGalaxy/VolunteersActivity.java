@@ -26,17 +26,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
 
 public class VolunteersActivity extends AppCompatActivity {
@@ -52,7 +57,7 @@ public class VolunteersActivity extends AppCompatActivity {
     TextView city_tv, country_tv,from_tv, test_statistics;
     ImageView goHome;
 
-    private Session session;
+    private Map<String,String> volunteerInfo = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +91,8 @@ public class VolunteersActivity extends AppCompatActivity {
         country_tv = findViewById(R.id.country_text_users);
         goHome = findViewById(R.id.go_home_iv_users);
         from_tv = findViewById(R.id.city_text_tv);
-        test_statistics = findViewById(R.id.test_statistics);
-        test_statistics.setVisibility(View.INVISIBLE);
+       /* test_statistics = findViewById(R.id.test_statistics);
+        test_statistics.setVisibility(View.INVISIBLE);*/
 
     }
 
@@ -106,7 +111,7 @@ public class VolunteersActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager;
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_users_lg);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mLayoutManager = new GridLayoutManager(this, 3);
+            mLayoutManager = new GridLayoutManager(this, 2);
         }else {
             mLayoutManager = new GridLayoutManager(this, 4);
         }
@@ -135,9 +140,10 @@ public class VolunteersActivity extends AppCompatActivity {
                                 final String firstName = document.getString("firstName");
                                 final String lastName = document.getString("lastName");
                                 final String location = document.getString("address");
+                                final String homelessCreated = document.getString("homelessCreated");
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,latitude, longitude, location, email, phone, firstName, lastName);
+                                final LgUser user = new LgUser(username,color, latitude, longitude, location, email, phone, firstName, lastName, homelessCreated);
                                 users.add(user);
 
 
@@ -148,7 +154,6 @@ public class VolunteersActivity extends AppCompatActivity {
                                 lgUserAdapter.setOnItemClickListener(new LgUserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
-                                        homelessCreated(users.get(position).getEmail());
 
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
                                         POIController.cleanKm();
@@ -156,7 +161,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, description,"volunteer.jpg", "balloons/basic/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, description,"volunteer", "balloons/basic/volunteers");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/volunteers");
 
                                         //Toast.makeText(VolunteersActivity.this, "Showing " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
@@ -164,13 +169,13 @@ public class VolunteersActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onBioClick(int position) {
-                                        homelessCreated(users.get(position).getEmail());
+
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), "volunteer.jpg", "balloons/bio/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), "volunteer", "balloons/bio/volunteers");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/volunteers");
 
                                        // Toast.makeText(VolunteersActivity.this, "Showing BIO of " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
@@ -179,19 +184,16 @@ public class VolunteersActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onTransactionClick(int position) {
-                                        homelessCreated(users.get(position).getEmail());
-
-                                        String homelessCreated = test_statistics.getText().toString();
 
                                         POIController.cleanKm();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/xf1S6cn/volunteer-icon.png", "placemarks/volunteers");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), homelessCreated),"volunteer.jpg", "balloons/transactions/volunteers");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), users.get(position).getHomelessCreated()),"volunteer", "balloons/transactions/volunteers");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/volunteers");
 
-                                      //  Toast.makeText(VolunteersActivity.this, "Showing Transactions for " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(VolunteersActivity.this, "Showing Transactions for " + users.get(position).getHomelessCreated() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -281,21 +283,7 @@ public class VolunteersActivity extends AppCompatActivity {
                 "<p><b> Created homeless profiles: </b> " +  createdHomeless + "</p>\n";
     }
 
-    private void homelessCreated(String email){
-
-        mFirestore.collection("homeless").whereEqualTo("volunteerEmail",email )
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            test_statistics.setText(String.valueOf(task.getResult().size()));
-                        }
-                    }
-                });
-    }
-
-    private class GetSessionTask extends AsyncTask<Void, Void, Void> {
+   /* private class GetSessionTask extends AsyncTask<Void, Void, Void> {
         Activity activity;
 
         GetSessionTask(Activity activity) {
@@ -509,6 +497,6 @@ public class VolunteersActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
 
 }

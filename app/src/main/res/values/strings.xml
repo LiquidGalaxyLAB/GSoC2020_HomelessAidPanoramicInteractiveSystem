@@ -344,9 +344,9 @@
 
     <!--Dashboard cards-->
     <string name="cities">Cities</string>
-    <string name="statistics">Statistics</string>
-    <string name="demo">Demo</string>
-    <string name="tour">Tour</string>
+    <string name="statistics">Global Statistics</string>
+    <string name="city_statistics">City Statistics</string>
+
 
     <!--Activity Tools-->
     <string name="clean_kmls">Clean KMLs</string>
@@ -362,6 +362,7 @@
     <string name="homeless">Homeless</string>
     <string name="volunteers">Volunteers</string>
     <string name="donors">Donors</string>
+    <string name="live_overview">LIVE \n OVERVIEW</string>
 
     <!--Cities activity-->
     <string name="you_are">You are in </string>
@@ -370,7 +371,7 @@
     <!--Users Activity-->
     <string name="search_users_hint">Username</string>
     <string name="homeless_from">Homeless people from</string>
-    
+
     <!--Donors Activity-->
     <string name="search_donors_hint">Username</string>
     <string name="donors_from">Donors from</string>
@@ -379,7 +380,6 @@
     <!--Volunteers Activity-->
     <string name="search_volunteers_hint">Username</string>
     <string name="volunteers_from">Volunteers from</string>
-
 
 
     <string name="viewing">Visualizing</string>
@@ -393,6 +393,11 @@
     <string name="speeddiv4">x/4</string>
     <string name="cancel">Cancel</string>
     <string name="connection_failure">Error connecting with Liquid Galaxy system. Try changing username, password, port or the host ip</string>
+
+
+    <!--CityStatistics-->
+    <string name="stop">STOP</string>
+    <string name="city_statistics_txt">Local Statistics</string>
 
     <!--Instalation menu-->
     <string name="first_time_install">Install</string>

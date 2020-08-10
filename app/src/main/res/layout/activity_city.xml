@@ -88,8 +88,6 @@
 
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -97,13 +95,21 @@
         android:gravity="center"
         android:layout_gravity="center">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="@dimen/margins"
+            android:orientation="horizontal">
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/homeless_cv"
                 android:layout_width="@dimen/dashboard_cards"
                 app:cardCornerRadius="@dimen/cardCornerRadius"
                 app:cardElevation="@dimen/elevation"
                 android:elevation="@dimen/elevation"
-                android:backgroundTint="@color/color_forth_card"
+                android:backgroundTint="@color/color_first_card"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
 
@@ -114,9 +120,10 @@
 
                     <!-- Media -->
                     <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dashboard_image_cv"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         app:srcCompat="@drawable/homeless_image"
+                        android:layout_gravity="center"
                         android:scaleType="centerCrop"
                         android:contentDescription="@string/content_description"
                         />
@@ -144,6 +151,61 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/volunteers_cv"
+                android:layout_width="@dimen/dashboard_cards"
+                app:cardCornerRadius="@dimen/cardCornerRadius"
+                app:cardElevation="@dimen/elevation"
+                android:elevation="@dimen/elevation"
+                android:backgroundTint="@color/color_third_card"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Media -->
+                    <ImageView
+                        android:layout_width="@dimen/dashboard_image_cv"
+                        android:layout_height="@dimen/dashboard_image_cv"
+                        app:srcCompat="@drawable/volunteer_image"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/content_description"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Title, secondary and supporting text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/volunteers"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="@dimen/margins"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/donors_cv"
                 android:layout_width="@dimen/dashboard_cards"
                 app:cardElevation="@dimen/elevation"
@@ -160,10 +222,11 @@
 
                     <!-- Media -->
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/dashboard_image_cv"
                         android:layout_height="@dimen/dashboard_image_cv"
                         app:srcCompat="@drawable/donor_image"
                         android:scaleType="centerCrop"
+                        android:layout_gravity="center"
                         android:contentDescription="@string/content_description"
                         />
 
@@ -189,50 +252,42 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/volunteers_cv"
+                android:id="@+id/live_overview_cv"
                 android:layout_width="@dimen/dashboard_cards"
-                app:cardCornerRadius="@dimen/cardCornerRadius"
                 app:cardElevation="@dimen/elevation"
                 android:elevation="@dimen/elevation"
-                android:backgroundTint="@color/color_third_card"
-                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/green_color"
+                android:layout_height="@dimen/dashboard_cards"
+                app:cardCornerRadius="@dimen/cardCornerRadius"
                 android:layout_margin="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:padding="16dp">
 
-                    <!-- Media -->
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dashboard_image_cv"
-                        app:srcCompat="@drawable/volunteer_image"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="@string/content_description"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <!-- Title, secondary and supporting text -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/volunteers"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            />
-                    </LinearLayout>
+                        android:text="@string/live_overview"
+                        android:gravity="center"
+                        android:textSize="@dimen/body"
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        />
                 </LinearLayout>
 
+
             </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+
 
         </LinearLayout>
 

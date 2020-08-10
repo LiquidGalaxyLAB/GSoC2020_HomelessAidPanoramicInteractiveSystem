@@ -66,4 +66,11 @@ public class LGUtils {
     }
 
 
+    public static void closeSession(Session session) {
+        if (session != null && session.isConnected()) {
+            session.disconnect();
+        }
+    }
+
+
 }

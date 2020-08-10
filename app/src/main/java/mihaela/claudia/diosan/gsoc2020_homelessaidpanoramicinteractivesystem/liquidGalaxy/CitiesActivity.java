@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -20,11 +21,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
@@ -47,6 +51,7 @@ public class CitiesActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +70,13 @@ public class CitiesActivity extends AppCompatActivity {
 
     }
 
+    
+
     private void setRecyclerView(){
-        RecyclerView.LayoutManager mLayoutManager;
+        RecyclerView.LayoutManager mLayoutManager ;
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_cities);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mLayoutManager = new GridLayoutManager(this, 3);
+            mLayoutManager = new GridLayoutManager(this, 2);
         }else {
             mLayoutManager = new GridLayoutManager(this, 4);
         }
@@ -116,8 +123,6 @@ public class CitiesActivity extends AppCompatActivity {
 
                                         startActivity(new Intent(CitiesActivity.this, CityActivity.class));
 
-
-
                                     }
                                 });
 
@@ -159,6 +164,9 @@ public class CitiesActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 

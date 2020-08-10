@@ -26,12 +26,6 @@
                 android:orientation="horizontal"
                 android:layout_margin="@dimen/margins">
 
-                <TextView
-                    android:id="@+id/test_statistics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text"
-                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/city_text_tv"

@@ -345,9 +345,8 @@
 
     <!--Dashboard cards-->
     <string name="cities">Ciudades</string>
-    <string name="statistics">Estadísticas</string>
-    <string name="demo">Demo</string>
-    <string name="tour">Tour</string>
+    <string name="statistics">Estadísticas globales</string>
+    <string name="city_statistics">Estadísticas por ciudad </string>
 
     <!--Activity Tools-->
     <string name="clean_kmls">Limpiar KMLs</string>
@@ -363,6 +362,7 @@
     <string name="homeless">Necesitan ayuda</string>
     <string name="volunteers">Voluntarios</string>
     <string name="donors">Donantes</string>
+    <string name="live_overview">LIVE \n OVERVIEW</string>
 
     <!--Cities activity-->
     <string name="you_are">Estas en </string>
@@ -370,7 +370,7 @@
 
     <!--Homeless Activity-->
     <string name="search_users_hint">Nombre de usuario</string>
-    <string name="homeless_from">Personas que necesitan ayuda en</string>
+    <string name="homeless_from">Necesitan ayuda en</string>
 
     <!--Donors Activity-->
     <string name="search_donors_hint">Nombre de usuario</string>
@@ -392,6 +392,11 @@
     <string name="speeddiv4">x/4</string>
     <string name="cancel">Cancel</string>
     <string name="connection_failure">Error connecting with Liquid Galaxy system. Try changing username, password, port or the host ip</string>
+
+
+    <!--CityStatistics-->
+    <string name="stop">STOP</string>
+    <string name="city_statistics_txt">Estadísticas Locales</string>
 
     <!--Instalation menu-->
     <string name="first_time_install">Instalar</string>

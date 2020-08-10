@@ -5,6 +5,8 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liq
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
+import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand.CRITICAL_MESSAGE;
+
 public class POIController {
 
     private static POIController INSTANCE = null;
@@ -37,6 +39,11 @@ public class POIController {
         return sendPoiToLG(listener);
     }
 
+    public LGCommand flyToCity(POI poi, LGCommand.Listener listener){
+        currentPOI = new POI(poi);
+        return sendCityToLG(listener);
+    }
+
     public LGCommand showPlacemark(POI poi, LGCommand.Listener listener, String placemarkIcon, String route){
         currentPOI = new POI(poi);
         return  sendPlacemarkToLG(listener, placemarkIcon, route);
@@ -57,6 +64,10 @@ public class POIController {
         return  setBalloon(listener, route);
     }
 
+    public LGCommand sendPoi(POI poi, LGCommand.Listener listener, String route){
+        currentPOI = new POI(poi);
+        return  setPoi(listener, route);
+    }
 
     public synchronized void moveXY(double angle, double percentDistance) {
         //.setLongitude() [-180 to +180]: X (cos)
@@ -98,7 +109,7 @@ public class POIController {
     }
 
     private LGCommand sendPoiToLG(LGCommand.Listener listener) {
-        LGCommand lgCommand = new LGCommand(buildCommand(currentPOI), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+        LGCommand lgCommand = new LGCommand(buildCommand(currentPOI), CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
             if(listener != null)
                 listener.onResponse(result);
@@ -119,8 +130,28 @@ public class POIController {
                 "</LookAt>' > /tmp/query.txt";
     }
 
+    private LGCommand sendCityToLG(LGCommand.Listener listener) {
+        LGCommand lgCommand = new LGCommand(flyToCity(currentPOI), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+            if(listener != null)
+                listener.onResponse(result);
+        });
+        LGConnectionManager.getInstance().addCommandToLG(lgCommand);
+        return lgCommand;
+    }
+
+    private static String flyToCity(POI poi){
+        return "echo 'flytoview=<gx:duration>5</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
+                "<longitude>" + poi.getLongitude() + "</longitude>" +
+                "<latitude>" + poi.getLatitude() + "</latitude>" +
+                "<altitude>" + poi.getAltitude() + "</altitude>" +
+                "<range>" + poi.getRange() + "</range>" +
+                "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
+                "</LookAt>' > /tmp/query.txt; sleep 25";
+    }
+
+
     private LGCommand sendPlacemarkToLG(LGCommand.Listener listener, String placemarkIcon, String route){
-        LGCommand lgCommand = new LGCommand(buildPlacemark(currentPOI, placemarkIcon, route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+        LGCommand lgCommand = new LGCommand(buildPlacemark(currentPOI, placemarkIcon, route), CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
             if(listener != null)
                 listener.onResponse(result);
@@ -130,8 +161,7 @@ public class POIController {
     }
 
     private LGCommand sendBalloonToLG(LGCommand.Listener listener,String description, String image, String route){
-        LGCommand lgCommand = new LGCommand(buildDescriptionBallon(currentPOI,description, image, route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
-            //currentPOI = new POI(previousPOI);
+        LGCommand lgCommand = new LGCommand(buildDescriptionBallon(currentPOI,description, image, route), CRITICAL_MESSAGE, (String result) -> {
             if(listener != null)
                 listener.onResponse(result);
         });
@@ -140,7 +170,17 @@ public class POIController {
     }
 
     private LGCommand setPlacemark(LGCommand.Listener listener, String hostIp, String route){
-        LGCommand lgCommand = new LGCommand(setPlacemarkRoute(currentPOI, hostIp,route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+        LGCommand lgCommand = new LGCommand(setPlacemarkRoute(currentPOI, hostIp,route), CRITICAL_MESSAGE, (String result) -> {
+            //currentPOI = new POI(previousPOI);
+            if(listener != null)
+                listener.onResponse(result);
+        });
+        LGConnectionManager.getInstance().addCommandToLG(lgCommand);
+        return lgCommand;
+    }
+
+    private LGCommand setPoi(LGCommand.Listener listener, String route){
+        LGCommand lgCommand = new LGCommand(setPoiRoute(currentPOI,route), CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
             if(listener != null)
                 listener.onResponse(result);
@@ -150,7 +190,7 @@ public class POIController {
     }
 
     private LGCommand setBalloon(LGCommand.Listener listener, String route){
-        LGCommand lgCommand = new LGCommand(setBalloonRoute(currentPOI,route), LGCommand.CRITICAL_MESSAGE, (String result) -> {
+        LGCommand lgCommand = new LGCommand(setBalloonRoute(currentPOI,route), CRITICAL_MESSAGE, (String result) -> {
             //currentPOI = new POI(previousPOI);
             if(listener != null)
                 listener.onResponse(result);
@@ -183,9 +223,9 @@ public class POIController {
         String sentence1 = "cd /var/www/html/hapis/balloons/basic/homeless/ ;curl -o " + username + " " + imageUrl;
         String sentence2 = "cd /var/www/html/hapis/balloons/bio/homeless/ ;curl -o " + username + " " + imageUrl;
         String sentence3 = "cd /var/www/html/hapis/balloons/transactions/homeless/ ;curl -o " + username + " " + imageUrl;
-        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence1, LGCommand.CRITICAL_MESSAGE, null));
-        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence2, LGCommand.CRITICAL_MESSAGE, null));
-        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence3, LGCommand.CRITICAL_MESSAGE, null));
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence1, CRITICAL_MESSAGE, null));
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence2, CRITICAL_MESSAGE, null));
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence3, CRITICAL_MESSAGE, null));
     }
 
 
@@ -193,13 +233,18 @@ public class POIController {
         return "echo 'http://" + hostIp + ":81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
     }
 
+    private static String setPoiRoute(POI poi,String route){
+        return "echo 'http://localhost:81/hapis/" + route + "/" + poi.getName() + ".kml' > /var/www/html/kmls.txt;sleep 5";
+    }
+
+
     private static String setBalloonRoute(POI poi,String route){
         return "echo 'http://localhost:81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
     }
 
     public static void cleanKm(){
         String sentence = "chmod 777 /var/www/html/kmls.txt; echo '' > /var/www/html/kmls.txt";
-        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
 
 

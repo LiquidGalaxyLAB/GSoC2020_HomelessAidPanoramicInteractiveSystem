@@ -42,7 +42,7 @@
     <dimen name="homeless_custom_view">100dp</dimen>
     <dimen name="create_profile_image">150dp</dimen>
     <dimen name="dashboard_image_cv">90dp</dimen>
-    <dimen name="logos_image">120dp</dimen>
+    <dimen name="logos_image">240dp</dimen>
 
 
     <!--Boxes-->
