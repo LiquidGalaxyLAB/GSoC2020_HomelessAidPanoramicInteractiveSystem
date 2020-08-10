@@ -179,7 +179,6 @@ public class VolunteersActivity extends AppCompatActivity {
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/volunteers");
 
                                        // Toast.makeText(VolunteersActivity.this, "Showing BIO of " + users.get(position).getUsername() + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
-
                                     }
 
                                     @Override
