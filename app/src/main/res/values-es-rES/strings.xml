@@ -93,7 +93,7 @@
 
     <!--******  Forgot password activity  *******-->
     <string name="is_email_valid_error">El Email no es válido o el campo esta vacio</string>
-    <string name="forgot_password_name">Contraseña olvidada</string>
+    <string name="forgot_password_name">Recuperar contraseña</string>
     <string name="fp_title">¿Has olvidado tu contraseña?</string>
     <string name="fp_body">Para restablecer tu contraseña, introduce tu correo electrónico que utilizas para iniciar sesión en HAPIS.</string>
     <string name="pop_up_message"> Un correo ha sido enviado al email facilitado.\nSigue las instrucciones para restablecer tu contraseña.</string>

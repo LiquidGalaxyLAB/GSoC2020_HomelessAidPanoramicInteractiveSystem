@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/bottom_margin"
+            android:layout_marginBottom="@dimen/cv_margins"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:src="@drawable/login_foto"
@@ -26,8 +26,10 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginTop="@dimen/cv_margins"
             app:cardCornerRadius="@dimen/cardCornerRadius"
+            android:backgroundTint="@color/white"
+            android:elevation="@dimen/elevation"
             app:cardElevation="@dimen/elevation"
             android:layout_margin="@dimen/margins">
 
@@ -130,13 +132,14 @@
                         android:layout_marginTop="@dimen/top_margin"
                         android:backgroundTint="@color/white"
                         android:text="@string/sign_up"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/body"
                         android:textStyle="bold"
-                        app:icon="@drawable/ic_person_add_black_24dp"
-                        app:iconTint="@color/colorPrimaryDark"
+                        app:icon="@drawable/register_user_icon"
+                        app:iconTint="@null"
+                        app:iconSize="24dp"
                         app:iconPadding="@dimen/padding"
-                        app:strokeColor="@color/blue"
+                        app:strokeColor="@color/colorPrimary"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         />
 
@@ -156,9 +159,19 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:backgroundTint="@color/white"
-                        app:iconPadding="@dimen/padding"
+                        android:text="@string/liquid_galaxy_tv"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginTop="@dimen/top_margin"
+                        android:textSize="@dimen/body"
+                        android:textStyle="bold"
                         app:icon="@drawable/lg"
-                        app:iconTint="@null" />
+                        app:iconTint="@null"
+                        app:iconSize="24dp"
+                        android:gravity="center"
+                        app:iconPadding="@dimen/padding"
+                        app:strokeColor="@color/colorPrimary"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        />
                 </LinearLayout>
 
             </LinearLayout>

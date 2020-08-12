@@ -108,13 +108,14 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     public static void showErrorToast(Context context, String message){
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
         View view =toast.getView();
-        view.setBackgroundColor(Color.WHITE);
+        view.setBackgroundColor(Color.TRANSPARENT);
         TextView toastMessage =  toast.getView().findViewById(android.R.id.message);
         toastMessage.setTextColor(Color.RED);
         toastMessage.setGravity(Gravity.CENTER);
         toastMessage.setTextSize(15);
         toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.error_drawable, 0,0,0);
         toastMessage.setPadding(10,10,10,10);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 

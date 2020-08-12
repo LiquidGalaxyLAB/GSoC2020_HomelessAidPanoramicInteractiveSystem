@@ -58,7 +58,8 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     private FirebaseFirestore mFirestore;
 
     private ProgressDialog dialog;
-    private Session session;
+    private Handler handler;
+    private Runnable runnable;
 
 
     public static final POI EARTH_POI = new POI()
@@ -73,8 +74,8 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
     public static final POI STATISTICS = new POI()
             .setName("GLOBAL_STATISTICS")
-            .setLongitude(-3.285760d)
-            .setLatitude(40.531229d)
+            .setLongitude(40.331103d)
+            .setLatitude(75.297993d)
             .setAltitude(0.0d)
             .setHeading(90.0d)
             .setTilt(0.0d)
@@ -88,6 +89,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
         initViews();
         POIController.cleanKm();
+        POIController.cleanKmlSlave("slave_3");
         POIController.getInstance().moveToPOI(EARTH_POI, null);
         mFirestore = FirebaseFirestore.getInstance();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -152,17 +154,35 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.stop), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LGUtils.closeSession(session);
+                    /*    if (handler != null && runnable != null) {
+                            handler.removeCallbacks(runnable);
+                        }*/
+
+                        POIController.cleanKm();
                         dialog.dismiss();
                     }
                 });
 
                 dialog.show();
+
                 setCitiesStatistics();
 
-
+              /*  runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler = new Handler();
+                        runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                setCitiesStatistics();
+                            }
+                        };
+                        handler.postDelayed(runnable, 1000);
+                    }
+                });*/
         }
     }
+
 
 
     private void setGlobalStatistics(){
@@ -194,14 +214,16 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 final String clothes = document.getString("clothes");
                                 final String work = document.getString("work");
                                 final String lodging = document.getString("lodging");
-                                final String hygiene = document.getString("hygiene");
+                                final String hygiene = document.getString("hygieneProducts");
                                 final String personallyDonations = document.getString("personallyStatistics");
                                 final String throughVolunteerDonations = document.getString("throughVolunteerStatistics");
                                 final String image = document.getString("image");
 
 
                                 POIController.getInstance().moveToPOI(STATISTICS, null);
-                                POIController.getInstance().showBalloon(STATISTICS, null, buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), null, "balloons/statistics");
+                                String sentence = "cd /var/www/html/hapis/balloons/statistics/ ;curl -o " + STATISTICS.getName() + " " + image;
+                                LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
+                                POIController.getInstance().showBalloon(STATISTICS, null, buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), STATISTICS.getName(), "balloons/statistics");
                                 POIController.getInstance().sendBalloon(STATISTICS, null, "balloons/statistics");
 
                                 Toast.makeText(MainActivityLG.this,   buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), Toast.LENGTH_SHORT).show();
@@ -213,6 +235,12 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
 
 
+    }
+
+
+    public static void downloadCityPhoto(String city, String imageUrl){
+        String sentence = "cd /var/www/html/hapis/balloons/statistics/cities/ ;curl -o " + city + " " + imageUrl;
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
 
 
@@ -250,21 +278,15 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 getCityHygiene(city);
 
                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
+                                downloadCityPhoto(cityPOI.getName(),image );
+                               // Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
-
-                                POIController.getInstance().showBalloon(cityPOI, null, buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), null, "balloons/statistics/cities");
-                                POIController.getInstance().sendBalloon(cityPOI, null,"balloons/statistics/cities" );
-                                POIController.getInstance().flyToCity(cityPOI, null);
-                                //  Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
-                            /*    POIController.getInstance().sendPlacemark(cityPOI,null, "192.168.86.228","balloons/statistics/cities" );*/
-                            }
+                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), cityPOI.getName(), "slave_3");
+                                POIController.getInstance().flyToCity(cityPOI, null); }
                         }
                     }
                 });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -326,9 +348,9 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 .setName(name)
                 .setLatitude(Double.parseDouble(latitude))
                 .setAltitude(Double.parseDouble(altitude))
-                .setHeading(0.0d)
-                .setTilt(40.0d)
-                .setRange(800.0d)
+                .setHeading(15.0d)
+                .setTilt(60.0d)
+                .setRange(1200.0d)
                 .setAltitudeMode("relativeToSeaFloor");
 
         return poi;

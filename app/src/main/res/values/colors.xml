@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#2979ff</color>
     <color name="colorPrimaryDark">#004ecb</color>
-    <color name="colorAccent">#cc99ff</color>
+    <color name="colorAccent">#ff66c4</color>
 
     <!-- colors for Intro-->
     <color name="white">#ffffff</color>
@@ -25,6 +25,7 @@
     <color name="green_color">#66ff99</color>
     <color name="yellow_color">#ffcc66</color>
     <color name="dark_green">#0CA33E</color>
+    <color name="icons_blue">#b6dcfe</color>
 
     <!--dashboard cards-->
     <color name="color_first_card">#3e72ff</color>

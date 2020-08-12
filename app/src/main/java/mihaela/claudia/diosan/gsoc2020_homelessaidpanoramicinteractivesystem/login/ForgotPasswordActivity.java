@@ -53,7 +53,10 @@ public class ForgotPasswordActivity extends MainActivity implements View.OnClick
             if (AuxiliaryMethods.isEmailValid(forgotPasswordEmail.getText().toString(), forgotPasswordEmail.getText().toString())){
                 resetPassword(forgotPasswordEmail.getText().toString());
             }else{
-                MainActivity.showErrorToast(ForgotPasswordActivity.this,getString(R.string.is_email_valid_error));
+                forgotPasswordEmail.setError(getString(R.string.fp_recover_failed));
+               // Toast.makeText(ForgotPasswordActivity.this,getString(R.string.fp_recover_failed), Toast.LENGTH_SHORT).show();
+
+              //  MainActivity.showErrorToast(ForgotPasswordActivity.this,getString(R.string.is_email_valid_error));
             }
         }
     }
@@ -73,7 +76,9 @@ public class ForgotPasswordActivity extends MainActivity implements View.OnClick
                         if (task.isSuccessful()) {
                             showPopUp();
                         } else {
-                            MainActivity.showErrorToast(ForgotPasswordActivity.this,getString(R.string.fp_recover_failed));
+                            forgotPasswordEmail.setError(getString(R.string.fp_recover_failed));
+                          //  Toast.makeText(ForgotPasswordActivity.this,getString(R.string.fp_recover_failed), Toast.LENGTH_SHORT).show();
+                        //    MainActivity.showErrorToast(ForgotPasswordActivity.this,getString(R.string.fp_recover_failed));
                         }
                     }
                 });
@@ -89,8 +94,7 @@ public class ForgotPasswordActivity extends MainActivity implements View.OnClick
                 .setPositiveButton(getString(R.string.pop_up_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent goLogin = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
-                        startActivity(goLogin);
+                        startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
                     }
                 })
 

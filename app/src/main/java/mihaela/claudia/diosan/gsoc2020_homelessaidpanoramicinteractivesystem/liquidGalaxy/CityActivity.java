@@ -114,9 +114,9 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.live_overview_cv:
                 String city = preferences.getString("city","");
                 showAllHomeless();
-                liveOverview(city);
                 showLocalStatistics(city);
                 showHomelessInfo(city);
+                liveOverview(city);
                 break;
         }
     }

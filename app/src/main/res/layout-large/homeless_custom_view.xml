@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margins">
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginStart="@dimen/start_margin"
+        android:layout_marginEnd="@dimen/end_margin">
 
 
         <LinearLayout
@@ -32,88 +34,159 @@
                 android:orientation="vertical"
                 android:layout_margin="@dimen/margins">
 
-                <TextView
-                    android:id="@+id/homeless_username_tv"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/top_margin"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/username_img"/>
+
+
+                    <TextView
+                        android:id="@+id/homeless_username_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/title"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:text="@string/hcv_username"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/cv_margins"
-                    android:textSize="@dimen/title"
-                    android:drawablePadding="@dimen/padding"
-                    android:drawableStart="@drawable/username_drawable"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    android:text="@string/hcv_username"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/homeless_phone_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/cv_margins"
-                    android:drawableStart="@drawable/phone_drawable"
-                    android:drawablePadding="@dimen/padding"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:textSize="@dimen/body"
-                    android:text="@string/hcv_phone"/>
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/phone_img"/>
 
-                <TextView
-                    android:id="@+id/homeless_birthday_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/cv_margins"
-                    android:drawablePadding="@dimen/padding"
-                    android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/birthday_drawable"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:text="@string/hcv_birthday"/>
 
-                <TextView
-                    android:id="@+id/homeless_lifeHistory_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/cv_margins"
-                    android:drawablePadding="@dimen/padding"
-                    android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/life_history_drawable"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:text="@string/hcv_life_history"/>
+                    <TextView
+                        android:id="@+id/homeless_phone_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/body"
+                        android:text="@string/hcv_phone"/>
 
-                <TextView
-                    android:id="@+id/homeless_locationAddress_tv"
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/cv_margins"
-                    android:drawablePadding="@dimen/padding"
-                    android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/create_homeless_location"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:text="@string/hcv_address"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/homeless_schedule_tv"
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/birthday_img"/>
+
+
+                    <TextView
+                        android:id="@+id/homeless_birthday_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/body"
+                        android:text="@string/hcv_birthday"/>
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/cv_margins"
-                    android:drawablePadding="@dimen/padding"
-                    android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/schedule_icon"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:text="@string/hcv_schedule"/>
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/life_history_img"/>
 
-                <TextView
-                    android:id="@+id/homeless_need_tv"
+                    <TextView
+                        android:id="@+id/homeless_lifeHistory_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/body"
+                        android:text="@string/hcv_life_history"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/cv_margins"
-                    android:drawablePadding="@dimen/padding"
-                    android:textSize="@dimen/body"
-                    android:drawableStart="@drawable/create_homeless_needs"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:text="@string/hcv_need"/>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/location_img"/>
+
+                    <TextView
+                        android:id="@+id/homeless_locationAddress_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/body"
+                        android:text="@string/hcv_address"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cv_margins"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/schedule_img"/>
+
+                    <TextView
+                        android:id="@+id/homeless_schedule_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/body"
+                        android:text="@string/hcv_schedule"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cv_margins"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="@dimen/end_margin"
+                        android:src="@drawable/needs_img"/>
+
+                    <TextView
+                        android:id="@+id/homeless_need_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/body"
+                        android:text="@string/hcv_need"/>
+
+                </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

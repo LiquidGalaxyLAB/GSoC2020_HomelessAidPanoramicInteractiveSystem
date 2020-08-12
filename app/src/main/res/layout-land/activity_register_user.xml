@@ -78,6 +78,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/register_user_username_hint"
                             android:drawableStart="@drawable/username_drawable"
+                            android:drawableTint="@color/icons_blue"
                             android:textSize="@dimen/body"
                             android:inputType="textPersonName"
                             android:drawablePadding="@dimen/padding" />
@@ -96,6 +97,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/register_user_email_hint"
                             android:drawableStart="@drawable/email_drawable"
+                            android:drawableTint="@color/icons_blue"
                             android:textSize="@dimen/body"
                             android:inputType="textEmailAddress"
                             android:drawablePadding="@dimen/padding" />
@@ -115,6 +117,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/register_user_password_hint"
                             android:drawableStart="@drawable/password_drawable"
+                            android:drawableTint="@color/icons_blue"
                             android:drawablePadding="@dimen/padding"
                             android:inputType="textPassword"
                             android:textSize="@dimen/body"/>
@@ -145,6 +148,7 @@
                             android:textSize="@dimen/body"
                             android:inputType="textPersonName"
                             android:drawableStart="@drawable/username_drawable"
+                            android:drawableTint="@color/icons_blue"
                             android:drawablePadding="@dimen/padding" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,6 +167,7 @@
                             android:textSize="@dimen/body"
                             android:inputType="textPersonName"
                             android:drawableStart="@drawable/username_drawable"
+                            android:drawableTint="@color/icons_blue"
                             android:drawablePadding="@dimen/padding"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -179,6 +184,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/register_user_phone_number_hint"
                             android:drawableStart="@drawable/phone_drawable"
+                            android:drawableTint="@color/icons_blue"
                             android:drawablePadding="@dimen/padding"
                             android:textSize="@dimen/body"
                             android:inputType="numberDecimal" />

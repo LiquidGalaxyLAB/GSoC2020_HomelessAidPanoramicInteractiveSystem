@@ -54,6 +54,11 @@ public class POIController {
         return  sendBalloonToLG(listener,description, image, route);
     }
 
+    public LGCommand showBalloonOnSlave(POI poi, LGCommand.Listener listener,String description, String image, String slave_name){
+        currentPOI = new POI(poi);
+        return  sendBalloonToSlave(listener,description, image, slave_name);
+    }
+
     public LGCommand sendPlacemark(POI poi, LGCommand.Listener listener, String hostIp, String route){
         currentPOI = new POI(poi);
         return  setPlacemark(listener, hostIp, route);
@@ -139,11 +144,13 @@ public class POIController {
         return lgCommand;
     }
 
-    private static String flyToCity(POI poi){
+    public static String flyToCity(POI poi){
         return "echo 'flytoview=<gx:duration>5</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
                 "<longitude>" + poi.getLongitude() + "</longitude>" +
                 "<latitude>" + poi.getLatitude() + "</latitude>" +
                 "<altitude>" + poi.getAltitude() + "</altitude>" +
+                "<heading>" + poi.getHeading() +"</heading>" +
+                "<tilt>" + poi.getTilt() + "</tilt>"+
                 "<range>" + poi.getRange() + "</range>" +
                 "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
                 "</LookAt>' > /tmp/query.txt; sleep 25";
@@ -162,6 +169,15 @@ public class POIController {
 
     private LGCommand sendBalloonToLG(LGCommand.Listener listener,String description, String image, String route){
         LGCommand lgCommand = new LGCommand(buildDescriptionBallon(currentPOI,description, image, route), CRITICAL_MESSAGE, (String result) -> {
+            if(listener != null)
+                listener.onResponse(result);
+        });
+        LGConnectionManager.getInstance().addCommandToLG(lgCommand);
+        return lgCommand;
+    }
+
+    private LGCommand sendBalloonToSlave(LGCommand.Listener listener,String description, String image, String slave_name){
+        LGCommand lgCommand = new LGCommand(buildDescriptionBallonCityStatistics(currentPOI,description, image, slave_name), CRITICAL_MESSAGE, (String result) -> {
             if(listener != null)
                 listener.onResponse(result);
         });
@@ -272,6 +288,47 @@ public class POIController {
                " \n" +
                "</kml>' > /var/www/html/hapis/" + route + "/" + poi.getName() + ".kml";
     }
+
+    private static String buildDescriptionBallonCityStatistics(POI poi, String description, String image, String slave_name ){
+        return  "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
+                "  xmlns:gx=\"http://www.google.com/kml/ext/2.2\">\n" +
+                "  \n" +
+                " <Placemark>\n" +
+                " <name>" + poi.getName() + "</name>\n" +
+                " <description>\n" +
+                " <![CDATA[\n" +
+                "<body style=\" margin:5 width:700px; height:800px text-align:center\"> \n" +
+                "<img src= http://lg1:81/hapis/balloons/statistics/cities/" + image + " " +  "width = \"600px\" class=\"center\" > \n"+
+                "<font size = \"+3\">" + description + "</font> \n" +
+                "</body>" +
+                "]]> \n" +
+                "</description>\n" +
+                " <gx:displayMode>panel</gx:displayMode>" +
+                " <gx:balloonVisibility>1</gx:balloonVisibility>\n" +
+                " </Placemark>\n" +
+                " \n" +
+                "</kml>' > /var/www/html/kml/" + slave_name + ".kml";
+    }
+
+    public static void cleanKmlSlave(String slave_name){
+        String sentence = "chmod 777 /var/www/html/kml/" + slave_name + ".kml; echo '" +
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n" +
+                "<kml xmlns=\"http://www.opengis.net/kml/2.2\"" +
+                " xmlns:gx=\"http://www.google.com/kml/ext/2.2\"" +
+                " xmlns:kml=\"http://www.opengis.net/kml/2.2\" " +
+                " xmlns:atom=\"http://www.w3.org/2005/Atom\">\n" +
+                " <Document id=\" " + slave_name + "\"> \n" +
+                " </Document>\n" +
+                " </kml>\n' > /var/www/html/kml/" + slave_name + ".kml";
+
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
+    }
+
+
+
+
+
 
 
 }

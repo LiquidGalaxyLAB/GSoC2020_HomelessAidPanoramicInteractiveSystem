@@ -23,9 +23,13 @@ import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.MainActivityLG;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
+
+import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand.CRITICAL_MESSAGE;
 
 
 public class CityStatisticsTask extends AsyncTask<Void, Void, String> {
@@ -83,55 +87,17 @@ public class CityStatisticsTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        try {
-
-            Session session = LGUtils.getSession(activity);
-
-            //We fly to the point
-            LGUtils.setConnectionWithLiquidGalaxy(session, command, activity);
-
-
-                while (!isCancelled()) {
-                    session.sendKeepAliveMsg();
-
-                    setCitiesStatistics();
-
-                }
-
-
+        setCitiesStatistics();
             return "";
 
-        } catch (JSchException e) {
-            this.cancel(true);
-            if (dialog != null) {
-                dialog.dismiss();
-            }
-            activity.runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    Toast.makeText(context, context.getResources().getString(R.string.error_galaxy), Toast.LENGTH_LONG).show();
-                }
-            });
-
-            return null;
-        } catch (InterruptedException e) {
-            activity.runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    Toast.makeText(context, context.getResources().getString(R.string.visualizationCanceled), Toast.LENGTH_LONG).show();
-                }
-            });
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+
+    public static void downloadCityPhoto(String city, String imageUrl){
+        String sentence = "cd /var/www/html/hapis/balloons/statistics/cities/ ;curl -o " + city + " " + imageUrl;
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
 
-
-    private void setCitiesStatistics() {
+    private void setCitiesStatistics(){
         mFirestore.collection("cities")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -141,6 +107,7 @@ public class CityStatisticsTask extends AsyncTask<Void, Void, String> {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 final String city = document.getString("city");
+                                final String cityWS = document.getString("cityWS");
                                 final String latitude = document.getString("latitude");
                                 final String longitude = document.getString("longitude");
                                 final String altitude = document.getString("altitude");
@@ -163,20 +130,22 @@ public class CityStatisticsTask extends AsyncTask<Void, Void, String> {
                                 getCityLodging(city);
                                 getCityHygiene(city);
 
-                                POI cityPOI = createPOI(city, latitude, longitude, altitude);
+                                POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
+                                downloadCityPhoto(cityPOI.getName(),image );
+                                // Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
 
-                                POIController.getInstance().showBalloon(cityPOI, null, buildCityStatistics(city, homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), null, "balloons/statistics/cities");
-                                Toast.makeText(context, buildCityStatistics(city, homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
+                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), cityPOI.getName(), "slave_3");
+                                //POIController.getInstance().sendBalloon(cityPOI, null,"balloons/statistics/cities" );
+                                POIController.getInstance().flyToCity(cityPOI, null);
 
-                                //    POIController.getInstance().sendBalloon(cityPOI, null,"balloons/statistics/cities" );
-
-                            /*    POIController.getInstance().sendPlacemark(cityPOI,null, "192.168.86.228","balloons/statistics/cities" );
-                                POIController.getInstance().flyToCity(cityPOI, null);*/
+                                //  Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
+                                /*    POIController.getInstance().sendPlacemark(cityPOI,null, "192.168.86.228","balloons/statistics/cities" );*/
                             }
                         }
                     }
                 });
     }
+
 
     private POI createPOI(String name, String latitude, String longitude, String altitude){
 

@@ -64,8 +64,10 @@
                             app:chipBackgroundColor="@drawable/chip_selector"
                             android:textColor="@color/black"
                             android:text="@string/chip_food"
-                            android:textSize="@dimen/body"
                             app:chipIcon="@drawable/food_icon"
+                            android:padding="@dimen/padding"
+                            android:textSize="@dimen/body"
+                            app:iconStartPadding="@dimen/padding"
                             app:chipIconEnabled="true"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
@@ -78,6 +80,8 @@
                             android:text="@string/chip_clothes"
                             android:textSize="@dimen/body"
                             app:chipIcon="@drawable/clothes_icon"
+                            app:iconStartPadding="@dimen/padding"
+                            android:padding="@dimen/padding"
                             app:chipIconEnabled="true"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
@@ -89,7 +93,9 @@
                             android:textColor="@color/black"
                             android:text="@string/chip_work"
                             android:textSize="@dimen/body"
+                            android:padding="@dimen/padding"
                             app:chipIcon="@drawable/work_icon"
+                            app:iconStartPadding="@dimen/padding"
                             app:chipIconEnabled="true"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
@@ -101,7 +107,9 @@
                             android:textColor="@color/black"
                             android:text="@string/chip_lodging"
                             android:textSize="@dimen/body"
+                            app:iconStartPadding="@dimen/padding"
                             app:chipIcon="@drawable/lodging_icon"
+                            android:padding="@dimen/padding"
                             app:chipIconEnabled="true"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
@@ -112,11 +120,12 @@
                             app:chipBackgroundColor="@drawable/chip_selector"
                             android:textColor="@color/black"
                             android:text="@string/chip_hygiene_products"
+                            android:padding="@dimen/padding"
                             android:textSize="@dimen/body"
+                            app:iconStartPadding="@dimen/padding"
                             app:chipIcon="@drawable/hygiene_icon"
                             app:chipIconEnabled="true"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
-
                     </com.google.android.material.chip.ChipGroup>
 
                     <TextView
@@ -159,12 +168,17 @@
                     android:layout_height="wrap_content"
                     android:text="@string/personally_button"
                     android:layout_marginTop="@dimen/top_margin"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:backgroundTint="@color/blue_light"
                     android:textSize="@dimen/body"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:iconSize="24dp"
+                    android:backgroundTint="@color/white"
                     app:icon="@drawable/personally_icon"
-                    app:iconTint="@color/black" />
+                    app:iconPadding="@dimen/padding"
+                    app:strokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:iconTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/through_volunteer_button"
@@ -172,12 +186,17 @@
                     android:layout_height="wrap_content"
                     android:text="@string/through_volunteer_button"
                     android:layout_marginBottom="@dimen/bottom_margin"
+                    android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/body"
-                    android:backgroundTint="@color/lila_color"
+                    app:iconSize="24dp"
+                    android:backgroundTint="@color/white"
                     app:icon="@drawable/volunteer_icon"
-                    app:iconTint="@color/black" />
+                    app:iconPadding="@dimen/padding"
+                    app:strokeColor="@color/colorAccent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:iconTint="@null" />
 
             </LinearLayout>
 

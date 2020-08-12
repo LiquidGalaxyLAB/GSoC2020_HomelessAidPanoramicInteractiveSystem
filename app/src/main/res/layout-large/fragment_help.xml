@@ -11,7 +11,6 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="@dimen/margins">
 
         <LinearLayout
@@ -42,7 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/start_margin"
                 android:layout_marginTop="@dimen/top_margin"
                 android:layout_marginBottom="@dimen/bottom_margin"
                 app:singleSelection="true">
@@ -54,12 +52,11 @@
                     app:chipBackgroundColor="@drawable/chip_selector"
                     android:textColor="@color/black"
                     android:text="@string/chip_food"
-                    android:layout_marginStart="@dimen/start_margin"
-                    android:layout_marginEnd="@dimen/end_margin"
                     app:chipIcon="@drawable/food_icon"
+                    android:padding="@dimen/padding"
                     android:textSize="@dimen/body"
+                    app:iconStartPadding="@dimen/padding"
                     app:chipIconEnabled="true"
-                    app:iconEndPadding="@dimen/padding"
                     style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
                 <com.google.android.material.chip.Chip
@@ -70,11 +67,10 @@
                     android:textColor="@color/black"
                     android:text="@string/chip_clothes"
                     android:textSize="@dimen/body"
-                    android:layout_marginStart="@dimen/start_margin"
-                    android:layout_marginEnd="@dimen/end_margin"
                     app:chipIcon="@drawable/clothes_icon"
+                    app:iconStartPadding="@dimen/padding"
+                    android:padding="@dimen/padding"
                     app:chipIconEnabled="true"
-                    app:iconEndPadding="@dimen/padding"
                     style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
                 <com.google.android.material.chip.Chip
@@ -85,11 +81,10 @@
                     android:textColor="@color/black"
                     android:text="@string/chip_work"
                     android:textSize="@dimen/body"
+                    android:padding="@dimen/padding"
                     app:chipIcon="@drawable/work_icon"
-                    android:layout_marginStart="@dimen/start_margin"
-                    android:layout_marginEnd="@dimen/end_margin"
+                    app:iconStartPadding="@dimen/padding"
                     app:chipIconEnabled="true"
-                    app:iconEndPadding="@dimen/padding"
                     style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
                 <com.google.android.material.chip.Chip
@@ -100,10 +95,9 @@
                     android:textColor="@color/black"
                     android:text="@string/chip_lodging"
                     android:textSize="@dimen/body"
-                    android:layout_marginStart="@dimen/start_margin"
-                    android:layout_marginEnd="@dimen/end_margin"
+                    app:iconStartPadding="@dimen/padding"
                     app:chipIcon="@drawable/lodging_icon"
-                    app:iconEndPadding="@dimen/padding"
+                    android:padding="@dimen/padding"
                     app:chipIconEnabled="true"
                     style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
@@ -114,10 +108,9 @@
                     app:chipBackgroundColor="@drawable/chip_selector"
                     android:textColor="@color/black"
                     android:text="@string/chip_hygiene_products"
+                    android:padding="@dimen/padding"
                     android:textSize="@dimen/body"
-                    android:layout_marginStart="@dimen/start_margin"
-                    android:layout_marginEnd="@dimen/end_margin"
-                    app:iconEndPadding="@dimen/padding"
+                    app:iconStartPadding="@dimen/padding"
                     app:chipIcon="@drawable/hygiene_icon"
                     app:chipIconEnabled="true"
                     style="@style/Widget.MaterialComponents.Chip.Choice"/>
@@ -154,10 +147,15 @@
                 android:layout_marginTop="@dimen/top_margin"
                 android:textSize="@dimen/body"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/blue_light"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:iconSize="48dp"
+                android:backgroundTint="@color/white"
                 app:icon="@drawable/personally_icon"
-                app:iconTint="@color/black" />
+                app:iconPadding="@dimen/padding"
+                app:strokeColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:iconTint="@null" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/through_volunteer_button"
@@ -165,13 +163,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/through_volunteer_button"
                 android:layout_marginBottom="@dimen/bottom_margin"
+                android:textStyle="bold"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/body"
-                android:backgroundTint="@color/lila_color"
+                app:iconSize="48dp"
+                android:backgroundTint="@color/white"
                 app:icon="@drawable/volunteer_icon"
-                app:iconTint="@color/black" />
+                app:iconPadding="@dimen/padding"
+                app:strokeColor="@color/colorAccent"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:iconTint="@null" />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
 </ScrollView>

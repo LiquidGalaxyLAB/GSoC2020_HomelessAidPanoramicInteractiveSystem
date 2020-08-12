@@ -130,15 +130,16 @@
                         android:layout_marginTop="@dimen/top_margin"
                         android:backgroundTint="@color/white"
                         android:text="@string/sign_up"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/body"
                         android:textStyle="bold"
-                        app:icon="@drawable/add_user_icon_48dp"
-                        app:iconTint="@color/blue"
+                        app:icon="@drawable/register_user_icon"
+                        app:iconTint="@null"
+                        app:iconSize="48dp"
                         app:iconPadding="@dimen/padding"
-                        app:strokeColor="@color/blue"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-
+                        app:strokeColor="@color/colorPrimary"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -155,9 +156,19 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:backgroundTint="@color/white"
-                        app:iconPadding="@dimen/padding"
+                        android:text="@string/liquid_galaxy_tv"
+                        android:layout_marginTop="@dimen/top_margin"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/body"
+                        android:textStyle="bold"
                         app:icon="@drawable/lg"
-                        app:iconTint="@null" />
+                        app:iconTint="@null"
+                        app:iconSize="48dp"
+                        android:gravity="center"
+                        app:iconPadding="@dimen/padding"
+                        app:strokeColor="@color/colorPrimary"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        />
                 </LinearLayout>
 
             </LinearLayout>

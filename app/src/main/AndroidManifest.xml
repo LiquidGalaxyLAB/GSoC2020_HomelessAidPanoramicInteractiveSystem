@@ -55,7 +55,8 @@
         <activity android:name=".register.RegisterUserActivity" />
         <activity android:name=".liquidGalaxy.FirstActivityLG" />
         <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".login.ForgotPasswordActivity" />
+        <activity android:name=".login.ForgotPasswordActivity"
+            android:label="@string/forgot_password_name"/>
         <activity
             android:name=".login.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
