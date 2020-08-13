@@ -34,14 +34,13 @@ public  class RegisterActivity extends MainActivity implements View.OnClickListe
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        AuxiliaryMethods.makeActivityFullScreen(getWindow(), getSupportActionBar());
+       /* AuxiliaryMethods.makeActivityFullScreen(getWindow(), getSupportActionBar());*/
         initViews();
 
         knowMoreDonorBtn.setOnClickListener(this);
         knowMoreVolunteerBtn.setOnClickListener(this);
         startRegisterDonorBtn.setOnClickListener(this);
         startRegisterVolunteerBtn.setOnClickListener(this);
-
     }
 
     @Override

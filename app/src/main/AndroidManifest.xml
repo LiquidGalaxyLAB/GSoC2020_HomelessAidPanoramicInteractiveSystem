@@ -52,9 +52,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".register.RegisterUserActivity" />
+        <activity android:name=".register.RegisterUserActivity"
+            android:label="@string/register_user_name"/>
         <activity android:name=".liquidGalaxy.FirstActivityLG" />
-        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".register.RegisterActivity"
+            android:label="@string/register_activity_name"/>
         <activity android:name=".login.ForgotPasswordActivity"
             android:label="@string/forgot_password_name"/>
         <activity

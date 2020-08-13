@@ -134,7 +134,7 @@ public class CityStatisticsTask extends AsyncTask<Void, Void, String> {
                                 downloadCityPhoto(cityPOI.getName(),image );
                                 // Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
 
-                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), cityPOI.getName(), "slave_3");
+                              //  POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), cityPOI.getName(), "slave_3");
                                 //POIController.getInstance().sendBalloon(cityPOI, null,"balloons/statistics/cities" );
                                 POIController.getInstance().flyToCity(cityPOI, null);
 

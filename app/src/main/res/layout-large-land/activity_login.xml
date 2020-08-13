@@ -188,18 +188,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:backgroundTint="@color/white"
-                            android:text="@string/liquid_galaxy_tv"
                             android:layout_marginTop="@dimen/top_margin"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/body"
-                            android:textStyle="bold"
                             app:icon="@drawable/lg"
                             app:iconTint="@null"
-                            app:iconSize="24dp"
-                            android:gravity="center"
-                            app:iconPadding="@dimen/padding"
-                            app:strokeColor="@color/colorPrimary"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             />
 
                     </LinearLayout>

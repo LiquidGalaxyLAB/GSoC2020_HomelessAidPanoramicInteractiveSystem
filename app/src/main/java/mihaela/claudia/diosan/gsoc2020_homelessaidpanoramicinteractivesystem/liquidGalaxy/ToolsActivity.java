@@ -18,6 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 
 public class ToolsActivity extends AppCompatActivity {
 
@@ -76,9 +77,11 @@ public class ToolsActivity extends AppCompatActivity {
                         String sentence = "cd /var/www/html/ ; mkdir -p hapis/{balloons/{basic/{donors,volunteers,homeless},bio/{donors,volunteers,homeless},statistics/cities,transactions/{donors,volunteers,homeless}},placemarks/{donors,volunteers,homeless}} ; sudo apt install curl";
                         String donor = "cd /var/www/html/hapis/balloons/basic/donors/ ; curl -o donor https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Fdonor.jpg?alt=media&token=32057beb-680a-4849-9645-e603983fcffb ; cd /var/www/html/hapis/balloons/bio/donors/ ; curl -o donor https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Fdonor.jpg?alt=media&token=32057beb-680a-4849-9645-e603983fcffb ; cd /var/www/html/hapis/balloons/transactions/donors/ ; curl -o donor https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Fdonor.jpg?alt=media&token=32057beb-680a-4849-9645-e603983fcffb";
                         String volunteer = "cd /var/www/html/hapis/balloons/basic/volunteers/ ; curl -o volunteer https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Fvolunteer.jpg?alt=media&token=9e10e7a3-10dc-4c68-986f-02e35bf5e5ca ; cd /var/www/html/hapis/balloons/bio/volunteers/ ; curl -o volunteer https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Fvolunteer.jpg?alt=media&token=9e10e7a3-10dc-4c68-986f-02e35bf5e5ca ; cd /var/www/html/hapis/balloons/transactions/volunteers/ ; curl -o volunteer https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Fvolunteer.jpg?alt=media&token=9e10e7a3-10dc-4c68-986f-02e35bf5e5ca";
+                        String logos = "cd /var/www/html/hapis/ ; curl -o logos.png https://firebasestorage.googleapis.com/v0/b/gsoc2020-hapis.appspot.com/o/lg_profile%2Flogos.png?alt=media&token=6a7658d6-86f8-4c6c-af2b-3f26172508c6";
                         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
                         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(donor, LGCommand.CRITICAL_MESSAGE, null));
                         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(volunteer, LGCommand.CRITICAL_MESSAGE, null));
+                        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(logos, LGCommand.CRITICAL_MESSAGE, null));
                         Toast.makeText(ToolsActivity.this, getString(R.string.install_toast), Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -100,6 +103,8 @@ public class ToolsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String sentence = "cd /var/www/html/ ; rm -r hapis";
                         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, LGCommand.CRITICAL_MESSAGE, null));
+                        POIController.cleanKmlSlave("slave_4");
+                        POIController.cleanKmlSlave("slave_3");
                         Toast.makeText(ToolsActivity.this, getString(R.string.uninstall_toast), Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -127,6 +132,13 @@ public class ToolsActivity extends AppCompatActivity {
                 //String sentence = "rm -f /var/www/html/kmls.txt; touch /var/www/html/kmls.txt > /home/lg/log.txt";
                 String sentence = "chmod 777 /var/www/html/kmls.txt; echo '' > /var/www/html/kmls.txt";
                 showAlertAndExecution(sentence, "clean kml files");
+                POIController.cleanKmlSlave("slave_2");
+                POIController.cleanKmlSlave("slave_3");
+                POIController.cleanKmlSlave("slave_4");
+                POIController.cleanKmlSlave("slave_5");
+                POIController.cleanKmlSlave("slave_6");
+                POIController.cleanKmlSlave("slave_7");
+                POIController.cleanKmlSlave("slave_8");
             } catch (Exception e) {
                 Toast.makeText(this, getResources().getString(R.string.error_galaxy), Toast.LENGTH_LONG).show();
             }

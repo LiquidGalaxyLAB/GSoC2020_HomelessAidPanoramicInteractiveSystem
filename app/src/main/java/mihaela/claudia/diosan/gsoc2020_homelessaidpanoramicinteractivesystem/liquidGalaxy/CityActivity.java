@@ -113,10 +113,11 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.live_overview_cv:
                 String city = preferences.getString("city","");
+                POIController.cleanKm();
                 showAllHomeless();
                 showLocalStatistics(city);
-                showHomelessInfo(city);
-                liveOverview(city);
+               // showHomelessInfo(city);
+               // liveOverview(city);
                 break;
         }
     }
@@ -179,11 +180,16 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
 
                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
 
-                                Toast.makeText(CityActivity.this, MainActivityLG.buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(CityActivity.this, MainActivityLG.buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
+
+                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, MainActivityLG.buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), "slave_3");
+                                String command = buildCommand(cityPOI);
+                                VisitPoiTask visitPoiTask = new VisitPoiTask(command, cityPOI, true,CityActivity.this, CityActivity.this);
+                                visitPoiTask.execute();
 
                                 //Local Statistics balloon
-                                POIController.getInstance().showBalloon(cityPOI, null, MainActivityLG.buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), null, "balloons/statistics/cities");
-                                POIController.getInstance().sendBalloon(cityPOI, null,"balloons/statistics/cities" );
+                              //  POIController.getInstance().showBalloonOnSlave(cityPOI, null, MainActivityLG.buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), null, "slave_3");
+                              //  POIController.getInstance().sendBalloon(cityPOI, null,"balloons/statistics/cities" );
                            //     POIController.getInstance().flyToCity(cityPOI, null);
                                 //  Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
                                 /*    POIController.getInstance().sendPlacemark(cityPOI,null, "192.168.86.228","balloons/statistics/cities" );*/
@@ -316,15 +322,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                 final String longitude = document.getString("homelessLongitude");
                                 final String latitude = document.getString("homelessLatitude");
 
-                                 POI Homeless = new POI()
-                                         .setName(name)
-                                        .setLongitude(Double.parseDouble(longitude))
-                                        .setLatitude(Double.parseDouble(latitude))
-                                        .setAltitude(0.0d)
-                                        .setHeading(0d)
-                                        .setTilt(40.0d)
-                                        .setRange(100.0d)
-                                        .setAltitudeMode("relativeToSeaFloor ");
+                                 POI Homeless = createPOI(name,latitude, longitude, "0.0d" );
                                  POIController.getInstance().sendPlacemark(Homeless, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "placemarks/homeless");
                                  POIController.getInstance().showPlacemark(Homeless,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
                             }}

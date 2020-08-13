@@ -54,9 +54,9 @@ public class POIController {
         return  sendBalloonToLG(listener,description, image, route);
     }
 
-    public LGCommand showBalloonOnSlave(POI poi, LGCommand.Listener listener,String description, String image, String slave_name){
+    public LGCommand showBalloonOnSlave(POI poi, LGCommand.Listener listener,String description,String route, String image, String slave_name){
         currentPOI = new POI(poi);
-        return  sendBalloonToSlave(listener,description, image, slave_name);
+        return  sendBalloonToSlave(listener,description,route, image, slave_name);
     }
 
     public LGCommand sendPlacemark(POI poi, LGCommand.Listener listener, String hostIp, String route){
@@ -176,8 +176,8 @@ public class POIController {
         return lgCommand;
     }
 
-    private LGCommand sendBalloonToSlave(LGCommand.Listener listener,String description, String image, String slave_name){
-        LGCommand lgCommand = new LGCommand(buildDescriptionBallonCityStatistics(currentPOI,description, image, slave_name), CRITICAL_MESSAGE, (String result) -> {
+    private LGCommand sendBalloonToSlave(LGCommand.Listener listener,String description, String route, String image, String slave_name){
+        LGCommand lgCommand = new LGCommand(buildDescriptionBalloonStatistics(currentPOI, description,route, image, slave_name), CRITICAL_MESSAGE, (String result) -> {
             if(listener != null)
                 listener.onResponse(result);
         });
@@ -289,7 +289,7 @@ public class POIController {
                "</kml>' > /var/www/html/hapis/" + route + "/" + poi.getName() + ".kml";
     }
 
-    private static String buildDescriptionBallonCityStatistics(POI poi, String description, String image, String slave_name ){
+    private static String buildDescriptionBalloonStatistics(POI poi, String description,String route, String image, String slave_name ){
         return  "echo '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
                 "  xmlns:gx=\"http://www.google.com/kml/ext/2.2\">\n" +
@@ -299,8 +299,8 @@ public class POIController {
                 " <description>\n" +
                 " <![CDATA[\n" +
                 "<body style=\" margin:5 width:700px; height:800px text-align:center\"> \n" +
-                "<img src= http://lg1:81/hapis/balloons/statistics/cities/" + image + " " +  "width = \"600px\" class=\"center\" > \n"+
-                "<font size = \"+3\">" + description + "</font> \n" +
+                "<img src=" + route + image + " " +  "width = \"600px\" class=\"center\" > \n"+
+                "<font size = \"+3\" >" + description + "</font> \n" +
                 "</body>" +
                 "]]> \n" +
                 "</description>\n" +
@@ -311,6 +311,7 @@ public class POIController {
                 "</kml>' > /var/www/html/kml/" + slave_name + ".kml";
     }
 
+
     public static void cleanKmlSlave(String slave_name){
         String sentence = "chmod 777 /var/www/html/kml/" + slave_name + ".kml; echo '" +
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n" +
@@ -320,6 +321,31 @@ public class POIController {
                 " xmlns:atom=\"http://www.w3.org/2005/Atom\">\n" +
                 " <Document id=\" " + slave_name + "\"> \n" +
                 " </Document>\n" +
+                " </kml>\n' > /var/www/html/kml/" + slave_name + ".kml";
+
+        LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
+    }
+
+    public static void setLogos(String slave_name){
+        String sentence = "chmod 777 /var/www/html/kml/" + slave_name + ".kml; echo '" +
+                "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
+                "xmlns:atom=\"http://www.w3.org/2005/Atom\" \n"  +
+                " xmlns:gx=\"http://www.google.com/kml/ext/2.2\"> \n" +
+                " <Document>\n " +
+                " <Folder> \n" +
+                    "<name>Logos</name> \n" +
+                        "<ScreenOverlay>\n" +
+                            "<name>Logo</name> \n" +
+                            " <Icon> \n" +
+                              "<href>http://192.168.86.228:81/hapis/logos.png</href> \n" +
+                            " </Icon> \n" +
+                            " <overlayXY x=\"0\" y=\"1\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
+                            " <screenXY x=\"0.02\" y=\"0.95\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
+                            " <rotationXY x=\"0\" y=\"0\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
+                            " <size x=\"0.6\" y=\"0.2\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
+                        "</ScreenOverlay> \n" +
+                " </Folder> \n" +
+                " </Document> \n" +
                 " </kml>\n' > /var/www/html/kml/" + slave_name + ".kml";
 
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));

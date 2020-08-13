@@ -69,8 +69,7 @@
 
 
     <!--*****    Register User Activity  *****-->
-    <string name="register_volunteer_name">Register Volunteer</string>
-    <string name="register_donor_name">Register Donor</string>
+    <string name="register_user_name">Register User</string>
     <string name="register_user_title">Create an account</string>
     <string name="register_user_pop_up_title">REGISTRATION SUCCESS</string>
     <string name="register_user_login_info">Login Info</string>

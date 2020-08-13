@@ -37,7 +37,7 @@ public class LgUser {
 
     }
 
-    public LgUser(String username,int color, String latitude, String longitude, String location, String email, String phone, String firstName, String lastName) {
+    public LgUser(String username, String latitude, String longitude, String location, String email, String phone, String firstName, String lastName, String homelessCreated, int color) {
         this.username = username;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -47,6 +47,7 @@ public class LgUser {
         this.firstName = firstName;
         this.lastName = lastName;
         this.color = color;
+        this.homelessCreated = homelessCreated;
 
     }
 

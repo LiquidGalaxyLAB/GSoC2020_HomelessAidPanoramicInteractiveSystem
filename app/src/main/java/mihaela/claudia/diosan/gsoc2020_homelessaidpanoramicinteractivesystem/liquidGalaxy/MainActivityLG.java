@@ -58,8 +58,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     private FirebaseFirestore mFirestore;
 
     private ProgressDialog dialog;
-    private Handler handler;
-    private Runnable runnable;
+
 
 
     public static final POI EARTH_POI = new POI()
@@ -89,7 +88,9 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
         initViews();
         POIController.cleanKm();
+        POIController.cleanKmlSlave("slave_2");
         POIController.cleanKmlSlave("slave_3");
+        POIController.setLogos("slave_4");
         POIController.getInstance().moveToPOI(EARTH_POI, null);
         mFirestore = FirebaseFirestore.getInstance();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -186,6 +187,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
 
     private void setGlobalStatistics(){
+        getTotalCities();
         getHomelessNumber();
         getDonorsNumber();
         getVolunteersNumber();
@@ -207,6 +209,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
+                                final String cities = document.getString("cities");
                                 final String homeless = document.getString("homeless");
                                 final String donors = document.getString("donors");
                                 final String volunteers = document.getString("volunteers");
@@ -223,10 +226,12 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 POIController.getInstance().moveToPOI(STATISTICS, null);
                                 String sentence = "cd /var/www/html/hapis/balloons/statistics/ ;curl -o " + STATISTICS.getName() + " " + image;
                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
-                                POIController.getInstance().showBalloon(STATISTICS, null, buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), STATISTICS.getName(), "balloons/statistics");
-                                POIController.getInstance().sendBalloon(STATISTICS, null, "balloons/statistics");
+                                POIController.getInstance().showBalloonOnSlave(STATISTICS, null, buildGlobalStatistics(cities,homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations),"http://lg1:81/hapis/balloons/statistics/", STATISTICS.getName(), "slave_2");
 
-                                Toast.makeText(MainActivityLG.this,   buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), Toast.LENGTH_SHORT).show();
+                             //   POIController.getInstance().showBalloon(STATISTICS, null, buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), STATISTICS.getName(), "balloons/statistics");
+                            //    POIController.getInstance().sendBalloon(STATISTICS, null, "balloons/statistics");
+
+                              //  Toast.makeText(MainActivityLG.this,   buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -281,7 +286,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 downloadCityPhoto(cityPOI.getName(),image );
                                // Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
 
-                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(cityWS,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), cityPOI.getName(), "slave_3");
+                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), "slave_3");
                                 POIController.getInstance().flyToCity(cityPOI, null); }
                         }
                     }
@@ -356,8 +361,10 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         return poi;
     }
 
-    private String buildGlobalStatistics(String homeless, String donors, String volunteers, String food, String clothes, String work, String lodging, String hygiene_products,String personallyStatistics,String throughVolunteerStatistics){
-        return  "<h2> <b> USERS</b></h2>\n" +
+    private String buildGlobalStatistics(String cities, String homeless, String donors, String volunteers, String food, String clothes, String work, String lodging, String hygiene_products,String personallyStatistics,String throughVolunteerStatistics){
+        return  "<h2> <b> CITIES</b></h2>\n" +
+                "<p> <b> Total cities: </b> " + cities + "</p>\n" +
+                "<h2> <b> USERS</b></h2>\n" +
                 "<p> <b> Total homeless: </b> " + homeless + "</p>\n" +
                 "<p> <b> Total donors: </b> " + donors + "</p>\n" +
                 "<p> <b> Total volunteers: </b> " + volunteers + "</p>\n" +
@@ -388,6 +395,23 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 "<p> <b> Hygiene products: </b> " + hygiene_products + "</p>\n";
     }
 
+    private void getTotalCities(){
+
+        mFirestore.collection("cities").
+                get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            String cities = String.valueOf(task.getResult().size());
+                            globalInfo.put("cities", cities);
+                            mFirestore.collection("statistics").document("global").set(globalInfo, SetOptions.merge());
+                        }
+                    }
+                });
+    }
+
+
 
     private void getHomelessNumber(){
 
@@ -404,6 +428,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                     }
                 });
     }
+
 
 
 
@@ -684,10 +709,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                     }
                 });
     }
-
-    
-
-
 }
 
 

@@ -143,9 +143,9 @@ public class VolunteersActivity extends AppCompatActivity {
                                 final String homelessCreated = document.getString("homelessCreated");
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,color, latitude, longitude, location, email, phone, firstName, lastName, homelessCreated);
-                                users.add(user);
 
+                                final LgUser user = new LgUser(username, latitude, longitude, location, email, phone, firstName, lastName, homelessCreated, color);
+                                users.add(user);
 
                                 final LgUserAdapter lgUserAdapter = new LgUserAdapter(users);
                                 searchText(lgUserAdapter);
@@ -157,6 +157,7 @@ public class VolunteersActivity extends AppCompatActivity {
 
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
                                         POIController.cleanKm();
+                                        Toast.makeText(VolunteersActivity.this,users.get(position).getEmail(), Toast.LENGTH_SHORT ).show();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
