@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -143,7 +144,7 @@ public class ThroughVolunteerFragment extends Fragment implements View.OnClickLi
             case R.id.donor_confirm_button:
                 if (isValidForm()){
                     uploadDataToFirebase();
-                    showSuccessToast(getString(R.string.fr_tv_confirm_toast));
+                    MainActivity.showSuccessToast(getActivity(),getString(R.string.fr_tv_confirm_toast));
                     startActivity(new Intent(getContext(), HomeDonor.class));
                 }
                 break;
@@ -190,43 +191,18 @@ public class ThroughVolunteerFragment extends Fragment implements View.OnClickLi
 
     private boolean isValidForm(){
         if (selectedDateDonor.getText().toString().equals(getString(R.string.fr_tv_date))){
-            showErrorToast( getString(R.string.date_error_toast));
+            MainActivity.showErrorToast( getActivity(), getString(R.string.date_error_toast));
             return false;
         }else if (selectedTimeDonor.getText().toString().equals(getString(R.string.fr_tv_hour))){
-            showErrorToast(getString(R.string.time_error_toast));
+            MainActivity.showErrorToast( getActivity(),getString(R.string.time_error_toast));
             return false;
         }else if (locationDonor.getText().toString().equals(getString(R.string.fr_tv_location))){
-            showErrorToast( getString(R.string.location_error_toast));
+            MainActivity.showErrorToast( getActivity(), getString(R.string.location_error_toast));
             return false;
         }
         return true;
     }
 
-    public void showErrorToast(String message){
-        Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
-        View view =toast.getView();
-        view.setBackgroundColor(Color.WHITE);
-        TextView toastMessage =  toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(Color.RED);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setTextSize(15);
-        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.error_drawable, 0,0,0);
-        toastMessage.setPadding(10,10,10,10);
-        toast.show();
-    }
-
-    public void showSuccessToast(String message){
-        Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
-        View view =toast.getView();
-        view.setBackgroundColor(Color.WHITE);
-        TextView toastMessage =  toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(Color.GREEN);
-        toastMessage.setGravity(Gravity.CENTER);
-        toastMessage.setTextSize(15);
-        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_circle_black_24dp, 0,0,0);
-        toastMessage.setPadding(10,10,10,10);
-        toast.show();
-    }
 
     private void initPlaces() {
         Places.initialize(view.getContext(), getString(R.string.API_KEY));
@@ -237,6 +213,7 @@ public class ThroughVolunteerFragment extends Fragment implements View.OnClickLi
         AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_donor);
         assert autocompleteSupportFragment != null;
         autocompleteSupportFragment.setPlaceFields(placeFields);
+        autocompleteSupportFragment.setHint(getString(R.string.choose_location_hint));
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull final Place place) {

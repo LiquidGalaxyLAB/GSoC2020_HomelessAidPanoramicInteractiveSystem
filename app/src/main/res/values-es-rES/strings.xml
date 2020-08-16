@@ -278,6 +278,8 @@
 
 
     <!--  Help Fragment-->
+    <string name="help_fr_title">AYUDA A </string>
+    <string name="blank_space">" "</string>
     <string name="donation_type">Selecciona  que quieres donar</string>
     <string name="help_type">Selecciona como quieres realizar tu donación</string>
     <string name="personally_button">PERSONALMENTE</string>
@@ -292,6 +294,7 @@
 
     <!--Fragment through a volunteer -->
     <string name="fr_tv_title">Establece un punto de encuentro cercano, el día y la hora para encontrarte con el voluntario y se pondrá en contacto contigo. </string>
+    <string name="choose_location_hint">Busca punto de encunetro</string>
     <string name="pick_date_button">FECHA</string>
     <string name="pick_time_button">HORA</string>
     <string name="fr_tv_location">Ubicación seleccionada</string>

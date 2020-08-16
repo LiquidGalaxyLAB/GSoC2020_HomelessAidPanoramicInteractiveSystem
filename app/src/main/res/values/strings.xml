@@ -276,6 +276,8 @@
 
 
     <!--  Help Fragment-->
+    <string name="help_fr_title">Help</string>
+    <string name="blank_space">" "</string>
     <string name="donation_type">Choose what you want do donate </string>
     <string name="help_type">Choose the manner you want to make your donation</string>
     <string name="personally_button">PERSONALLY</string>
@@ -290,6 +292,7 @@
 
     <!--Fragment through a volunteer -->
     <string name="fr_tv_title">Establish a close meeting point, the day and time to meet the volunteer and he will contact you. </string>
+    <string name="choose_location_hint">Search meeting point</string>
     <string name="pick_date_button">DATE</string>
     <string name="pick_time_button">HOUR</string>
     <string name="fr_tv_location">Selected location</string>

@@ -47,6 +47,8 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     private MaterialButton personallyBtn;
     private MaterialButton throughVolunteerBtn;
 
+    private TextView homelessToHelp;
+
     private ChipGroup chipGroup;
     private TextView helpType;
 
@@ -66,6 +68,8 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 
         initViews();
         firebaseInit();
+
+        homelessToHelp.setText(homelessUsername);
 
         return view;
     }
@@ -125,6 +129,8 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         personallyBtn = view.findViewById(R.id.personally_button);
         throughVolunteerBtn = view.findViewById(R.id.through_volunteer_button);
         helpType = view.findViewById(R.id.help_type_donor);
+        homelessToHelp = view.findViewById(R.id.username_to_help);
+
     }
 
 

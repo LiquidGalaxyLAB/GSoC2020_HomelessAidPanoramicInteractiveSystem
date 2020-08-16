@@ -26,41 +26,55 @@
                 map:liteMode="true"
                 map:mapType="none" />
 
-            <TextView
-                android:id="@+id/lite_list_row_text"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textStyle="bold"
-                android:drawableStart="@drawable/username_drawable"
-                android:drawableTint="@color/colorPrimaryDark"
-                android:drawablePadding="@dimen/padding"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="@string/text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/lite_list_row_address"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="@dimen/cv_margins"
+                    android:src="@drawable/username_img"/>
+
+                <TextView
+                    android:id="@+id/lite_list_row_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/body"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="@dimen/body"
-                android:drawableStart="@drawable/create_homeless_location"
-                android:drawableTint="@color/grey"
-                android:drawablePadding="@dimen/padding"
-                android:textColor="@color/grey"
-                android:text="@string/text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/cv_margins"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="@dimen/cv_margins"
+                    android:src="@drawable/location_img"/>
 
-
+                <TextView
+                    android:id="@+id/lite_list_row_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/body"
+                    android:textColor="@color/grey"
+                    android:text="@string/text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
 
 
         </LinearLayout>
 
-
-
-
     </com.google.android.material.card.MaterialCardView>
-
-
 
 </LinearLayout>

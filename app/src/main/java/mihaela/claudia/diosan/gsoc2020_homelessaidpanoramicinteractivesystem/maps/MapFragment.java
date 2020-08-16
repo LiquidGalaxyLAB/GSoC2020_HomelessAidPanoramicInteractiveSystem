@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
@@ -23,7 +25,11 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,6 +38,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,12 +47,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.donor.HelpFragment;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MapFragment extends Fragment implements OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FirebaseFirestore mFirestore;
+    /*SharedPreferences*/
+    private SharedPreferences homelessPref;
 
 
     @Override
@@ -55,7 +72,9 @@ public class MapFragment extends Fragment implements OnMapAndViewReadyListener.O
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
-        String sPref = preferences.getString("networkPreference", "Todas");
+      //  String sPref = preferences.getString("networkPreference", "Todas");
+
+        homelessPref = getActivity().getSharedPreferences("homelessInfo", MODE_PRIVATE);
       //  String status = getConnectivityStatusString(getContext());
 
       //  if (sPref.equals("Wi-Fi") && status.equals(getString(R.string.mobile_connected)) || status.equals(getString(R.string.no_network_operating))){
@@ -169,6 +188,8 @@ public class MapFragment extends Fragment implements OnMapAndViewReadyListener.O
                                 String longitude = document.getString("homelessLongitude");
                                 String username = document.getString("homelessUsername");
                                 String schedule = document.getString("homelessSchedule");
+                                String image = document.getString("image");
+
 
                                 final LatLng position = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
@@ -177,12 +198,41 @@ public class MapFragment extends Fragment implements OnMapAndViewReadyListener.O
                                         .title(username)
                                         .snippet(getString(R.string.here) + " " + schedule)
                                         .icon(vectorToBitmap(R.drawable.ic_person_pin_circle_black_24dp, Color.parseColor("#F10000"))));
+
+                                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                    @Override
+                                    public void onInfoWindowClick(Marker marker) {
+
+                                        SharedPreferences.Editor editor = homelessPref.edit();
+                                        editor.putString("homelessUsername",  marker.getTitle()).apply();
+
+                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.donor_fragment_container, new HelpFragment())
+                                               .addToBackStack(null).commit();
+                                    }
+                                });
+
                             }
                         }
                     }
                 });
 
 
+    }
+
+
+    public Bitmap getBitmapFromURL(String strURL) {
+        try {
+            URL url = new URL(strURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private BitmapDescriptor vectorToBitmap(@DrawableRes int id, @ColorInt int color) {
