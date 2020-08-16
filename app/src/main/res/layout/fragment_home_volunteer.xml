@@ -40,7 +40,7 @@
             app:fab_label="@string/send_delivery_notification"
             app:fab_colorNormal="@color/colorPrimaryDark"
             app:fab_colorPressed="@color/colorPrimary"
-            android:src="@drawable/send_notification_drawable"
+            android:src="@drawable/send_drawable"
             app:fab_size="mini">
         </com.github.clans.fab.FloatingActionButton>
 

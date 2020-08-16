@@ -40,6 +40,7 @@
                 app:itemTextColor="@drawable/bn_item_selected"
                 app:menu="@menu/donor_bottom_navigation_menu"/>
         </FrameLayout>
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -48,9 +49,8 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         app:itemTextColor="@color/darkGrey"
-        app:itemIconTint="@color/colorPrimary"
+        app:itemIconTint="@color/colorAccent"
         app:menu="@menu/user_menu"
-        android:elevation="@dimen/elevation"
         app:headerLayout="@layout/user_header"
         android:layout_gravity="start">
     </com.google.android.material.navigation.NavigationView>

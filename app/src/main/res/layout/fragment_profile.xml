@@ -27,7 +27,7 @@
                     android:id="@+id/homeless_profile_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/create_profile_image"
-                    android:background="@drawable/gradient_background"
+                    android:background="@drawable/no_profile_image"
                     android:layout_gravity="center"
                     android:contentDescription="@string/content_description"/>
 
@@ -41,8 +41,9 @@
                     android:textSize="@dimen/body"
                     android:text="@string/select_photo_button"
                     android:textColor="@color/colorPrimary"
-                    app:icon="@drawable/ic_add_a_photo_black_24dp"
-                    app:iconTint="@color/colorPrimary"
+                    app:icon="@drawable/add_image"
+                    app:iconSize="24dp"
+                    app:iconTint="@null"
                     />
 
 
@@ -59,7 +60,7 @@
                         android:singleLine="true"
                         android:drawableStart="@drawable/username_drawable"
                         android:drawablePadding="@dimen/padding"
-                        android:drawableTint="@color/grey"
+                        android:drawableTint="@color/icons_blue"
                         android:inputType="textPersonName"
                         android:hint="@string/homeless_profile_fragment_username_hint"
                         />
@@ -79,7 +80,7 @@
                         android:inputType="phone"
                         android:drawableStart="@drawable/phone_drawable"
                         android:drawablePadding="@dimen/padding"
-                        android:drawableTint="@color/grey"
+                        android:drawableTint="@color/icons_blue"
                         android:hint="@string/homeless_profile_fragment_phone_number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +100,7 @@
                         android:focusableInTouchMode="false"
                         android:drawableStart="@drawable/birthday_drawable"
                         android:drawablePadding="@dimen/padding"
-                        android:drawableTint="@color/grey"/>
+                        android:drawableTint="@color/icons_blue"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +119,7 @@
                         android:layout_marginBottom="@dimen/bottom_margin"
                         android:drawableStart="@drawable/life_history_drawable"
                         android:drawablePadding="@dimen/padding"
-                        android:drawableTint="@color/grey"
+                        android:drawableTint="@color/icons_blue"
                         android:hint="@string/homeless_profile_fragment_life_history_hint" />
 
                     <LinearLayout
@@ -131,10 +132,11 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/cancelProfileButton"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            app:strokeColor="@color/colorPrimary"
+                            app:strokeColor="@color/red"
                             android:textColor="@color/colorPrimary"
-                            app:icon="@drawable/ic_close_black_24dp"
-                            app:iconTint="@color/colorPrimary"
+                            app:icon="@drawable/cancel_img"
+                            app:iconTint="@null"
+                            app:iconSize="24dp"
                             android:textSize="@dimen/body"
                             android:layout_marginEnd="@dimen/end_margin"
                             android:layout_width="wrap_content"
@@ -148,9 +150,10 @@
                             android:id="@+id/saveProfileButton"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             app:strokeColor="@color/green"
-                            android:textColor="@color/green"
-                            app:icon="@drawable/ic_save_black_24dp"
-                            app:iconTint="@color/green"
+                            android:textColor="@color/colorPrimary"
+                            app:icon="@drawable/save_img"
+                            app:iconTint="@null"
+                            app:iconSize="24dp"
                             android:textSize="@dimen/body"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

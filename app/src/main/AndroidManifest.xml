@@ -39,9 +39,13 @@
         <activity android:name=".liquidGalaxy.MainActivityLG" />
         <activity
             android:name=".donor.HomeDonor"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".volunteer.CreateHomelessProfile" />
-        <activity android:name=".common.Payment" />
+        <activity android:name=".common.Payment"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.YouTubePlayer"
             android:configChanges="orientation|screenSize" />

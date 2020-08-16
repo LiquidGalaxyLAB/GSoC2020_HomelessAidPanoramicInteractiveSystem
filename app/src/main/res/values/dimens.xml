@@ -23,12 +23,12 @@
 
     <!--    Images -->
     <dimen name="check_size">50dp</dimen>
-    <dimen name="payment_icons">50dp</dimen>
+    <dimen name="payment_icons">40dp</dimen>
     <dimen name="statistics_image">80dp</dimen>
     <dimen name="statistics_image_land">120dp</dimen>
-    <dimen name="contact_image">100dp</dimen>
+    <dimen name="contact_image">150dp</dimen>
     <dimen name="contact_image_land">100dp</dimen>
-    <dimen name="donate_icon">100dp</dimen>
+    <dimen name="donate_icon">150dp</dimen>
     <dimen name="help_image">200dp</dimen>
     <dimen name="help_image_land">120dp</dimen>
     <dimen name="through_vol_fragment">100dp</dimen>

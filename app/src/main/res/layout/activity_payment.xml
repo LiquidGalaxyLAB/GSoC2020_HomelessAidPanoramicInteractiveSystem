@@ -31,7 +31,6 @@
                     android:layout_width="@dimen/payment_icons"
                     android:layout_height="@dimen/payment_icons"
                     android:layout_marginTop="@dimen/top_margin"
-                    android:layout_marginStart="@dimen/start_margin"
                     android:contentDescription="@string/content_description"
                     android:src="@drawable/donate_icon"/>
 
@@ -64,9 +63,8 @@
                     android:layout_width="@dimen/payment_icons"
                     android:layout_height="@dimen/payment_icons"
                     android:layout_marginTop="@dimen/top_margin"
-                    android:layout_marginStart="@dimen/start_margin"
                     android:contentDescription="@string/content_description"
-                    android:src="@drawable/credit_card_icon"/>
+                    android:src="@drawable/credit_card_img"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -86,13 +84,15 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_pay"
-                android:layout_marginStart="@dimen/start_margin"
                 app:icon="@drawable/donate_left_drawable"
-                app:iconTint="@color/green"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/top_margin"
+                app:iconTint="@null"
+                app:iconSize="24dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/green"
+                app:strokeColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:textColor="@color/green"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"

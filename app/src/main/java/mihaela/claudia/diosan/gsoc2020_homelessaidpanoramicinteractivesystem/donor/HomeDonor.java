@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +31,7 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.common.ConfigurationFragment;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.common.ContactFragment;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.common.DonateFragment;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.login.LoginActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.maps.ListMapFragment;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.maps.MapFragment;
@@ -88,10 +90,10 @@ public class HomeDonor extends MainActivity implements NavigationView.OnNavigati
                         DocumentSnapshot documentSnapshot = task.getResult();
                         if (documentSnapshot != null){
 
-                            donorUsername.setText( documentSnapshot.getString("donorUsername"));
-                            donorPhone.setText(documentSnapshot.getString("donorPhone"));
-                            donorFirstName.setText(documentSnapshot.getString("donorFirstName"));
-                            donorLastName.setText(documentSnapshot.getString("donorLastName"));
+                            donorUsername.setText( documentSnapshot.getString("username"));
+                            donorPhone.setText(documentSnapshot.getString("phone"));
+                            donorFirstName.setText(documentSnapshot.getString("firstName"));
+                            donorLastName.setText(documentSnapshot.getString("lastName"));
                         }
                     }
                 }
@@ -103,12 +105,20 @@ public class HomeDonor extends MainActivity implements NavigationView.OnNavigati
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mToolbar = findViewById(R.id.donor_toolbar);
+        setSupportActionBar(mToolbar);
+
         donorDrawer = findViewById(R.id.donor_drawer);
         navigationView = findViewById(R.id.nav_view_donor);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, donorDrawer, mToolbar, R.string.open_navigation_drawer, R.string.close_navigation_drawer);
+        donorDrawer.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     private void setNavigationElements() {
-        setSupportActionBar(mToolbar);
+
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -167,6 +177,8 @@ public class HomeDonor extends MainActivity implements NavigationView.OnNavigati
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
