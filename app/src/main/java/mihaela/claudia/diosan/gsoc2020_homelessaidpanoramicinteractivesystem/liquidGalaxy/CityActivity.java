@@ -44,8 +44,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences preferences;
     SharedPreferences defaultPrefs;
     /*Firebase*/
-    private FirebaseFirestore mFirestore;
-    private Map<String,String> homelessInfo = new HashMap<>();
+    private FirebaseFirestore mFirestore;    private Map<String,String> homelessInfo = new HashMap<>();
     private Map<String,String> volunteerInfo = new HashMap<>();
 
     @Override

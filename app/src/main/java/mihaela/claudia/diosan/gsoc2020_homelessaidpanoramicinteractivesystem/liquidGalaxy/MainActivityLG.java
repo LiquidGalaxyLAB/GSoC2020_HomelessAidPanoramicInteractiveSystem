@@ -4,19 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,23 +22,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.Session;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.CitiesCardsAdapter;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.CityStatisticsTask;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.Cities;
 
 import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand.CRITICAL_MESSAGE;
 
@@ -58,7 +46,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     private FirebaseFirestore mFirestore;
 
     private ProgressDialog dialog;
-
 
 
     public static final POI EARTH_POI = new POI()
@@ -145,6 +132,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.city_statistics:
+
                 String message = getString(R.string.viewing) + " " + getString(R.string.city_statistics_txt) + " " + getResources().getString(R.string.inLG);
 
                 dialog = new ProgressDialog(MainActivityLG.this);
@@ -155,10 +143,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.stop), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    /*    if (handler != null && runnable != null) {
-                            handler.removeCallbacks(runnable);
-                        }*/
-
                         POIController.cleanKm();
                         dialog.dismiss();
                     }
@@ -166,23 +150,10 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
                 dialog.show();
 
-                setCitiesStatistics();
-
-              /*  runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler = new Handler();
-                        runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                setCitiesStatistics();
-                            }
-                        };
-                        handler.postDelayed(runnable, 1000);
-                    }
-                });*/
         }
+                setCitiesStatistics();
     }
+
 
 
 
@@ -709,6 +680,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                     }
                 });
     }
+
 }
 
 

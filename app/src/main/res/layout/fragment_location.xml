@@ -65,18 +65,32 @@
                     android:layout_marginBottom="@dimen/bottom_margin"
                     />
 
-                <TextView
-                    android:id="@+id/selected_location_tv"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/body"
-                    android:layout_marginTop="@dimen/top_margin"
-                    android:layout_marginBottom="@dimen/bottom_margin"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:drawableStart="@drawable/create_homeless_location"
-                    android:drawableTint="@color/colorPrimaryDark"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_marginTop="@dimen/top_margin"
+                    android:layout_marginBottom="@dimen/bottom_margin"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="@dimen/cv_margins"
+                        android:src="@drawable/location_img"
+                        />
+
+                    <TextView
+                        android:id="@+id/selected_location_tv"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/body"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+
+
 
                 <!-- MapFragment with lite mode enabled -->
                 <fragment
@@ -103,17 +117,19 @@
                         android:text="@string/homeless_profile_cancel_button"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/body"
-                        app:icon="@drawable/ic_close_black_24dp"
-                        app:iconTint="@color/colorPrimary"
-                        app:strokeColor="@color/colorPrimary" />
+                        map:iconSize="24dp"
+                        app:icon="@drawable/cancel_img"
+                        app:iconTint="@null"
+                        app:strokeColor="@color/red" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/saveLocationButton"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         app:strokeColor="@color/green"
-                        android:textColor="@color/green"
-                        app:icon="@drawable/ic_save_black_24dp"
-                        app:iconTint="@color/green"
+                        android:textColor="@color/colorPrimary"
+                        app:icon="@drawable/save_img"
+                        app:iconTint="@null"
+                        map:iconSize="24dp"
                         android:layout_marginStart="@dimen/start_margin"
                         android:textSize="@dimen/body"
                         android:layout_marginTop="@dimen/top_margin"

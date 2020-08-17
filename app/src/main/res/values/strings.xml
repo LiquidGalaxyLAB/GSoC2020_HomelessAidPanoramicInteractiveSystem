@@ -306,6 +306,7 @@
 
     <!--Through volunteer fragment-->
     <string name="donation_type_tv">Wants to donate</string>
+    <string name="tv_location_hint">Homeless location</string>
     <string name="donates_to">To</string>
     <string name="can_be">Location</string>
     <string name="on">Date and time</string>
@@ -345,9 +346,9 @@
 
 
     <!--Dashboard cards-->
-    <string name="cities">Cities</string>
-    <string name="statistics">Global Statistics</string>
-    <string name="city_statistics">City Statistics</string>
+    <string name="cities">Cities\n</string>
+    <string name="statistics">Global\n Statistics</string>
+    <string name="city_statistics">City\n Statistics</string>
 
 
     <!--Activity Tools-->
@@ -410,4 +411,25 @@
     <string name="install_description">This is necessary when you first use the application with the Liquid Galaxy.\n This allows you to see all the information on the screens.</string>
     <string name="uninstall_title">Uninstall LG Requirements</string>
     <string name="uninstall_description">By this you delete all information and requirements of HAPIS into the Liquid Galaxy.</string>
+
+    <!--Liquid Galaxy Help-->
+    <string name="lg_help_name">HELP</string>
+    <string name="lg_help_title">You can find the complete guide of HAPIS in <a href="https://github.com/LiquidGalaxyLAB/GSoC2020_HomelessAidPanoramicInteractiveSystem/wiki">HAPIS Wiki</a> </string>
+    <string name="lg_connection_title">Connect to the Liquid Galaxy for the first time</string>
+    <string name="lg_connection_body">To connect with the Liquid Galaxy for the first time follow the next steps:\n 1.In the menu select Setting. Here, complete the LG user, password, IP and port. The port normally is 22.\n 2. Go back to main dashboard and select Tools on the menu.\n 3. In Tools select the menu option Install and press OK button. This way you install all the requirements into the Liquid Galaxy master. </string>
+    <string name="main_dashboard_title">Main dashboard buttons</string>
+    <string name="main_dashboard_body">In the main dashboard you have 3 buttons:\n 1. Cities: By pressing this button you go to another page where you can see all the cities where we have homeless registerd.\n 2. City Statistics: This button flies to each city and shows you the local statistics on Liquid Galaxy.\n 3. Global Statistics: This button shows you the statistics for all cities into a single bubble on Liquid Galaxy.</string>
+    <string name="tools_options_title">Tools options</string>
+    <string name="tools_options_body">If you select Tools on the menu, you can see 4 buttons:\n 1. Clean KML: By pressing this button, you delete all the kmls shown on the Liquid Galaxy. It also cleans the slaves.\n 2. Relaunch LG: By pressing this button you make a relaunch of he Liquid Galaxy.\n 3. Reboot LG: Makes a reboot of the Liquid Galaxy.\n 4. Shutdown LG: This buttons shuts down the Liquid Galaxy. </string>
+    <string name="city_title">See information for each city</string>
+    <string name="city_body">When you select a city, in the Liquid Galaxy you can see how it flies to the city and on the device you can see four buttons on the dashboard. Next, you can what is doing each of them:\n 1. Homeless: Shows you a list of all homeless in the selected city and all the placemarks into the Liquid Galaxy.\n 2. Volunteers:Shows you a list of all volunteers in the selected city and all the placemarks into the Liquid Galaxy.\n 3.Donors: Shows you a list of all donors in the selected city and all the placemarks into the Liquid Galaxy.\n 4.Live Overview: Into the Liquid Galaxy,flies to each city, shows the local statistics on a screen and passes for all homeless, showing the information bubble into another screen. </string>
+    <string name="homeless_title">Homeless Information</string>
+    <string name="homeless_body">When you select Homeless on a city, you can see a list of all homeless persons in that city.When you select a homeless username, in the Liquid Galaxy flies to his position and shows the basic information.\n Each username has 3 buttons:\n 1. Life History: Shows the life history too, on the Liquid Galaxy.\n 2. Transactions: Shows the donations that the homeless received.\n 3. Orbit: Realize an orbit around that homeless. </string>
+    <string name="volunteers_title">Volunteers Information</string>
+    <string name="volunteers_body">When you select Volunteers on a city, you can see a list of all volunteers in that city.When you select a volunteer username, in the Liquid Galaxy flies to his position and shows the basic information.\n Each username has 3 buttons:\n 1. Extra: Shows the first name, last name and phone too, on the Liquid Galaxy.\n 2. Transactions: Shows how many homeless profiles he created.\n 3. Orbit: Realize an orbit around that volunteer. </string>
+    <string name="donors_title">Donors Information</string>
+    <string name="donors_body">When you select Donors on a city, you can see a list of all donors in that city.When you select a donor username, in the Liquid Galaxy flies to his position and shows the basic information.\n Each username has 3 buttons:\n 1. Extra: Shows the first name, last name and phone too, on the Liquid Galaxy.\n 2. Transactions: Shows how many donations he realized.\n 3. Orbit: Realize an orbit around that donor. </string>
+
+
+
 </resources>

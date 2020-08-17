@@ -119,9 +119,8 @@
                         android:id="@+id/homeless_lifeHistory_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/hcv_life_history"/>
-                        android:textSize="@dimen/body"
-                        android:text="@string/hcv_life_history"/>
+                        android:text="@string/hcv_life_history"
+                        android:textSize="@dimen/body"/>
                 </LinearLayout>
 
                 <LinearLayout

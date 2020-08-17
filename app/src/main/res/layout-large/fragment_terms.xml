@@ -77,7 +77,7 @@
                     android:layout_marginTop="@dimen/top_margin"
                     android:textSize="@dimen/body"
                     android:text="@string/clear_signature_button"
-                    app:iconSize="24dp"
+                    app:iconSize="48dp"
                     android:textStyle="bold"
                     app:icon="@drawable/delete_homeless_icon"
                     app:iconTint="@null"
@@ -98,7 +98,7 @@
                     android:textColor="@color/colorPrimary"
                     app:icon="@drawable/save_img"
                     app:iconTint="@null"
-                    app:iconSize="24dp"
+                    app:iconSize="48dp"
                     app:strokeColor="@color/green"
                     android:layout_marginBottom="@dimen/bottom_margin"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton" />

@@ -151,6 +151,7 @@ public class LocationFragment extends Fragment implements  OnMapAndViewReadyList
         AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         assert autocompleteSupportFragment != null;
         autocompleteSupportFragment.setPlaceFields(placeFields);
+        autocompleteSupportFragment.setHint(getString(R.string.tv_location_hint));
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull final Place place) {

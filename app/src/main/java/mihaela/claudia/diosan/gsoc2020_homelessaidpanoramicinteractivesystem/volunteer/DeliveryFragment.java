@@ -88,7 +88,7 @@ public class DeliveryFragment extends Fragment {
                             .setPositiveButton(getString(R.string.confirm_button_delivery), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String donorEmail = documentSnapshot.getString("donorEmail".toLowerCase());
+                                    String donorEmail = documentSnapshot.getString("donorEmail");
                                     String donatesTo = documentSnapshot.getString("donatesTo");
                                     String donationType = documentSnapshot.getString("donationType");
 

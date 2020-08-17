@@ -31,7 +31,8 @@
         <activity android:name=".liquidGalaxy.HomelessActivity" />
         <activity android:name=".liquidGalaxy.CityActivity" />
         <activity android:name=".liquidGalaxy.CitiesActivity" />
-        <activity android:name=".liquidGalaxy.HelpActivity" />
+        <activity android:name=".liquidGalaxy.HelpActivity"
+            android:label="@string/lg_help_name"/>
         <activity android:name=".liquidGalaxy.ToolsActivity" />
         <activity
             android:name=".liquidGalaxy.SettingsActivity"

@@ -17,7 +17,7 @@
 
     <!--    Text -->
     <dimen name="title">35sp</dimen>
-    <dimen name="body">23sp</dimen>
+    <dimen name="body">20sp</dimen>
 
     <!--    Images -->
     <dimen name="check_size">60dp</dimen>
@@ -30,7 +30,7 @@
     <dimen name="help_image">400dp</dimen>
     <dimen name="help_image_land">240dp</dimen>
     <dimen name="through_vol_fragment">200dp</dimen>
-    <dimen name="homeless_cv_image">700dp</dimen>
+    <dimen name="homeless_cv_image">600dp</dimen>
     <dimen name="intro_image_layout_height_land">200dp</dimen>
     <dimen name="delivery_notification_width">200dp</dimen>
     <dimen name="delivery_notification_height">300dp</dimen>
