@@ -1,6 +1,5 @@
 package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.annotation.TargetApi;
@@ -20,12 +19,15 @@ import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liq
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.lg_settings_preferences);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        slavesPrefs();
 
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.za
@@ -87,6 +89,32 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         // Trigger the listener immediately with the preference's
         // current value.
             onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+    }
+
+    private void slavesPrefs(){
+
+       // final androidx.preference.ListPreference logosPrefs =  findPreference("logos_preference");
+        final ListPreference logosPrefs = (ListPreference) findPreference("logos_preference");
+        final ListPreference homelessPrefs = (ListPreference) findPreference("homeless_preference");
+        final ListPreference localPrefs = (ListPreference) findPreference("local_preference");
+        final ListPreference globalPrefs = (ListPreference) findPreference("global_preference");
+
+        logosPrefs.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                preferences.edit().putString("logos_preference", newValue.toString()).apply();
+                preferences.edit().putString("homeless_preference", newValue.toString()).apply();
+                preferences.edit().putString("local_preference", newValue.toString()).apply();
+                preferences.edit().putString("global_preference", newValue.toString()).apply();
+                logosPrefs.setValue(newValue.toString());
+                homelessPrefs.setValue(newValue.toString());
+                localPrefs.setValue(newValue.toString());
+                globalPrefs.setValue(newValue.toString());
+
+                return false;
+            }
+        });
+
     }
 
 

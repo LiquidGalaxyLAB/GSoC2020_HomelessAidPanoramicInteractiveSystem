@@ -35,8 +35,8 @@ public class LGConnectionManager implements Runnable {
 
     public LGConnectionManager() {
         user = "lg";
-        password = "lqgalaxy";
-        hostname = "192.168.86.228";
+        password = "lg";
+        hostname = "192.168.1.29";
         port = 22;
 
         session = null;
@@ -106,6 +106,10 @@ public class LGConnectionManager implements Runnable {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public  void stopSending(){
+        session = null;
     }
 
     private boolean sendLGCommand(LGCommand lgCommand) {

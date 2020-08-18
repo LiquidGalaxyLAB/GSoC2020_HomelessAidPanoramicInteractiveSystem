@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +39,7 @@ import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesys
 public class MainActivityLG extends AppCompatActivity implements View.OnClickListener {
 
     MaterialCardView cities, globalStatistics, cityStatistics;
+    MaterialButton stopStatistics;
     SharedPreferences preferences;
 
     private Map<String,String> cityInfo = new HashMap<>();
@@ -45,7 +48,12 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     /*Firebase*/
     private FirebaseFirestore mFirestore;
 
-    private ProgressDialog dialog;
+    private ProgressDialog progressDialog;
+    private boolean runningThread = false;
+    String sentence = "sleep 10";
+    private Handler handler;
+    private Runnable myRunnable;
+    boolean stop = false;
 
 
     public static final POI EARTH_POI = new POI()
@@ -68,19 +76,24 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
             .setRange(10000000.0d)
             .setAltitudeMode("relativeToSeaFloor");
 
+    String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_l_g);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        logos_slave = preferences.getString("logos_preference","");
+        homeless_slave = preferences.getString("homeless_preference","");
+        local_statistics_slave = preferences.getString("local_preference","");
+        global_statistics_slave = preferences.getString("global_preference","");
+
+
         initViews();
-        POIController.cleanKm();
-        POIController.cleanKmlSlave("slave_2");
-        POIController.cleanKmlSlave("slave_3");
-        POIController.setLogos("slave_4");
+        cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave);
         POIController.getInstance().moveToPOI(EARTH_POI, null);
         mFirestore = FirebaseFirestore.getInstance();
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
         String user = preferences.getString("SSH-USER", "lg");
@@ -95,9 +108,19 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         cities.setOnClickListener(this);
         globalStatistics.setOnClickListener(this);
         cityStatistics.setOnClickListener(this);
+        stopStatistics.setOnClickListener(this);
 
     }
 
+    private void cleanKmls(String logos_slave, String homeless_slave, String local_statistics_slave, String global_statistics_slave){
+        POIController.cleanKmls();
+        POIController.cleanKmlSlave(homeless_slave);
+        POIController.cleanKmlSlave(local_statistics_slave);
+        POIController.cleanKmlSlave(global_statistics_slave);
+        POIController.setLogos(logos_slave);
+
+
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -116,7 +139,9 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         cities = findViewById(R.id.cities_cv);
         globalStatistics = findViewById(R.id.statistics_cv);
         cityStatistics = findViewById(R.id.city_statistics);
+        stopStatistics = findViewById(R.id.stop_statistics);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -126,35 +151,35 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 POIController.getInstance().moveToPOI(EARTH_POI, null);
                 break;
             case R.id.statistics_cv:
-                POIController.cleanKm();
+                POIController.cleanKmls();
                 setGlobalStatistics();
                 globalStatistics();
                 break;
-
             case R.id.city_statistics:
-
-                String message = getString(R.string.viewing) + " " + getString(R.string.city_statistics_txt) + " " + getResources().getString(R.string.inLG);
-
-                dialog = new ProgressDialog(MainActivityLG.this);
-                dialog.setMessage(message);
-                dialog.setIndeterminate(false);
-                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.stop), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        POIController.cleanKm();
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-
-        }
+                stopStatistics.setVisibility(View.VISIBLE);
                 setCitiesStatistics();
+             /*  handler =  new Handler();
+                 myRunnable = new Runnable() {
+                    public void run() {
+                        // Things to be done
+                        setCitiesStatistics();
+                    }
+                };
+
+                handler.postDelayed(myRunnable, 1000);*/
+
+                break;
+            case R.id.stop_statistics:
+                stopStatistics.setVisibility(View.GONE);
+             //
+                /*handler.removeMessages(0);
+                stop = true;*/
+                POIController.cleanKmls();
+                POIController.cleanKmlSlave(local_statistics_slave);
+                break;
+        }
+
     }
-
-
 
 
     private void setGlobalStatistics(){
@@ -197,12 +222,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 POIController.getInstance().moveToPOI(STATISTICS, null);
                                 String sentence = "cd /var/www/html/hapis/balloons/statistics/ ;curl -o " + STATISTICS.getName() + " " + image;
                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
-                                POIController.getInstance().showBalloonOnSlave(STATISTICS, null, buildGlobalStatistics(cities,homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations),"http://lg1:81/hapis/balloons/statistics/", STATISTICS.getName(), "slave_2");
-
-                             //   POIController.getInstance().showBalloon(STATISTICS, null, buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), STATISTICS.getName(), "balloons/statistics");
-                            //    POIController.getInstance().sendBalloon(STATISTICS, null, "balloons/statistics");
-
-                              //  Toast.makeText(MainActivityLG.this,   buildGlobalStatistics(homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations), Toast.LENGTH_SHORT).show();
+                                POIController.getInstance().showBalloonOnSlave(STATISTICS, null, buildGlobalStatistics(cities,homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations),"http://lg1:81/hapis/balloons/statistics/", STATISTICS.getName(), global_statistics_slave);
 
                             }
                         }
@@ -254,14 +274,40 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 getCityHygiene(city);
 
                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
+                                POIController.getInstance().moveToPOI(cityPOI, null);
+                                LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
+
+
+
+                           //     POIController.getInstance().flyToCity(cityPOI, null);
+                              //      Toast.makeText(MainActivityLG.this, cityPOI.getName(), Toast.LENGTH_SHORT).show();
+                                /*
                                 downloadCityPhoto(cityPOI.getName(),image );
                                // Toast.makeText(MainActivityLG.this,  buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), Toast.LENGTH_SHORT).show();
+                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), local_statistics_slave);
+                                POIController.getInstance().flyToCity(cityPOI, null);
+                                *//*String command = buildCommand(cityPOI);
+                                CityStatisticsTask cityStatisticsTask = new CityStatisticsTask(command, cityPOI, MainActivityLG.this, MainActivityLG.this);
+                                cityStatisticsTask.execute();*//*
+                                if (!running){
+                                    LGConnectionManager.getInstance().removeCommandFromLG(POIController.getInstance().flyToCity(cityPOI, null));*/
+//                                }
 
-                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), "slave_3");
-                                POIController.getInstance().flyToCity(cityPOI, null); }
+                            }
                         }
                     }
                 });
+    }
+
+    private String buildCommand(POI poi) {
+        return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude>" +
+                "<latitude>" + poi.getLatitude() + "</latitude>" +
+                "<altitude>" + poi.getAltitude() + "</altitude>" +
+                "<heading>" + poi.getHeading() + "</heading>" +
+                "<tilt>" + poi.getTilt() + "</tilt>" +
+                "<range>" + poi.getRange() + "</range>" +
+                "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
+                "</LookAt>' > /tmp/query.txt";
     }
 
     @Override

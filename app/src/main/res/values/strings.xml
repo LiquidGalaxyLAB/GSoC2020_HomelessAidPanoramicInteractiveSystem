@@ -430,6 +430,37 @@
     <string name="donors_title">Donors Information</string>
     <string name="donors_body">When you select Donors on a city, you can see a list of all donors in that city.When you select a donor username, in the Liquid Galaxy flies to his position and shows the basic information.\n Each username has 3 buttons:\n 1. Extra: Shows the first name, last name and phone too, on the Liquid Galaxy.\n 2. Transactions: Shows how many donations he realized.\n 3. Orbit: Realize an orbit around that donor. </string>
 
+    <!-- Preferences -->
+    <string name="basic_category">Basic Settings</string>
+    <string name="advanced_category">Advanced Settings</string>
+    <string name="logos_title">Logos</string>
+    <string name="logos_summary">Choose the slave where you want to see the logos.</string>
+    <string name="homeless_balloon_slaves">Homeless</string>
+    <string name="homeless_balloon_summary">Choose the slave where you want to see the homeless balloon.</string>
+    <string name="local_statistics_slaves">Local Statistics</string>
+    <string name="local_statistics_summary">Choose the slave where you want to see the local statistics balloon.</string>
+    <string name="global_statistics_slaves">Global Statistics</string>
+    <string name="global_statistics_summary">Choose the slave where you want to see the global statistics balloon.</string>
 
+
+    <string-array name="Slaves">
+        <item>Slave 2</item>
+        <item>Slave 3</item>
+        <item>Slave 4</item>
+        <item>Slave 5</item>
+        <item>Slave 6</item>
+        <item>Slave 7</item>
+        <item>Slave 8</item>
+    </string-array>
+    
+    <string-array name="slavesAlias">
+        <item>slave_2</item>
+        <item>slave_3</item>
+        <item>slave_4</item>
+        <item>slave_5</item>
+        <item>slave_6</item>
+        <item>slave_7</item>
+        <item>slave_8</item>
+    </string-array>
 
 </resources>

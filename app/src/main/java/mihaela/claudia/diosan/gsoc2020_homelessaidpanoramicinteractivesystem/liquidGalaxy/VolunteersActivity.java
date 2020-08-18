@@ -6,14 +6,9 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +29,6 @@ import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
@@ -156,7 +147,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                     public void onItemClick(int position) {
 
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         Toast.makeText(VolunteersActivity.this,users.get(position).getEmail(), Toast.LENGTH_SHORT ).show();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
@@ -171,7 +162,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                     @Override
                                     public void onBioClick(int position) {
 
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
@@ -185,7 +176,7 @@ public class VolunteersActivity extends AppCompatActivity {
                                     @Override
                                     public void onTransactionClick(int position) {
 
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 

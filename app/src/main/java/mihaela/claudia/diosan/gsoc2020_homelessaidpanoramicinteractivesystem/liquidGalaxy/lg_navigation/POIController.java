@@ -123,6 +123,7 @@ public class POIController {
         return lgCommand;
     }
 
+
     private static String buildCommand(POI poi) {
         //return "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt><longitude>" + poi.getLongitude() + "</longitude><latitude>" + poi.getLatitude() + "</latitude><altitude>" + poi.getAltitude() + "</altitude><heading>" + poi.getHeading() + "</heading><tilt>" + poi.getTilt() + "</tilt><range>" + poi.getRange() + "</range><gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode></LookAt>' > /tmp/query.txt";
 
@@ -144,8 +145,9 @@ public class POIController {
         return lgCommand;
     }
 
+
     public static String flyToCity(POI poi){
-        return "echo 'flytoview=<gx:duration>5</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
+        return "echo 'flytoview=<gx:Wait><gx:duration>10</gx:duration><gx:/Wait><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
                 "<longitude>" + poi.getLongitude() + "</longitude>" +
                 "<latitude>" + poi.getLatitude() + "</latitude>" +
                 "<altitude>" + poi.getAltitude() + "</altitude>" +
@@ -153,7 +155,7 @@ public class POIController {
                 "<tilt>" + poi.getTilt() + "</tilt>"+
                 "<range>" + poi.getRange() + "</range>" +
                 "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
-                "</LookAt>' > /tmp/query.txt; sleep 25";
+                "</LookAt>' > /tmp/query.txt;";
     }
 
 
@@ -258,7 +260,7 @@ public class POIController {
         return "echo 'http://localhost:81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
     }
 
-    public static void cleanKm(){
+    public static void cleanKmls(){
         String sentence = "chmod 777 /var/www/html/kmls.txt; echo '' > /var/www/html/kmls.txt";
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }

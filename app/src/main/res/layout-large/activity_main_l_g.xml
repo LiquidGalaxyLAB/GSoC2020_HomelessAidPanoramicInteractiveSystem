@@ -16,6 +16,17 @@
         android:gravity="center"
         android:layout_gravity="center">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/stop_statistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop"
+            android:textSize="@dimen/body"
+            android:visibility="gone"
+            android:backgroundTint="@color/red"
+            android:layout_marginEnd="@dimen/cv_margins"
+            android:layout_gravity="end"/>
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cities_cv"

@@ -2,24 +2,17 @@ package mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.li
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,8 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +28,6 @@ import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
@@ -156,7 +146,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         personallyTransactions(users.get(position).getEmail());
                                         throughVolunteerTransactions(users.get(position).getEmail());
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
@@ -171,7 +161,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         personallyTransactions(users.get(position).getEmail());
                                         throughVolunteerTransactions(users.get(position).getEmail());
 
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
@@ -185,7 +175,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         throughVolunteerTransactions(users.get(position).getEmail());
 
 
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 

@@ -23,8 +23,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.jcraft.jsch.Session;
 
 
 import java.io.IOException;
@@ -36,15 +34,11 @@ import java.util.Map;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
 
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
-import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
-
-import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand.CRITICAL_MESSAGE;
 
 
 public class HomelessActivity extends AppCompatActivity {
@@ -166,7 +160,7 @@ public class HomelessActivity extends AppCompatActivity {
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
                                         String description = description(users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed());
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
@@ -182,7 +176,7 @@ public class HomelessActivity extends AppCompatActivity {
                                         personallyTransactions(users.get(position).getUsername());
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
@@ -200,7 +194,7 @@ public class HomelessActivity extends AppCompatActivity {
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
 
-                                        POIController.cleanKm();
+                                        POIController.cleanKmls();
                                         personallyTransactions(users.get(position).getUsername());
                                         throughVolunteerTransactions(users.get(position).getUsername());
 
@@ -363,8 +357,6 @@ public class HomelessActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 
 
 
