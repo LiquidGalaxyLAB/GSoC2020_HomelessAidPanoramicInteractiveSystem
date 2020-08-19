@@ -339,7 +339,7 @@ public class POIController {
                         "<ScreenOverlay>\n" +
                             "<name>Logo</name> \n" +
                             " <Icon> \n" +
-                              "<href>http://192.168.86.228:81/hapis/logos.png</href> \n" +
+                              "<href>http://localhost:81/hapis/logos.png</href> \n" +
                             " </Icon> \n" +
                             " <overlayXY x=\"0\" y=\"1\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
                             " <screenXY x=\"0.02\" y=\"0.95\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
@@ -352,11 +352,5 @@ public class POIController {
 
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
-
-
-
-
-
-
 
 }

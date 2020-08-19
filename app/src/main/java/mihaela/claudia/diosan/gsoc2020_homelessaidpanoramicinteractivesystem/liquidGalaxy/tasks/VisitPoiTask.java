@@ -4,16 +4,21 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.preference.PreferenceManager;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.MainActivityLG;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 
 public class VisitPoiTask extends AsyncTask<Void, Void, String> {
     String command;
@@ -37,6 +42,18 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless;
+        SharedPreferences preferences;
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        logos_slave = preferences.getString("logos_preference","");
+        homeless_slave = preferences.getString("homeless_preference","");
+        local_statistics_slave = preferences.getString("local_preference","");
+        global_statistics_slave = preferences.getString("global_preference","");
+        live_overview_homeless = preferences.getString("live_overview_homeless", "");
+
+
         if (dialog == null) {
             dialog = new ProgressDialog(context);
             String message = context.getResources().getString(R.string.viewing) + " " + this.currentPoi.getName() + " " + context.getResources().getString(R.string.inLG);
@@ -69,6 +86,8 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
+                    POIController.cleanKmls();
+                    MainActivityLG.cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless);
                     cancel(true);
                 }
             });

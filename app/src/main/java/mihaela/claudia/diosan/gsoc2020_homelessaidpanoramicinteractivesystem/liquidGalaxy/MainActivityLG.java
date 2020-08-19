@@ -76,7 +76,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
             .setRange(10000000.0d)
             .setAltitudeMode("relativeToSeaFloor");
 
-    String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave;
+    String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +88,11 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         homeless_slave = preferences.getString("homeless_preference","");
         local_statistics_slave = preferences.getString("local_preference","");
         global_statistics_slave = preferences.getString("global_preference","");
+        live_overview_homeless = preferences.getString("live_overview_homeless", "");
 
 
         initViews();
-        cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave);
+        cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless);
         POIController.getInstance().moveToPOI(EARTH_POI, null);
         mFirestore = FirebaseFirestore.getInstance();
 
@@ -112,11 +113,12 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void cleanKmls(String logos_slave, String homeless_slave, String local_statistics_slave, String global_statistics_slave){
+    public static void cleanKmls(String logos_slave, String homeless_slave, String local_statistics_slave, String global_statistics_slave, String live_overview_homeless){
         POIController.cleanKmls();
         POIController.cleanKmlSlave(homeless_slave);
         POIController.cleanKmlSlave(local_statistics_slave);
         POIController.cleanKmlSlave(global_statistics_slave);
+        POIController.cleanKmlSlave(live_overview_homeless);
         POIController.setLogos(logos_slave);
 
 
@@ -247,6 +249,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 final String city = document.getString("city");
@@ -275,9 +278,8 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
                                 POIController.getInstance().moveToPOI(cityPOI, null);
+                                POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), local_statistics_slave);
                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
-
-
 
                            //     POIController.getInstance().flyToCity(cityPOI, null);
                               //      Toast.makeText(MainActivityLG.this, cityPOI.getName(), Toast.LENGTH_SHORT).show();
@@ -329,7 +331,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this, HelpActivity.class));
                 return true;
             case R.id.action_about_lg:
-                showAboutDialog();
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -337,25 +339,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void showAboutDialog() {
-
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.lg_about_dialog, null);
-
-        androidx.appcompat.app.AlertDialog alert = new MaterialAlertDialogBuilder(this)
-                .setTitle(getResources().getString(R.string.lg_about_title))
-                .setView(dialogView)
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.lg_about_button), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-
-        alert.show();
-    }
 
     @Override
     public void finish(){

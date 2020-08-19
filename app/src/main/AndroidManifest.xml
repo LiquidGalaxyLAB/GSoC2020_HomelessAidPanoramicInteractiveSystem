@@ -26,13 +26,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="q">
+        <activity android:name=".liquidGalaxy.AboutActivity"
+            android:label="@string/about_name"/>
         <activity android:name=".liquidGalaxy.VolunteersActivity" />
         <activity android:name=".liquidGalaxy.DonorsActivity" />
         <activity android:name=".liquidGalaxy.HomelessActivity" />
         <activity android:name=".liquidGalaxy.CityActivity" />
         <activity android:name=".liquidGalaxy.CitiesActivity" />
-        <activity android:name=".liquidGalaxy.HelpActivity"
-            android:label="@string/lg_help_name"/>
+        <activity
+            android:name=".liquidGalaxy.HelpActivity"
+            android:label="@string/lg_help_name" />
         <activity android:name=".liquidGalaxy.ToolsActivity" />
         <activity
             android:name=".liquidGalaxy.SettingsActivity"
@@ -44,9 +47,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".volunteer.CreateHomelessProfile" />
-        <activity android:name=".common.Payment"
+        <activity
+            android:name=".common.Payment"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".common.YouTubePlayer"
             android:configChanges="orientation|screenSize" />
@@ -57,13 +61,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".register.RegisterUserActivity"
-            android:label="@string/register_user_name"/>
+        <activity
+            android:name=".register.RegisterUserActivity"
+            android:label="@string/register_user_name" />
         <activity android:name=".liquidGalaxy.FirstActivityLG" />
-        <activity android:name=".register.RegisterActivity"
-            android:label="@string/register_activity_name"/>
-        <activity android:name=".login.ForgotPasswordActivity"
-            android:label="@string/forgot_password_name"/>
+        <activity
+            android:name=".register.RegisterActivity"
+            android:label="@string/register_activity_name" />
+        <activity
+            android:name=".login.ForgotPasswordActivity"
+            android:label="@string/forgot_password_name" />
         <activity
             android:name=".login.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />

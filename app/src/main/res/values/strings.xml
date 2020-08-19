@@ -337,12 +337,15 @@
     <string name="title_activity_settings">Settings</string>
 
     <!--    About dialog -->
-    <string name="lg_about_title">About HAPIS Application</string>
+    <string name="about_name">About Us</string>
+    <string name="lg_about_title">HAPIS Application</string>
     <string name="lg_about_button">CLOSE</string>
     <string name="lg_about_info">This app has been developed thanks to Intership students as a new application from GSoC 2020 Project </string>
     <string name="lg_about_contact">Depeloped by Mihaela Claudia Diosan (mcd1591@gmail.com) </string>
-    <string name="lg_about_github">https://github.com/LiquidGalaxyLAB/GSoC2020_HomelessAidPanoramicInteractiveSystem?organization=LiquidGalaxyLAB&amp;organization=LiquidGalaxyLAB</string>
+    <string name="lg_about_github"><a href="https://github.com/LiquidGalaxyLAB/GSoC2020_HomelessAidPanoramicInteractiveSystem?organization=LiquidGalaxyLAB&amp;organization=LiquidGalaxyLAB">HAPIS Github Reposiory</a> </string>
     <string name="lg_about_thanks">Developed thanks to TIC Laboratories of the Scientific Park of Lleida and Liquid Galaxy LAB</string>
+    <string name="special_thanks"> The next persons helped to realize this project, so THANK YOU ALL.</string>
+    <string name="about_persons">Alexandra Rivero\n Maria Luz Mosterio\n Andreu Ibañez\n\n Paula Vidal\n Roger Colomo\n Josep Cunyat\n Guillem Felis de Dios\n\n Emilie Ma\n\n Sara Serrano\n Francesc Muñoz\n</string>
 
 
     <!--Dashboard cards-->
@@ -416,7 +419,7 @@
     <string name="lg_help_name">HELP</string>
     <string name="lg_help_title">You can find the complete guide of HAPIS in <a href="https://github.com/LiquidGalaxyLAB/GSoC2020_HomelessAidPanoramicInteractiveSystem/wiki">HAPIS Wiki</a> </string>
     <string name="lg_connection_title">Connect to the Liquid Galaxy for the first time</string>
-    <string name="lg_connection_body">To connect with the Liquid Galaxy for the first time follow the next steps:\n 1.In the menu select Setting. Here, complete the LG user, password, IP and port. The port normally is 22.\n 2. Go back to main dashboard and select Tools on the menu.\n 3. In Tools select the menu option Install and press OK button. This way you install all the requirements into the Liquid Galaxy master. </string>
+    <string name="lg_connection_body">To connect with the Liquid Galaxy for the first time follow the next steps:\n 1.In the menu select Setting. Here, complete the LG user, password, IP and port. The port normally is 22.\n 2. In Advanced Setting you can find 5 options.Here, you can select which is the slave screen where you want to see that info.\n 3. Go back to main dashboard and select Tools on the menu.\n 4. In Tools select the menu option Install and press OK button. This way you install all the requirements into the Liquid Galaxy master.\n 5. If you want to delete all the Hapis related  info from the LG master, you just have to select the Uninstall button. </string>
     <string name="main_dashboard_title">Main dashboard buttons</string>
     <string name="main_dashboard_body">In the main dashboard you have 3 buttons:\n 1. Cities: By pressing this button you go to another page where you can see all the cities where we have homeless registerd.\n 2. City Statistics: This button flies to each city and shows you the local statistics on Liquid Galaxy.\n 3. Global Statistics: This button shows you the statistics for all cities into a single bubble on Liquid Galaxy.</string>
     <string name="tools_options_title">Tools options</string>
@@ -441,6 +444,8 @@
     <string name="local_statistics_summary">Choose the slave where you want to see the local statistics balloon.</string>
     <string name="global_statistics_slaves">Global Statistics</string>
     <string name="global_statistics_summary">Choose the slave where you want to see the global statistics balloon.</string>
+    <string name="live_overview_slaves">Live Overview Homeless</string>
+    <string name="live_overview_summary">Choose the slave where you want to see the live overview homeless balloons.</string>
 
 
     <string-array name="Slaves">
@@ -452,7 +457,7 @@
         <item>Slave 7</item>
         <item>Slave 8</item>
     </string-array>
-    
+
     <string-array name="slavesAlias">
         <item>slave_2</item>
         <item>slave_3</item>
