@@ -328,7 +328,7 @@ public class POIController {
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
 
-    public static void setLogos(String slave_name){
+    public static void setLogos(String slave_name, String master_ip){
         String sentence = "chmod 777 /var/www/html/kml/" + slave_name + ".kml; echo '" +
                 "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
                 "xmlns:atom=\"http://www.w3.org/2005/Atom\" \n"  +
@@ -339,7 +339,7 @@ public class POIController {
                         "<ScreenOverlay>\n" +
                             "<name>Logo</name> \n" +
                             " <Icon> \n" +
-                              "<href>http://localhost:81/hapis/logos.png</href> \n" +
+                            "<href>http://lg1:81/hapis/logos.png</href> \n" +
                             " </Icon> \n" +
                             " <overlayXY x=\"0\" y=\"1\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +
                             " <screenXY x=\"0.02\" y=\"0.95\" xunits=\"fraction\" yunits=\"fraction\"/> \n" +

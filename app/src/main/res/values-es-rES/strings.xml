@@ -125,6 +125,8 @@
     <!--    Volunteer home fragment-->
     <string name="edit_button_toast">Con este botón el voluntario podrá editar los campos que aparecen para la persona necesitada</string>
     <string name="delete_button_toast">Con este botón se borrará el perfil de la persona necesitada</string>
+    <string name="welcome_vol">WELCOME TO</string>
+    <string name="first_homeless">WELCOME.\n Go to New homeless profile to create your first homeless.</string>
     <!--Floating Action Menu -->
     <string name="new_homeless_profile">Nuevo perfil persona necesitada</string>
     <string name="send_delivery_notification">Entrega donaciones</string>

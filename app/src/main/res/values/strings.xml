@@ -123,6 +123,8 @@
     <!--    Volunteer home fragment-->
     <string name="edit_button_toast">This button will let the volunteer edit the shown fields of the homeless</string>
     <string name="delete_button_toast">With this button the homeless profile will be deleted</string>
+    <string name="welcome_vol">WELCOME TO</string>
+    <string name="first_homeless">Go on the floating menu and select\n New homeless profile\n to create your first homeless profile.</string>
     <!--Floating Action Menu -->
     <string name="new_homeless_profile">New homeless profile</string>
     <string name="send_delivery_notification">Donations delivery</string>

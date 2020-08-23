@@ -4,16 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,15 +28,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.MainActivity;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGUtils;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
 
 import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand.CRITICAL_MESSAGE;
 
@@ -47,13 +56,15 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
     /*Firebase*/
     private FirebaseFirestore mFirestore;
+    final Handler handler = new Handler();
+    Runnable runnable;
 
     private ProgressDialog progressDialog;
     private boolean runningThread = false;
-    String sentence = "sleep 10";
-    private Handler handler;
+    String sentence = "sleep 25";
     private Runnable myRunnable;
     boolean stop = false;
+    CityStatisticsTask cityStatisticsTask;
 
 
     public static final POI EARTH_POI = new POI()
@@ -76,7 +87,8 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
             .setRange(10000000.0d)
             .setAltitudeMode("relativeToSeaFloor");
 
-    String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless;
+    String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless,hostname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,20 +102,24 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         global_statistics_slave = preferences.getString("global_preference","");
         live_overview_homeless = preferences.getString("live_overview_homeless", "");
 
+        String user = preferences.getString("SSH-USER", "lg");
+        String password = preferences.getString("SSH-PASSWORD", "lqgalaxy");
+        hostname = preferences.getString("SSH-IP", "");
+
 
         initViews();
-        cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless);
+        cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
         POIController.getInstance().moveToPOI(EARTH_POI, null);
         mFirestore = FirebaseFirestore.getInstance();
 
 
-        String user = preferences.getString("SSH-USER", "lg");
-        String password = preferences.getString("SSH-PASSWORD", "lqgalaxy");
-        String hostname = preferences.getString("SSH-IP", "");
+
         String port = preferences.getString("SSH-PORT", "22");
 
         LGConnectionManager lgConnectionManager = new LGConnectionManager();
         lgConnectionManager.setData(user, password, hostname, Integer.parseInt(port));
+
+
 
 
         cities.setOnClickListener(this);
@@ -113,13 +129,14 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public static void cleanKmls(String logos_slave, String homeless_slave, String local_statistics_slave, String global_statistics_slave, String live_overview_homeless){
+    public static void cleanKmls(String logos_slave, String homeless_slave, String local_statistics_slave, String global_statistics_slave, String live_overview_homeless, String hostname){
+
         POIController.cleanKmls();
         POIController.cleanKmlSlave(homeless_slave);
         POIController.cleanKmlSlave(local_statistics_slave);
         POIController.cleanKmlSlave(global_statistics_slave);
         POIController.cleanKmlSlave(live_overview_homeless);
-        POIController.setLogos(logos_slave);
+        POIController.setLogos(logos_slave, hostname);
 
 
     }
@@ -154,12 +171,17 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.statistics_cv:
                 POIController.cleanKmls();
+                cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
                 setGlobalStatistics();
                 globalStatistics();
                 break;
             case R.id.city_statistics:
+                cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
+                cityStatisticsTask = new CityStatisticsTask(MainActivityLG.this, MainActivityLG.this);
+                cityStatisticsTask.execute();
                 stopStatistics.setVisibility(View.VISIBLE);
-                setCitiesStatistics();
+             //   setCitiesStatistics();
+
              /*  handler =  new Handler();
                  myRunnable = new Runnable() {
                     public void run() {
@@ -169,15 +191,18 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                 };
 
                 handler.postDelayed(myRunnable, 1000);*/
-
                 break;
             case R.id.stop_statistics:
                 stopStatistics.setVisibility(View.GONE);
+                cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
+                cityStatisticsTask.cancel(true);
+            /*    stopStatistics.setVisibility(View.GONE);
+                handler.removeCallbacks(runnable);
              //
-                /*handler.removeMessages(0);
-                stop = true;*/
+                *//*handler.removeMessages(0);
+                stop = true;*//*
                 POIController.cleanKmls();
-                POIController.cleanKmlSlave(local_statistics_slave);
+                POIController.cleanKmlSlave(local_statistics_slave);*/
                 break;
         }
 
@@ -225,6 +250,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 String sentence = "cd /var/www/html/hapis/balloons/statistics/ ;curl -o " + STATISTICS.getName() + " " + image;
                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
                                 POIController.getInstance().showBalloonOnSlave(STATISTICS, null, buildGlobalStatistics(cities,homeless, donors, volunteers, food, clothes, work, lodging, hygiene,personallyDonations, throughVolunteerDonations),"http://lg1:81/hapis/balloons/statistics/", STATISTICS.getName(), global_statistics_slave);
+                                Toast.makeText(MainActivityLG.this, global_statistics_slave, Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -272,15 +298,18 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 getCityVolunteersNumber(city);
                                 getCityFood(city);
                                 getCityClothes(city);
-                                getCityWork(city);
+                                 getCityWork(city);
                                 getCityLodging(city);
                                 getCityHygiene(city);
 
                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
                                 POIController.getInstance().moveToPOI(cityPOI, null);
                                 POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), local_statistics_slave);
-                                LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
+                                //  LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
 
+                                   /*    String command = buildCommand(cityPOI);
+                                VisitPoiTask visitPoiTask = new VisitPoiTask(command, cityPOI, true,MainActivityLG.this, MainActivityLG.this);
+                                visitPoiTask.execute();*/
                            //     POIController.getInstance().flyToCity(cityPOI, null);
                               //      Toast.makeText(MainActivityLG.this, cityPOI.getName(), Toast.LENGTH_SHORT).show();
                                 /*
@@ -711,5 +740,203 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
     }
 
 }
+
+class CityStatisticsTask extends AsyncTask<Void, Void, String> {
+    private ProgressDialog dialog;
+    Activity activity;
+    Context context;
+    private FirebaseFirestore mFirestore;
+    String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless;
+
+
+    public CityStatisticsTask(Activity activity, Context context) {
+        this.activity = activity;
+        this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        SharedPreferences preferences;
+        mFirestore = FirebaseFirestore.getInstance();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        local_statistics_slave = preferences.getString("local_preference","");
+        String hostname;
+        mFirestore = FirebaseFirestore.getInstance();
+        logos_slave = preferences.getString("logos_preference","");
+        homeless_slave = preferences.getString("homeless_preference","");
+
+        global_statistics_slave = preferences.getString("global_preference","");
+        live_overview_homeless = preferences.getString("live_overview_homeless", "");
+        hostname = preferences.getString("SSH-IP", "");
+
+
+        if (dialog == null) {
+            dialog = new ProgressDialog(context);
+            String message = context.getResources().getString(R.string.viewing) + " " + "local statistics" + " " + context.getResources().getString(R.string.inLG);
+            dialog.setMessage(message);
+            dialog.setIndeterminate(false);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setCancelable(false);
+
+
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getResources().getString(R.string.stop), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    POIController.cleanKmls();
+                    MainActivityLG.cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
+                    cancel(true);
+                }
+            });
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    cancel(true);
+                }
+            });
+
+
+            dialog.show();
+        }
+    }
+
+    @Override
+    protected String doInBackground(Void... params) {
+
+        try {
+
+            Session session = LGUtils.getSession(activity);
+
+                while (!isCancelled()) {
+                    session.sendKeepAliveMsg();
+
+                    mFirestore.collection("cities")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                            final String city = document.getString("city");
+                                            final String cityWS = document.getString("cityWS");
+                                            final String latitude = document.getString("latitude");
+                                            final String longitude = document.getString("longitude");
+                                            final String altitude = document.getString("altitude");
+                                            final String homeless = document.getString("homelessNumber");
+                                            final String donors = document.getString("donorsNumber");
+                                            final String volunteers = document.getString("volunteersNumber");
+                                            final String foodSt = document.getString("foodSt");
+                                            final String clothesSt = document.getString("clothesSt");
+                                            final String workSt = document.getString("workSt");
+                                            final String lodgingSt = document.getString("lodgingSt");
+                                            final String hygieneSt = document.getString("hygieneSt");
+                                            final String image = document.getString("image");
+
+
+                                            POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
+                                            POIController.getInstance().moveToPOI(cityPOI, null);
+                                            POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), local_statistics_slave);
+
+                                            try {
+                                                Thread.sleep(10000);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                                e.printStackTrace();
+                                                activity.runOnUiThread(new Runnable() {
+
+                                                    @Override
+                                                    public void run() {
+                                                        Toast.makeText(context, context.getResources().getString(R.string.visualizationCanceled), Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                                            }
+
+
+                                        }
+                                    }
+                                }
+                            });
+
+                }
+
+            return "";
+
+        } catch (JSchException e) {
+            this.cancel(true);
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+            activity.runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    Toast.makeText(context, context.getResources().getString(R.string.error_galaxy), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            return null;
+        } catch (InterruptedException e) {
+            activity.runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    Toast.makeText(context, context.getResources().getString(R.string.visualizationCanceled), Toast.LENGTH_LONG).show();
+                }
+            });
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+    public static  String buildCityStatistics(String city, String homeless, String donors, String volunteers, String food, String clothes, String work, String lodging, String hygiene_products){
+
+        return  "<h2> <b> Local statistics from: </b> " + city + "</h2>\n" +
+                "<h2> <b> USERS</b></h2>\n" +
+                "<p> <b> Total homeless: </b> " + homeless + "</p>\n" +
+                "<p> <b> Total donors: </b> " + donors + "</p>\n" +
+                "<p> <b> Total volunteers: </b> " + volunteers + "</p>\n" +
+                "<h2> <b> NEEDS</b></h2>\n" +
+                "<p> <b> Food: </b> " + food + "</p>\n" +
+                "<p> <b> Clothes: </b> " + clothes + "</p>\n" +
+                "<p> <b> Work: </b> " + work + "</p>\n" +
+                "<p> <b> Lodging: </b> " + lodging + "</p>\n" +
+                "<p> <b> Hygiene products: </b> " + hygiene_products + "</p>\n";
+    }
+
+    private POI createPOI(String name, String latitude, String longitude, String altitude){
+
+        POI poi = new POI()
+                .setLongitude(Double.parseDouble(longitude))
+                .setName(name)
+                .setLatitude(Double.parseDouble(latitude))
+                .setAltitude(Double.parseDouble(altitude))
+                .setHeading(15.0d)
+                .setTilt(60.0d)
+                .setRange(1200.0d)
+                .setAltitudeMode("relativeToSeaFloor");
+
+        return poi;
+    }
+
+    @Override
+    protected void onPostExecute(String success) {
+        super.onPostExecute(success);
+        if (success != null) {
+            if (dialog != null) {
+                dialog.hide();
+                dialog.dismiss();
+            }
+        }
+    }
+}
+
 
 

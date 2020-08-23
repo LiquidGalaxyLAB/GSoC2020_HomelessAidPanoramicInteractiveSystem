@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +41,7 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
 
     /*Views*/
     private View view;
-
+    LinearLayout firstHomeless;
     /*Floating Action menu*/
     private FloatingActionButton newHomelessProfile;
     private FloatingActionButton sendDeliveryNotification;
@@ -66,6 +68,7 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
         firebaseInit();
 
         setUpRecyclerView();
+
 
         return view;
     }
@@ -95,10 +98,12 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
     private void initViews(){
         newHomelessProfile = view.findViewById(R.id.new_homeless_profile);
         sendDeliveryNotification = view.findViewById(R.id.send_delivery_notification);
-
+        firstHomeless = view.findViewById(R.id.add_first_homeless);
+        firstHomeless.setVisibility(View.VISIBLE);
         searchView = view.findViewById(R.id.volunteer_search);
         searchView.onActionViewExpanded();
         searchView.clearFocus();
+        searchView.setVisibility(View.GONE);
     }
 
     private void firebaseInit(){
@@ -114,8 +119,7 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
 
         final List<Homeless> homelesses = new ArrayList<>();
 
-
-        mFirestore.collection("homeless")/*.whereEqualTo("volunteerEmail".toLowerCase(),user.getEmail())*/
+        mFirestore.collection("homeless").whereEqualTo("volunteerEmail",user.getEmail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -134,11 +138,16 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
 
                                 final Homeless homeless = new Homeless(image, username, phone, birthday, lifeHistory, address, schedule, need);
                                 homelesses.add(homeless);
-                                final HomelessAdapter homelessAdapter = new HomelessAdapter(homelesses);
+                                HomelessAdapter homelessAdapter = new HomelessAdapter(homelesses);
                                 searchText(homelessAdapter);
                                 recyclerView.setAdapter(homelessAdapter);
 
-                                recyclerView.setAdapter(homelessAdapter);
+                                if (homelessAdapter.getItemCount() != 0){
+                                    searchView.setVisibility(View.VISIBLE);
+                                    firstHomeless.setVisibility(View.GONE);
+
+                                }
+
                                 homelessAdapter.setOnItemClicklistener(new HomelessAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(int position) {
@@ -153,6 +162,7 @@ public class HomeVolunteerFragment extends Fragment implements View.OnClickListe
                         }
                     }
                 });
+
     }
 
     private void searchText(final HomelessAdapter homelessAdapter){

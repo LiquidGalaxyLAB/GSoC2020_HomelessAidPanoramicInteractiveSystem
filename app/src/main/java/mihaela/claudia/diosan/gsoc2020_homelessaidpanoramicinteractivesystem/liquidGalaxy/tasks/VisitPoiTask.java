@@ -43,6 +43,7 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         String logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless;
+        String hostname;
         SharedPreferences preferences;
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -52,6 +53,7 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
         local_statistics_slave = preferences.getString("local_preference","");
         global_statistics_slave = preferences.getString("global_preference","");
         live_overview_homeless = preferences.getString("live_overview_homeless", "");
+        hostname = preferences.getString("SSH-IP", "");
 
 
         if (dialog == null) {
@@ -87,7 +89,7 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     POIController.cleanKmls();
-                    MainActivityLG.cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless);
+                    MainActivityLG.cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
                     cancel(true);
                 }
             });

@@ -46,7 +46,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     /*Firebase*/
     private FirebaseFirestore mFirestore;    private Map<String,String> homelessInfo = new HashMap<>();
     private Map<String,String> volunteerInfo = new HashMap<>();
-    String homeless_slave, local_statistics_slave, logos_slave, live_overview_homeless;
+    String homeless_slave, local_statistics_slave, logos_slave, live_overview_homeless, global_statistics_slave;
     String sentence = "sleep 10";
 
     @Override
@@ -59,6 +59,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
         local_statistics_slave = defaultPrefs.getString("local_preference","");
         logos_slave = defaultPrefs.getString("logos_preference","");
         live_overview_homeless = defaultPrefs.getString("live_overview_homeless", "");
+        global_statistics_slave = defaultPrefs.getString("global_preference","");
 
         initViews();
         setActualLocation();
@@ -118,17 +119,28 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(CityActivity.this, MainActivityLG.class));
                 break;
             case R.id.live_overview_cv:
+
                 String city = preferences.getString("city","");
                 POIController.cleanKmls();
+                cleanKmls(homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless);
+
                 showAllHomeless();
                 showLocalStatistics(city);
-   /*             POIController.cleanKmls();
-                showAllHomeless();
-                showLocalStatistics(city);*/
-         //       showHomelessInfo(city);
-        //        liveOverview(city);
+                showHomelessInfo(city);
                 break;
         }
+    }
+
+
+    public static void cleanKmls(String homeless_slave, String local_statistics_slave, String global_statistics_slave, String live_overview_homeless){
+
+        POIController.cleanKmls();
+        POIController.cleanKmlSlave(homeless_slave);
+        POIController.cleanKmlSlave(local_statistics_slave);
+        POIController.cleanKmlSlave(global_statistics_slave);
+        POIController.cleanKmlSlave(live_overview_homeless);
+
+
     }
 
     private void showLocalStatistics(String city){
@@ -158,6 +170,8 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
 
                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
                                 POIController.getInstance().showBalloonOnSlave(cityPOI, null, MainActivityLG.buildCityStatistics(city,homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt),"http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), local_statistics_slave);
+                                Toast.makeText(CityActivity.this, local_statistics_slave,Toast.LENGTH_SHORT).show();
+
                                 String command = buildCommand(cityPOI);
                                 VisitPoiTask visitPoiTask = new VisitPoiTask(command,cityPOI, true, CityActivity.this, CityActivity.this);
                                 visitPoiTask.execute();
@@ -201,7 +215,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-/*
     private void showHomelessInfo(String city){
         mFirestore.collection("homeless").whereEqualTo("city", city)
                 .get()
@@ -230,20 +243,18 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
 
                                 POI userPoi = createPOI(username, latitude, longitude,"0.0d");
                                 POIController.downloadProfilePhoto(userPoi.getName(), image);
-                                POIController.getInstance().flyToCity(userPoi, null);
+                                POIController.getInstance().showBalloonOnSlave(userPoi, null, HomelessActivity.buildTransactions(lifeHistory,birthday, location, schedule, need, personallyDonations, throughVolunteerDonations),"http://lg1:81/hapis/balloons/transactions/homeless/",username,live_overview_homeless);
 
-                                POIController.cleanKmls();
-                                POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
-                                POIController.getInstance().moveToPOI(userPoi, null);
-                                POIController.getInstance().showBalloonOnSlave(userPoi, null, HomelessActivity.buildTransactions(lifeHistory,birthday, location, schedule, need, personallyDonations, throughVolunteerDonations),"http://lg1:81/hapis/balloons/transactions/homeless/",username,"slave_5");
-                            //    POIController.setHomelessInfo(logos_slave,"http://lg1:81/hapis/balloons/transactions/homeless/",username, HomelessActivity.buildTransactions(lifeHistory,birthday, location, schedule, need, personallyDonations, throughVolunteerDonations));
-                                String sentence = "sleep 5";
-                                LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
-                               */
-/* POIController.getInstance().showBalloon(userPoi, null, HomelessActivity.buildTransactions(lifeHistory,birthday, location, schedule, need, personallyDonations, throughVolunteerDonations), username, "balloons/transactions/homeless");
-                                POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
-*//*
+                                //    POIController.getInstance().flyToCity(userPoi, null);
 
+                           //     POIController.cleanKmls();
+                            //    POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
+                              //  POIController.getInstance().moveToPOI(userPoi, null);
+                                  //    POIController.setHomelessInfo(logos_slave,"http://lg1:81/hapis/balloons/transactions/homeless/",username, HomelessActivity.buildTransactions(lifeHistory,birthday, location, schedule, need, personallyDonations, throughVolunteerDonations));
+                               // String sentence = "sleep 5";
+                               // LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
+                             //   POIController.getInstance().showBalloon(userPoi, null, HomelessActivity.buildTransactions(lifeHistory,birthday, location, schedule, need, personallyDonations, throughVolunteerDonations), username, "balloons/transactions/homeless");
+                               // POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
                             }
 
 
@@ -252,7 +263,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                 });
 
     }
-*/
 
     private void personallyTransactions(String homelessUsername){
 
@@ -288,7 +298,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
-
 
 
     private String buildCommand(POI poi) {
@@ -416,7 +425,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     private void showAllVolunteers(){
 
         String city = preferences.getString("city","");
-
 
         mFirestore.collection("volunteers").whereEqualTo("city", city)
                 .get()
