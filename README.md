@@ -17,7 +17,7 @@ to connect homeless people with persons who can help them. Besides, it can be co
  
 ## __Prerequisites__
  
- * Android phone or Tablet
+ * Android phone or Tablet with 6.0 OS Version or greater
  * In case you want to use the appliaction with Liquid Galaxy System:  [Liquid Galaxy](https://github.com/LiquidGalaxyLAB/liquid-galaxy)
  
 
