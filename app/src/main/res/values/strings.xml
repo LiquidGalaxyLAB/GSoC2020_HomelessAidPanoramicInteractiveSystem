@@ -61,7 +61,7 @@
                                             3. You can help to make the donation delivery in case the donors do not have the possibility to do it personally
     </string>
     <!--    Know more register donor popup -->
-    <string name="donor_know_more_title">What can you do if you register as donor?</string>
+    <string name="donor_know_more_title">What can you do if you register as a donor?</string>
     <string name="donor_know_more_text">1. You can help people without basic resources such as food, accommodation or clothing \n\n
                                   2. You can choose the profile of the person who most attracts your attention and help them \n\n
                                   3. You can donate food, clothing, accommodation, work or personal hygiene products \n\n
@@ -348,6 +348,8 @@
     <string name="lg_about_thanks">Developed thanks to TIC Laboratories of the Scientific Park of Lleida and Liquid Galaxy LAB</string>
     <string name="special_thanks"> The next persons helped to realize this project, so THANK YOU ALL.</string>
     <string name="about_persons">Alexandra Rivero\n Maria Luz Mosterio\n Andreu Ibañez\n\n Paula Vidal\n Roger Colomo\n Josep Cunyat\n Guillem Felis de Dios\n\n Emilie Ma\n\n Sara Serrano\n Francesc Muñoz\n</string>
+    <string name="photos_about">All the photos in this application are from the <a href="https://unsplash.com/">Unsplash page.</a> </string>
+    <string name="photos_about_1">Next you can find the author and link to the photos I use:\n <a href="https://unsplash.com/photos/AEaTUnvneik">Login photo</a>\n <a href="https://unsplash.com/photos/4OFU9yxUvLc">Register page</a>\n The icons are all from the <a href="https://icons8.com/">icons8.com page</a>\n And, the .png images are from the <a href="https://www.cleanpng.com/">cleanpng.com page.</a>\n All the homeless people photos are obtained using the next <a href="https://docs.google.com/document/d/1ZjpoeqWUgFagAW3VPulsK9YFz4c9bfRJnHt1xYwzjc4/edit?usp=sharing">Databases</a> </string>
 
 
     <!--Dashboard cards-->

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,13 +33,16 @@ import java.util.List;
 import java.util.Map;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.CitiesCardsAdapter;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.LgUserAdapter;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.GetSessionTask;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.tasks.VisitPoiTask;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.Cities;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.LgUser;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.logic.Homeless;
 
 
 public class HomelessActivity extends AppCompatActivity {
@@ -53,9 +57,11 @@ public class HomelessActivity extends AppCompatActivity {
     SharedPreferences defaultPrefs;
     TextView city_tv, country_tv, from_tv;
     ImageView goHome;
-    private Map<String,String> homelessInfo = new HashMap<>();
-  //  private Session session;
+    private Map<String, String> homelessInfo = new HashMap<>();
+    //  private Session session;
 
+    String city;
+    String country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +88,8 @@ public class HomelessActivity extends AppCompatActivity {
         });
     }
 
-    private void initViews(){
-        searchView =findViewById(R.id.lg_users_search);
+    private void initViews() {
+        searchView = findViewById(R.id.lg_users_search);
         searchView.onActionViewExpanded();
         searchView.clearFocus();
         city_tv = findViewById(R.id.city_text_users);
@@ -93,23 +99,23 @@ public class HomelessActivity extends AppCompatActivity {
 
     }
 
-    private void setActualLocation(){
+    private void setActualLocation() {
 
         preferences = this.getSharedPreferences("cityInfo", MODE_PRIVATE);
-        String city = preferences.getString("city","");
-        String country = preferences.getString("country","");
+        city = preferences.getString("city", "");
+        country = preferences.getString("country", "");
 
         city_tv.setText(city);
         country_tv.setText(country);
         from_tv.setText(getString(R.string.homeless_from));
     }
 
-    private void setRecyclerView(){
+    private void setRecyclerView() {
         RecyclerView.LayoutManager mLayoutManager;
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_users_lg);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             mLayoutManager = new GridLayoutManager(this, 2);
-        }else {
+        } else {
             mLayoutManager = new GridLayoutManager(this, 4);
         }
 
@@ -118,7 +124,7 @@ public class HomelessActivity extends AppCompatActivity {
 
         final List<LgUser> users = new ArrayList<>();
 
-        String city = preferences.getString("city","");
+        String city = preferences.getString("city", "");
 
 
         mFirestore.collection("homeless").whereEqualTo("city", city)
@@ -140,12 +146,10 @@ public class HomelessActivity extends AppCompatActivity {
                                 final String personallyDonations = document.getString("personallyDonations");
                                 final String throughVolunteerDonations = document.getString("throughVolunteerDonations");
                                 final String image = document.getString("image");
-                                final double tilt = 70.0d;
-                                final double range = 200.0d;
 
                                 final int color = getColor(R.color.white);
 
-                                final LgUser user = new LgUser(username,color, latitude, longitude,image, birthday, location, schedule, need, lifeHistory, personallyDonations, throughVolunteerDonations);
+                                final LgUser user = new LgUser(username, color, latitude, longitude, image, birthday, location, schedule, need, lifeHistory, personallyDonations, throughVolunteerDonations);
                                 users.add(user);
 
 
@@ -164,11 +168,12 @@ public class HomelessActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                       // POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
                                         POIController.downloadProfilePhoto(userPoi.getName(), users.get(position).getImage());
-                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
+                                        POIController.getInstance().showPlacemark(userPoi, null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
                                         POIController.getInstance().showBalloon(userPoi, null, description, users.get(position).getUsername(), "balloons/basic/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/homeless");
+                                        Toast.makeText(HomelessActivity.this, "Showing basic info of" + " " +  users.get(position).getUsername()  + " " +"on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
+
                                     }
 
                                     @Override
@@ -180,11 +185,12 @@ public class HomelessActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                      //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
+                                        //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
+                                        POIController.getInstance().showPlacemark(userPoi, null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
                                         POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed()), users.get(position).getUsername(), "balloons/bio/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/homeless");
+                                        Toast.makeText(HomelessActivity.this, "Showing Life History for" + " " + users.get(position).getUsername() + " " + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -201,11 +207,13 @@ public class HomelessActivity extends AppCompatActivity {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 
-                                      //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
+                                        //  POIController.getInstance().sendPlacemark(userPoi, null, defaultPrefs.getString("SSH-IP", "192.168.1.76"), "balloons/homeless");
 
-                                        POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
-                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(),users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), users.get(position).getPersonallyDonations(), users.get(position).getThroughVolunteerDonation()), users.get(position).getUsername(), "balloons/transactions/homeless");
+                                        POIController.getInstance().showPlacemark(userPoi, null, "https://i.ibb.co/1nsNbxr/homeless-icon.png", "placemarks/homeless");
+                                        POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getLifeHistory(), users.get(position).getBirthday(), users.get(position).getLocation(), users.get(position).getSchedule(), users.get(position).getNeed(), users.get(position).getPersonallyDonations(), users.get(position).getThroughVolunteerDonation()), users.get(position).getUsername(), "balloons/transactions/homeless");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/homeless");
+
+                                        Toast.makeText(HomelessActivity.this, "Showing Transactions for" + " " + users.get(position).getUsername() + " " + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -213,7 +221,7 @@ public class HomelessActivity extends AppCompatActivity {
                                     public void onOrbitClick(int position) {
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         String command = buildCommand(userPoi);
-                                        VisitPoiTask visitPoiTask = new VisitPoiTask(command, userPoi, true,HomelessActivity.this, HomelessActivity.this);
+                                        VisitPoiTask visitPoiTask = new VisitPoiTask(command, userPoi, true, HomelessActivity.this, HomelessActivity.this);
                                         visitPoiTask.execute();
                                     }
                                 });
@@ -225,8 +233,7 @@ public class HomelessActivity extends AppCompatActivity {
     }
 
 
-
-    private POI createPOI(String name, String latitude, String longitude){
+    private POI createPOI(String name, String latitude, String longitude) {
 
         POI poi = new POI()
                 .setName(name)
@@ -242,7 +249,7 @@ public class HomelessActivity extends AppCompatActivity {
     }
 
 
-    private void searchText(final LgUserAdapter lgUserAdapter){
+    private void searchText(final LgUserAdapter lgUserAdapter) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -258,16 +265,16 @@ public class HomelessActivity extends AppCompatActivity {
         });
     }
 
-    private String description(String birthday, String location, String schedule, String need){
-        return  "<h2> <b> Basic Info</b></h2>\n" +
+    private String description(String birthday, String location, String schedule, String need) {
+        return "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Birthday: </b> " + birthday + "</p>\n" +
                 "<p> <b> Location: </b> " + location + "</p>\n" +
                 "<p> <b> Schedule: </b> " + schedule + "</p>\n" +
-                "<p> <b> Most important need: </b> " + need + "</p>\n" ;
+                "<p> <b> Most important need: </b> " + need + "</p>\n";
     }
 
-    private String buildBio(String lifeHistory, String birthday, String location, String schedule, String need){
-        return  "<h2> <b> Basic Info</b></h2>\n" +
+    private String buildBio(String lifeHistory, String birthday, String location, String schedule, String need) {
+        return "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Birthday: </b> " + birthday + "</p>\n" +
                 "<p> <b> Location: </b> " + location + "</p>\n" +
                 "<p> <b> Schedule: </b> " + schedule + "</p>\n" +
@@ -276,9 +283,9 @@ public class HomelessActivity extends AppCompatActivity {
                 "<p> " + lifeHistory + "</p>\n";
     }
 
-    public static String buildTransactions(String lifeHistory, String birthday, String location, String schedule, String need, String personallyDonations, String throughVolunteerDonations){
+    public static String buildTransactions(String lifeHistory, String birthday, String location, String schedule, String need, String personallyDonations, String throughVolunteerDonations) {
 
-        return  "<h2> <b> Basic Info</b></h2>\n" +
+        return "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Birthday: </b> " + birthday + "</p>\n" +
                 "<p> <b> Location: </b> " + location + "</p>\n" +
                 "<p> <b> Schedule: </b> " + schedule + "</p>\n" +
@@ -286,51 +293,18 @@ public class HomelessActivity extends AppCompatActivity {
                 "<h2><b> Life history </b> </h2>\n" +
                 "<p> " + lifeHistory + "</p>\n" +
                 "<h2><b> Transactions </b> </h2>\n" +
-                "<p><b> Personally Donations: </b> " +  personallyDonations + "</p>\n" +
-                "<p><b> Through Volunteer Donations: </b> " +  throughVolunteerDonations + "</p>\n";
+                "<p><b> Personally Donations: </b> " + personallyDonations + "</p>\n" +
+                "<p><b> Through Volunteer Donations: </b> " + throughVolunteerDonations + "</p>\n";
     }
 
-  /*  private void personallyTransactions(String homelessUsername){
+    private void personallyTransactions(String homelessUsername) {
 
-            mFirestore.collection("personallyDonations").whereEqualTo("donatesTo",homelessUsername )
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()){
-                                String personallyDonations = String.valueOf(task.getResult().size());
-                                homelessInfo.put("personallyDonations", personallyDonations);
-                                mFirestore.collection("statistics").document(homelessUsername).set(homelessInfo, SetOptions.merge());
-
-                            //    test_statistics.setText(String.valueOf(task.getResult().size()));
-                                }
-                        }
-                    });
-    }
-*/
-
-  /*  private void throughVolunteerTransactions(String homelessUsername){
-
-        mFirestore.collection("throughVolunteerDonations").whereEqualTo("donatesTo",homelessUsername )
+        mFirestore.collection("personallyDonations").whereEqualTo("donatesTo", homelessUsername)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            test_statistics.setText(String.valueOf(task.getResult().size()));
-                        }
-                    }
-                });
-    }*/
-
-    private void personallyTransactions(String homelessUsername){
-
-        mFirestore.collection("personallyDonations").whereEqualTo("donatesTo",homelessUsername )
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             String personallyDonations = String.valueOf(task.getResult().size());
                             homelessInfo.put("personallyDonations", personallyDonations);
                             mFirestore.collection("homeless").document(homelessUsername).set(homelessInfo, SetOptions.merge());
@@ -341,14 +315,14 @@ public class HomelessActivity extends AppCompatActivity {
     }
 
 
-    private void throughVolunteerTransactions(String homelessUsername){
+    private void throughVolunteerTransactions(String homelessUsername) {
 
-        mFirestore.collection("throughVolunteerDonations").whereEqualTo("donatesTo",homelessUsername )
+        mFirestore.collection("throughVolunteerDonations").whereEqualTo("donatesTo", homelessUsername)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             String throughVolunteerDonations = String.valueOf(task.getResult().size());
                             homelessInfo.put("throughVolunteerDonations", throughVolunteerDonations);
                             mFirestore.collection("homeless").document(homelessUsername).set(homelessInfo, SetOptions.merge());
@@ -357,8 +331,6 @@ public class HomelessActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 
 
     private String buildCommand(POI poi) {
@@ -372,221 +344,36 @@ public class HomelessActivity extends AppCompatActivity {
                 "</LookAt>' > /tmp/query.txt";
     }
 
-/*    private class GetSessionTask extends AsyncTask<Void, Void, Void> {
-        Activity activity;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        flyToCity(city);
+        startActivity(new Intent(HomelessActivity.this, CityActivity.class));
 
-        GetSessionTask(Activity activity) {
-            this.activity = activity;
-        }
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            session = LGUtils.getSession(activity);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void success) {
-            super.onPostExecute(success);
-        }
-    */}
-
-/*    private class VisitPoiTask extends AsyncTask<Void, Void, String> {
-        String command;
-        POI currentPoi;
-        boolean rotate;
-        int rotationAngle = 10;
-        int rotationFactor = 1;
-        boolean changeVelocity = false;
-        private ProgressDialog dialog;
-        Activity activity;
-        Context context;
-
-        VisitPoiTask(String command, POI currentPoi, boolean rotate, Activity activity, Context context) {
-            this.command = command;
-            this.currentPoi = currentPoi;
-            this.rotate = rotate;
-            this.activity = activity;
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if (dialog == null) {
-                dialog = new ProgressDialog(context);
-                String message = context.getResources().getString(R.string.viewing) + " " + this.currentPoi.getName() + " " + context.getResources().getString(R.string.inLG);
-                dialog.setMessage(message);
-                dialog.setIndeterminate(false);
-                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog.setCancelable(false);
-
-
-                //Buton positive => more speed
-                //Button neutral => less speed
-                if (this.rotate) {
-                    dialog.setButton(DialogInterface.BUTTON_POSITIVE, context.getResources().getString(R.string.speedx2), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Do nothing, we after define the onclick
-                        }
-                    });
-
-                    dialog.setButton(DialogInterface.BUTTON_NEUTRAL, context.getResources().getString(R.string.speeddiv2), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Do nothing, we after define the onclick
-                        }
-                    });
-                }
-
-
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+    private void flyToCity(String city){
+        mFirestore.collection("cities").whereEqualTo("city", city)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        cancel(true);
-                    }
-                });
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        cancel(true);
-                    }
-                });
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
+                                final String city = document.getString("city");
+                                final String latitude = document.getString("latitude");
+                                final String longitude = document.getString("longitude");
 
-                dialog.show();
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_forward_black_36dp, 0, 0);
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_rewind_black_36dp, 0, 0);
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changeVelocity = true;
-                        rotationFactor = rotationFactor * 2;
+                                POIController.cleanKmls();
+                                POI cityPoi = createPOI(city, latitude, longitude);
+                                POIController.getInstance().moveToPOI(cityPoi,null);
 
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setText(context.getResources().getString(R.string.speedx4));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setText(context.getResources().getString(R.string.speeddiv2));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(true);
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_rewind_black_36dp, 0, 0);
-
-                        if (rotationFactor == 4) {
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                        }
-                    }
-                });
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changeVelocity = true;
-                        rotationFactor = rotationFactor / 2;
-
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setText(context.getResources().getString(R.string.speedx2));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setText(context.getResources().getString(R.string.speeddiv4));
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_forward_black_36dp, 0, 0);
-
-                        if (rotationFactor == 1) {
-                            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(false);
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-
-                session = LGUtils.getSession(activity);
-
-                //We fly to the point
-                LGUtils.setConnectionWithLiquidGalaxy(session, command, activity);
-
-                //If rotation button is pressed, we start the rotation
-                if (this.rotate) {
-
-                    boolean isFirst = true;
-
-                    while (!isCancelled()) {
-                        session.sendKeepAliveMsg();
-
-                        for (int i = 0; i <= (360 - this.currentPoi.getHeading()); i += (this.rotationAngle * this.rotationFactor)) {
-
-                            String commandRotate = "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
-                                    "<longitude>" + this.currentPoi.getLongitude() + "</longitude>" +
-                                    "<latitude>" + this.currentPoi.getLatitude() + "</latitude>" +
-                                    "<altitude>" + this.currentPoi.getAltitude() + "</altitude>" +
-                                    "<heading>" + (this.currentPoi.getHeading() + i) + "</heading>" +
-                                    "<tilt>" + this.currentPoi.getTilt() + "</tilt>" +
-                                    "<range>" + this.currentPoi.getRange() + "</range>" +
-                                    "<gx:altitudeMode>" + this.currentPoi.getAltitudeMode() + "</gx:altitudeMode>" +
-                                    "</LookAt>' > /tmp/query.txt";
-
-
-                            LGUtils.setConnectionWithLiquidGalaxy(session, commandRotate, activity);
-                            session.sendKeepAliveMsg();
-
-                            if (isFirst) {
-                                isFirst = false;
-                                Thread.sleep(7000);
-                            } else {
-                                Thread.sleep(4000);
                             }
                         }
                     }
-                }
-
-                return "";
-
-            } catch (JSchException e) {
-                this.cancel(true);
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-                activity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, context.getResources().getString(R.string.error_galaxy), Toast.LENGTH_LONG).show();
-                    }
                 });
-
-                return null;
-            } catch (InterruptedException e) {
-                activity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, context.getResources().getString(R.string.visualizationCanceled), Toast.LENGTH_LONG).show();
-                    }
-                });
-                return null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String success) {
-            super.onPostExecute(success);
-            if (success != null) {
-                if (dialog != null) {
-                    dialog.hide();
-                    dialog.dismiss();
-                }
-            }
-        }
-    }*/
-
+    }
+}
 
 

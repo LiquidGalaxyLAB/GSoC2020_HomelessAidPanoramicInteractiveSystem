@@ -160,6 +160,47 @@
             android:text="@string/about_persons" />
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginBottom="@dimen/bottom_margin"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/top_margin"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/end_margin"
+                    android:src="@drawable/photos_img"/>
+
+
+                <TextView
+                    android:id="@+id/about_photos_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/body"
+                    android:textColor="@color/grey"
+                    android:text="@string/photos_about" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/about_photos_tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/body"
+                android:textColor="@color/grey"
+                android:text="@string/photos_about_1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

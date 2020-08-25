@@ -350,6 +350,8 @@
     <string name="lg_about_thanks">Desarollada con la ayuda de los Laboratorios TIC del Parque Cientifico de Lleida y los Laboratorios Liquid Galaxy</string>
     <string name="special_thanks"> The next persons helped to realize this project, so THANK YOU ALL. \n\n Alexandra Rivero\n Maria Luz Mosterio\n Andreu Ibañez\n\n Paula Vidal\n Roger Colomo\n Josep Cunyat\n Guillem Felis de Dios\n\n Emilie Ma\n\n Sara Serrano\n Francesc Muñoz\n</string>
     <string name="about_persons">Alexandra Rivero\n Maria Luz Mosterio\n Andreu Ibañez\n\n Paula Vidal\n Roger Colomo\n Josep Cunyat\n Guillem Felis de Dios\n\n Emilie Ma\n\n Sara Serrano\n Francesc Muñoz\n</string>
+    <string name="photos_about">All the photos in this application are from the <a href="https://unsplash.com/">Unsplash page.</a> </string>
+    <string name="photos_about_1">Next you can find the author and link to the fotos I use:\n <a href="https://unsplash.com/photos/AEaTUnvneik">Login photo</a>\n <a href="https://unsplash.com/photos/4OFU9yxUvLc">Register page</a>.\n The icons are all from the <a href="https://icons8.com/">icons8.com page</a>\n And, the .png images are from the <a href="https://www.cleanpng.com/">cleanpng.com page.</a> </string>
 
 
     <!--Dashboard cards-->

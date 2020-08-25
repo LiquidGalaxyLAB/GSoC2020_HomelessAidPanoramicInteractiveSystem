@@ -77,12 +77,7 @@
             android:entries="@array/Slaves"
             android:entryValues="@array/slavesAlias"/>
 
-        <ListPreference
-            android:key="live_overview_homeless"
-            android:title="@string/live_overview_slaves"
-            android:summary="@string/live_overview_summary"
-            android:entries="@array/Slaves"
-            android:entryValues="@array/slavesAlias"/>
+
 
     </PreferenceCategory>
 

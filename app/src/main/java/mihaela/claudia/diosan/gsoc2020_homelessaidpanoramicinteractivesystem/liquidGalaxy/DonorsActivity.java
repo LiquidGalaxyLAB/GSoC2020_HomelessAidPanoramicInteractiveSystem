@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,10 +43,14 @@ public class DonorsActivity extends AppCompatActivity {
     /*SearchView*/
     private SearchView searchView;
 
-    SharedPreferences preferences, defaultPrefs;
-    TextView city_tv, country_tv, from_tv, test_statistics;
+    SharedPreferences preferences;
+    TextView city_tv, country_tv, from_tv;
+
     ImageView goHome;
+
     private Map<String,String> donorInfo = new HashMap<>();
+    String city, country;
+
 
 
     @Override
@@ -85,8 +90,8 @@ public class DonorsActivity extends AppCompatActivity {
     private void setActualLocation(){
 
         preferences = this.getSharedPreferences("cityInfo", MODE_PRIVATE);
-        String city = preferences.getString("city","");
-        String country = preferences.getString("country","");
+         city = preferences.getString("city","");
+         country = preferences.getString("country","");
 
         city_tv.setText(city);
         country_tv.setText(country);
@@ -154,6 +159,7 @@ public class DonorsActivity extends AppCompatActivity {
                                         POIController.getInstance().showBalloon(userPoi, null, description,"donor", "balloons/basic/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/basic/donors");
 
+                                        Toast.makeText(DonorsActivity.this, "Showing basic info of" + " " + users.get(position).getUsername() + " " + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -167,7 +173,10 @@ public class DonorsActivity extends AppCompatActivity {
 
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, buildBio(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation()), "donor", "balloons/bio/donors");
-                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/donors"); }
+                                        POIController.getInstance().sendBalloon(userPoi, null, "balloons/bio/donors");
+                                        Toast.makeText(DonorsActivity.this, "Showing Extra Info of" + " " + users.get(position).getUsername() + " " + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
+
+                                    }
 
                                     @Override
                                     public void onTransactionClick(int position) {
@@ -182,6 +191,8 @@ public class DonorsActivity extends AppCompatActivity {
                                         POIController.getInstance().showPlacemark(userPoi,null, "https://i.ibb.co/Bg4Lnvk/donor-icon.png", "placemarks/donors");
                                         POIController.getInstance().showBalloon(userPoi, null, buildTransactions(users.get(position).getFirstName(), users.get(position).getLastName(), users.get(position).getPhone(), users.get(position).getEmail(), users.get(position).getLocation(), users.get(position).getPersonallyDonations(), users.get(position).getThroughVolunteerDonation()),"donor", "balloons/transactions/donors");
                                         POIController.getInstance().sendBalloon(userPoi, null, "balloons/transactions/donors");
+                                        Toast.makeText(DonorsActivity.this, "Showing Transactions for" + " " + users.get(position).getUsername() + " " + "on Liquid Galaxy" , Toast.LENGTH_SHORT).show();
+
                                     }
 
                                     @Override
@@ -307,221 +318,36 @@ public class DonorsActivity extends AppCompatActivity {
                 });
     }
 
-   /* private class GetSessionTask extends AsyncTask<Void, Void, Void> {
-        Activity activity;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        flyToCity(city);
+        startActivity(new Intent(DonorsActivity.this, CityActivity.class));
 
-        GetSessionTask(Activity activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            session = LGUtils.getSession(activity);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void success) {
-            super.onPostExecute(success);
-        }
     }
 
-    private class VisitPoiTask extends AsyncTask<Void, Void, String> {
-        String command;
-        POI currentPoi;
-        boolean rotate;
-        int rotationAngle = 10;
-        int rotationFactor = 1;
-        boolean changeVelocity = false;
-        private ProgressDialog dialog;
-        Activity activity;
-        Context context;
-
-        VisitPoiTask(String command, POI currentPoi, boolean rotate, Activity activity, Context context) {
-            this.command = command;
-            this.currentPoi = currentPoi;
-            this.rotate = rotate;
-            this.activity = activity;
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if (dialog == null) {
-                dialog = new ProgressDialog(context);
-                String message = context.getResources().getString(R.string.viewing) + " " + this.currentPoi.getName() + " " + context.getResources().getString(R.string.inLG);
-                dialog.setMessage(message);
-                dialog.setIndeterminate(false);
-                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog.setCancelable(false);
-
-
-                //Buton positive => more speed
-                //Button neutral => less speed
-                if (this.rotate) {
-                    dialog.setButton(DialogInterface.BUTTON_POSITIVE, context.getResources().getString(R.string.speedx2), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Do nothing, we after define the onclick
-                        }
-                    });
-
-                    dialog.setButton(DialogInterface.BUTTON_NEUTRAL, context.getResources().getString(R.string.speeddiv2), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Do nothing, we after define the onclick
-                        }
-                    });
-                }
-
-
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+    private void flyToCity(String city){
+        mFirestore.collection("cities").whereEqualTo("city", city)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        cancel(true);
-                    }
-                });
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        cancel(true);
-                    }
-                });
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
+                                final String city = document.getString("city");
+                                final String latitude = document.getString("latitude");
+                                final String longitude = document.getString("longitude");
 
-                dialog.show();
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_forward_black_36dp, 0, 0);
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_rewind_black_36dp, 0, 0);
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changeVelocity = true;
-                        rotationFactor = rotationFactor * 2;
+                                POIController.cleanKmls();
+                                POI cityPoi = createPOI(city, latitude, longitude);
+                                POIController.getInstance().moveToPOI(cityPoi,null);
 
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setText(context.getResources().getString(R.string.speedx4));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setText(context.getResources().getString(R.string.speeddiv2));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(true);
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_rewind_black_36dp, 0, 0);
-
-                        if (rotationFactor == 4) {
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                        }
-                    }
-                });
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changeVelocity = true;
-                        rotationFactor = rotationFactor / 2;
-
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setText(context.getResources().getString(R.string.speedx2));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setText(context.getResources().getString(R.string.speeddiv4));
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_fast_forward_black_36dp, 0, 0);
-
-                        if (rotationFactor == 1) {
-                            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(false);
-                        }
-                    }
-                });
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-
-                session = LGUtils.getSession(activity);
-
-                //We fly to the point
-                LGUtils.setConnectionWithLiquidGalaxy(session, command, activity);
-
-                //If rotation button is pressed, we start the rotation
-                if (this.rotate) {
-
-                    boolean isFirst = true;
-
-                    while (!isCancelled()) {
-                        session.sendKeepAliveMsg();
-
-                        for (int i = 0; i <= (360 - this.currentPoi.getHeading()); i += (this.rotationAngle * this.rotationFactor)) {
-
-                            String commandRotate = "echo 'flytoview=<gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>" +
-                                    "<longitude>" + this.currentPoi.getLongitude() + "</longitude>" +
-                                    "<latitude>" + this.currentPoi.getLatitude() + "</latitude>" +
-                                    "<altitude>" + this.currentPoi.getAltitude() + "</altitude>" +
-                                    "<heading>" + (this.currentPoi.getHeading() + i) + "</heading>" +
-                                    "<tilt>" + this.currentPoi.getTilt() + "</tilt>" +
-                                    "<range>" + this.currentPoi.getRange() + "</range>" +
-                                    "<gx:altitudeMode>" + this.currentPoi.getAltitudeMode() + "</gx:altitudeMode>" +
-                                    "</LookAt>' > /tmp/query.txt";
-
-
-                            LGUtils.setConnectionWithLiquidGalaxy(session, commandRotate, activity);
-                            session.sendKeepAliveMsg();
-
-                            if (isFirst) {
-                                isFirst = false;
-                                Thread.sleep(7000);
-                            } else {
-                                Thread.sleep(4000);
                             }
                         }
                     }
-                }
-
-                return "";
-
-            } catch (JSchException e) {
-                this.cancel(true);
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-                activity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, context.getResources().getString(R.string.error_galaxy), Toast.LENGTH_LONG).show();
-                    }
                 });
-
-                return null;
-            } catch (InterruptedException e) {
-                activity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, context.getResources().getString(R.string.visualizationCanceled), Toast.LENGTH_LONG).show();
-                    }
-                });
-                return null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String success) {
-            super.onPostExecute(success);
-            if (success != null) {
-                if (dialog != null) {
-                    dialog.hide();
-                    dialog.dismiss();
-                }
-            }
-        }
-    }*/
+    }
 
 
 

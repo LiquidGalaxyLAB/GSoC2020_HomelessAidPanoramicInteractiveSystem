@@ -98,7 +98,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         final ListPreference homelessPrefs = (ListPreference) findPreference("homeless_preference");
         final ListPreference localPrefs = (ListPreference) findPreference("local_preference");
         final ListPreference globalPrefs = (ListPreference) findPreference("global_preference");
-        final ListPreference liveOverviewPrefs = (ListPreference) findPreference("live_overview_homeless");
+      //  final ListPreference liveOverviewPrefs = (ListPreference) findPreference("live_overview_homeless");
 
         logosPrefs.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -111,7 +111,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 homelessPrefs.setValue(newValue.toString());
                 localPrefs.setValue(newValue.toString());
                 globalPrefs.setValue(newValue.toString());
-                liveOverviewPrefs.setValue(newValue.toString());
+          //      liveOverviewPrefs.setValue(newValue.toString());
 
                 return false;
             }

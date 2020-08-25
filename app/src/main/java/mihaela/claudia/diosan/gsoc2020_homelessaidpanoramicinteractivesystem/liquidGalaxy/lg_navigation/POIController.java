@@ -131,10 +131,13 @@ public class POIController {
                 "<longitude>" + poi.getLongitude() + "</longitude>" +
                 "<latitude>" + poi.getLatitude() + "</latitude>" +
                 "<altitude>" + poi.getAltitude() + "</altitude>" +
+                "<heading>" + poi.getRange() + "</heading>" +
+                "<tilt>" + poi.getTilt() + "</tilt>" +
                 "<range>" + poi.getRange() + "</range>" +
                 "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
                 "</LookAt>' > /tmp/query.txt";
     }
+
 
     private LGCommand sendCityToLG(LGCommand.Listener listener) {
         LGCommand lgCommand = new LGCommand(flyToCity(currentPOI), LGCommand.CRITICAL_MESSAGE, (String result) -> {
@@ -155,7 +158,7 @@ public class POIController {
                 "<tilt>" + poi.getTilt() + "</tilt>"+
                 "<range>" + poi.getRange() + "</range>" +
                 "<gx:altitudeMode>" + poi.getAltitudeMode() + "</gx:altitudeMode>" +
-                "</LookAt>' > /tmp/query.txt;";
+                "</LookAt>' > /tmp/query.txt; sleep 25";
     }
 
 
@@ -247,6 +250,7 @@ public class POIController {
     }
 
 
+
     private static String setPlacemarkRoute(POI poi, String hostIp, String route){
         return "echo 'http://" + hostIp + ":81/hapis/" + route + "/" + poi.getName() + ".kml' >> /var/www/html/kmls.txt";
     }
@@ -275,7 +279,7 @@ public class POIController {
                " <name>" + poi.getName() + "</name>\n" +
                " <description>\n" +
                " <![CDATA[\n" +
-               "<body style=\"width:500px; height:550px\"> \n" +
+               "<body style=\" margin:5 width:500px; height:550px text-align:center\"> \n" +
                "<img src=" + image + " " +  "width = \"400px\" class=\"center\" > \n"+
                "<font size = \"+2\">" + description + "</font> \n" +
                "</body>" +

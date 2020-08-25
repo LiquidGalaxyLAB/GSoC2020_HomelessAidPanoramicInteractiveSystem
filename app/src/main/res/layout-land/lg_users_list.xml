@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="@dimen/margins">
+                android:layout_margin="@dimen/cv_margins">
 
 
                 <TextView

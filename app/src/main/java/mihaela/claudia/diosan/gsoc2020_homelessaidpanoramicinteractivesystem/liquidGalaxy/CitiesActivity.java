@@ -22,9 +22,13 @@ import java.util.List;
 
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.R;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.adapters.CitiesCardsAdapter;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand;
+import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGConnectionManager;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POI;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_navigation.POIController;
 import mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.utils.Cities;
+
+import static mihaela.claudia.diosan.gsoc2020_homelessaidpanoramicinteractivesystem.liquidGalaxy.lg_connection.LGCommand.CRITICAL_MESSAGE;
 
 
 public class CitiesActivity extends AppCompatActivity {
@@ -107,7 +111,6 @@ public class CitiesActivity extends AppCompatActivity {
                                         POIController.cleanKmls();
                                         POI cityPoi = createPOI(cities.get(position).getLatitude(), cities.get(position).getLongitude(), cities.get(position).getAltitude());
                                         POIController.getInstance().moveToPOI(cityPoi,null);
-
                                         startActivity(new Intent(CitiesActivity.this, CityActivity.class));
 
                                     }

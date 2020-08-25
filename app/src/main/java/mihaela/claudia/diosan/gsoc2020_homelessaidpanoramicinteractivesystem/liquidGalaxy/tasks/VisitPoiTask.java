@@ -56,6 +56,8 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
         hostname = preferences.getString("SSH-IP", "");
 
 
+
+
         if (dialog == null) {
             dialog = new ProgressDialog(context);
             String message = context.getResources().getString(R.string.viewing) + " " + this.currentPoi.getName() + " " + context.getResources().getString(R.string.inLG);
@@ -89,7 +91,9 @@ public class VisitPoiTask extends AsyncTask<Void, Void, String> {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     POIController.cleanKmls();
-                    MainActivityLG.cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
+                    POIController.cleanKmlSlave(homeless_slave);
+                    POIController.cleanKmlSlave(local_statistics_slave);
+                    POIController.cleanKmlSlave(global_statistics_slave);
                     cancel(true);
                 }
             });
