@@ -133,7 +133,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
         POIController.cleanKmlSlave(local_statistics_slave);
         POIController.cleanKmlSlave(global_statistics_slave);
         POIController.cleanKmlSlave(live_overview_homeless);
-        POIController.setLogos(logos_slave, hostname);
+        POIController.setLogos(logos_slave);
 
 
     }
@@ -176,9 +176,7 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
             case R.id.city_statistics:
                 POIController.cleanKmls();
                 cleanKmls(logos_slave, homeless_slave, local_statistics_slave, global_statistics_slave, live_overview_homeless, hostname);
-
-
-             stopStatistics.setVisibility(View.VISIBLE);
+                stopStatistics.setVisibility(View.VISIBLE);
 
                 mFirestore.collection("cities")
                         .get()
@@ -217,9 +215,9 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                         handler.postDelayed( runnable = new Runnable() {
                                             public void run() {
                                                 POI cityPOI = createPOI(cityWS, latitude, longitude, altitude);
-                                                String sentence = "cd /var/www/html/hapis/balloons/statistics/cities/ ;curl -o " + cityPOI.getName() + " " + image;
+                                              /*  String sentence = "cd /var/www/html/hapis/balloons/statistics/cities/ ;curl -o " + cityPOI.getName() + " " + image;
                                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
-
+*/
                                                 POIController.getInstance().showBalloonOnSlave(cityPOI, null, buildCityStatistics(city, homeless, donors, volunteers, foodSt, clothesSt, workSt, lodgingSt, hygieneSt), "http://lg1:81/hapis/balloons/statistics/cities/", cityPOI.getName(), local_statistics_slave);
                                                 POIController.getInstance().moveToPOI(cityPOI, null);
                                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
@@ -294,8 +292,6 @@ public class MainActivityLG extends AppCompatActivity implements View.OnClickLis
                                 String sentence = "cd /var/www/html/hapis/balloons/statistics/ ;curl -o " + STATISTICS.getName() + " " + image;
                                 LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
                                 POIController.getInstance().showBalloonOnSlave(STATISTICS, null, buildGlobalStatistics(cities, homeless, donors, volunteers, food, clothes, work, lodging, hygiene, personallyDonations, throughVolunteerDonations), "http://lg1:81/hapis/balloons/statistics/", STATISTICS.getName(), global_statistics_slave);
-                                Toast.makeText(MainActivityLG.this, global_statistics_slave, Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     }

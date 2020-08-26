@@ -266,7 +266,7 @@ public class HomelessActivity extends AppCompatActivity {
     }
 
     private String description(String birthday, String location, String schedule, String need) {
-        return "<h2> <b> Basic Info</b></h2>\n" +
+        return  "<h2> <b> Basic Info</b></h2>\n" +
                 "<p> <b> Birthday: </b> " + birthday + "</p>\n" +
                 "<p> <b> Location: </b> " + location + "</p>\n" +
                 "<p> <b> Schedule: </b> " + schedule + "</p>\n" +

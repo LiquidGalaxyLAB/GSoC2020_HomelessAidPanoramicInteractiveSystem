@@ -147,7 +147,6 @@ public class VolunteersActivity extends AppCompatActivity {
 
                                         String description = description(users.get(position).getEmail(), users.get(position).getLocation());
                                         POIController.cleanKmls();
-                                        Toast.makeText(VolunteersActivity.this,users.get(position).getEmail(), Toast.LENGTH_SHORT ).show();
                                         POI userPoi = createPOI(users.get(position).getUsername(), users.get(position).getLatitude(), users.get(position).getLongitude());
                                         POIController.getInstance().moveToPOI(userPoi, null);
 

@@ -280,7 +280,7 @@ public class POIController {
                " <description>\n" +
                " <![CDATA[\n" +
                "<body style=\" margin:5 width:500px; height:550px text-align:center\"> \n" +
-               "<img src=" + image + " " +  "width = \"400px\" class=\"center\" > \n"+
+               "<center><img src=" + image + " " +  "width = \"400px\" class=\"center\" ></center> \n"+
                "<font size = \"+2\">" + description + "</font> \n" +
                "</body>" +
                "]]> \n" +
@@ -305,7 +305,7 @@ public class POIController {
                 " <description>\n" +
                 " <![CDATA[\n" +
                 "<body style=\" margin:5 width:700px; height:800px text-align:center\"> \n" +
-                "<img src=" + route + image + " " +  "width = \"600px\" class=\"center\" > \n"+
+                "<center><img src=" + route + image + " " +  "width = \"600px\" class=\"center\" ></center> \n"+
                 "<font size = \"+3\" >" + description + "</font> \n" +
                 "</body>" +
                 "]]> \n" +
@@ -332,7 +332,7 @@ public class POIController {
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
 
-    public static void setLogos(String slave_name, String master_ip){
+    public static void setLogos(String slave_name){
         String sentence = "chmod 777 /var/www/html/kml/" + slave_name + ".kml; echo '" +
                 "<kml xmlns=\"http://www.opengis.net/kml/2.2\"\n" +
                 "xmlns:atom=\"http://www.w3.org/2005/Atom\" \n"  +
@@ -356,5 +356,6 @@ public class POIController {
 
         LGConnectionManager.getInstance().addCommandToLG(new LGCommand(sentence, CRITICAL_MESSAGE, null));
     }
+
 
 }
